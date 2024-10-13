@@ -1,0 +1,17 @@
+Application State
+"@reduxjs/toolkit"
+"react-redux"
+"redux-persist"
+
+Pop up
+"react-toastify"
+
+Form
+"react-dropzone" - picture upload
+"formik" - formdata
+"yup" - form validator
+
+Dev Dependencies
+"@types/react-dropzone"
+"@types/react-redux"
+"@types/redux-persist"
