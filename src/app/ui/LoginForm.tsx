@@ -1,50 +1,30 @@
 "use client";
-
+import "./FormInput.css";
+import { login } from "@/service/authServices";
 import React, { useState } from "react";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
-import { authenticate } from "@/app/lib/action";
-import styled from "styled-components";
 
-export default function LoginForm() {
+const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isPending, setIsPending] = useState(false);
 
-  const FormInput = styled.input`
-  block;
-  py-2.5;
-  px-0;
-  width: 100%;
-  text-sm;
-  text-gray-900;
-  background: transparent;
-  border: 0;
-  border-bottom: 2px solid #ccc;
-  appearance: none;
+  // const registerSchema = yup.object().shape({
+  //     firstName: yup.string().required("required"),
+  //     lastName: yup.string().required("required"),
+  //     email: yup.string().email("Invalid email").required("required"),
+  //     password: yup.string().required("required"),
+  //     location: yup.string().required("required"),
+  //     occupation: yup.string().required("required"),
+  //     picture: yup.string().required("required"),
+  // });
 
-  &:focus {
-    outline: none;
-    border-bottom-color: #0070f3; /* Change this to your theme color */
-  }
-
-  /* Autofill styles */
-  &:-webkit-autofill {
-    background-color: transparent !important;
-    color: inherit !important;
-    border-bottom: 2px solid #ccc !important; /* Keep the border style consistent */
-  }
-
-  &:-webkit-autofill:focus {
-    background-color: transparent !important;
-  }
-
-  &:-webkit-autofill::first-line {
-    font-size: inherit !important;
-    color: inherit !important;
-  }
-`;
+  // const loginSchema = yup.object().shape({
+  //     email: yup.string().email("Invalid email").required("required"),
+  //     password: yup.string().required("required"),
+  // });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,8 +37,7 @@ export default function LoginForm() {
     formData.append("remember", rememberMe.toString());
 
     try {
-      const result = await authenticate(undefined, formData);
-
+      const result = login({ email, password });
       if (result) {
         setErrorMessage(result);
       } else {
@@ -74,7 +53,7 @@ export default function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-3 w-full">
       <div className="relative z-0 w-full mb-5 group">
-        <FormInput
+        <input
           type="email"
           name="floating_email"
           id="floating_email"
@@ -92,7 +71,7 @@ export default function LoginForm() {
         </label>
       </div>
       <div className="relative z-0 w-full mb-5 group">
-        <FormInput
+        <input
           type="password"
           name="floating_password"
           id="floating_password"
@@ -128,13 +107,16 @@ export default function LoginForm() {
           terms and conditions
         </label>
       </div>
-      <button
-        aria-disabled={isPending}
-        type="submit"
-        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-      >
-        {isPending ? "Submitting..." : "Submit"}
-      </button>
+      <div className="">
+        <button
+          aria-disabled={isPending}
+          type="submit"
+          // className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="mx-auto rounded-lg border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:text-lg hover:border-transparent text-sm sm:text-base h-8 sm:h-10 px-4 sm:px-5 sm:min-w-44"
+        >
+          {isPending ? "Submitting..." : "Submit"}
+        </button>
+      </div>
       {errorMessage && (
         <div className="mt-2 text-red-500 flex items-center">
           <AiOutlineExclamationCircle className="mr-2" />
@@ -143,4 +125,6 @@ export default function LoginForm() {
       )}
     </form>
   );
-}
+};
+
+export default LoginForm;
