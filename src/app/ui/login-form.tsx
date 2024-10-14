@@ -1,19 +1,18 @@
-'use client'; 
+"use client";
 
 import React, { useState } from "react";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
-import { authenticate } from "@/app/lib/action"; 
+import { authenticate } from "@/app/lib/action";
 import styled from "styled-components";
 
-
 export default function LoginForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const [isPending, setIsPending] = useState(false);
 
-  const StyledInput = styled.input`
+  const FormInput = styled.input`
   block;
   py-2.5;
   px-0;
@@ -50,23 +49,23 @@ export default function LoginForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsPending(true);
-    setErrorMessage('');
+    setErrorMessage("");
 
     const formData = new FormData();
-    formData.append('email', email);
-    formData.append('password', password);
-    formData.append('remember', rememberMe.toString());
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("remember", rememberMe.toString());
 
     try {
       const result = await authenticate(undefined, formData);
 
       if (result) {
-        setErrorMessage(result); 
+        setErrorMessage(result);
       } else {
-        console.log('Login successful');
+        console.log("Login successful");
       }
     } catch (error: any) {
-      setErrorMessage('An unexpected error occurred.');
+      setErrorMessage("An unexpected error occurred.");
     } finally {
       setIsPending(false);
     }
@@ -75,7 +74,7 @@ export default function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-3 w-full">
       <div className="relative z-0 w-full mb-5 group">
-        <StyledInput
+        <FormInput
           type="email"
           name="floating_email"
           id="floating_email"
@@ -93,7 +92,7 @@ export default function LoginForm() {
         </label>
       </div>
       <div className="relative z-0 w-full mb-5 group">
-        <input
+        <FormInput
           type="password"
           name="floating_password"
           id="floating_password"
