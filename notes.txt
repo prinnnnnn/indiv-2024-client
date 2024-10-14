@@ -15,3 +15,24 @@ Dev Dependencies
 "@types/react-dropzone"
 "@types/react-redux"
 "@types/redux-persist"
+
+Theme (RGB)
+
+Navy - white
+112D4E
+3F72AF
+DBE2EF
+F9F7F7
+
+Navy - Purple
+424874
+A6B1E1
+DCD6F7
+F4EEFF
+
+GOLD
+6C0345
+10375C
+EB8317
+F3C623
+F4F6FF

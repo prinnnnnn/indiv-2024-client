@@ -2,21 +2,22 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const geistSans = localFont({
-    src: "./fonts/GeistVF.woff",
-    variable: "--font-geist-sans",
-    weight: "100 900",
-});
-const geistMono = localFont({
-    src: "./fonts/GeistMonoVF.woff",
-    variable: "--font-geist-mono",
-    weight: "100 900",
-});
-
 export const metadata: Metadata = {
-    title: "Prinhub",
+    title: "Hono",
     description: "Indiv 2024",
 };
+
+const sfDisplayReg = localFont({
+    src: "./fonts/SF-Pro-Display-Regular.woff",
+    variable: "--font-sf-display-regular",
+    weight: "400",
+});
+
+const sfDisplayBold = localFont({
+    src: "./fonts/SF-Pro-Display-Bold.woff",
+    variable: "--font-sf-display-bold",
+    weight: "700",
+});
 
 export default function RootLayout({
     children,
@@ -26,7 +27,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+                className={`${sfDisplayReg.variable} ${sfDisplayBold.variable} antialiased`}
             >
                 {children}
             </body>
