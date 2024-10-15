@@ -21,11 +21,11 @@ const SideNav = ({menus}:SideNavProp) => {
   return (
     <div className="flex-grow bg-[#DBE2EF] dark:bg-[#282828] rounded-lg h-fit">
       <div className="flex flex-col px-4 pb-6 pt-2 items-start">
-        <div className="flex flex-row gap-4 items-center">
-          <SiSnowflake className="text-[#1DA1F2] dark:text-orange-500 text-6xl me-0" />
+        <div className="flex flex-row gap-2 items-center pt-3">
+          <SiSnowflake className="text-[#1DA1F2] dark:text-orange-500 text-5xl me-0" />
           <h2>
             PRIN{""}
-            <span className="dark:hidden">N</span>
+            <span className="dark:hidden">NN</span>
             <span className="hidden dark:inline-block text-black bg-orange-500 rounded-xl px-2 ms-1">
               HUB
             </span>
