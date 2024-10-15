@@ -5,15 +5,15 @@ import { TiGroup } from "react-icons/ti";
 const Home = () => {
     return (
         <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-            <main className="flex flex-col items-center gap-8 row-start-2 sm:items-start border-black border-2 rounded-3xl p-6 ">
-                <h1 className="flex text-5xl font-extrabold">
+            <main className="flex flex-col items-center gap-8 row-start-2 sm:items-start border-[#424874] border-2 rounded-3xl p-6 ">
+                <h1 className="flex text-5xl font-extrabold text-[#424874]">
                     MAI
-                    <span className="text-black rounded-xl px-2 me-2">
+                    <span className="rounded-xl px-2 me-2">
                         AO
                     </span>{" "}
                     <TiGroup className="text-black" width={20} height={20}/>
                 </h1>
-                <ul className="text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
+                <ul className="text-sm text-center sm:text-left">
                     <li className="mb-2">Indiv 2024/1 By </li>
                     <li className="mb-2 flex">
                         <GrUserManager className="me-2" /> Parinthorn
@@ -27,16 +27,16 @@ const Home = () => {
 
                 <div className="flex gap-4 items-center flex-col sm:flex-row">
                     <a
-                        className="rounded-full border bg-[#112D4E] font-bold border-solid transition-colors
+                        className="rounded-full border bg-[#424874] font-bold border-solid transition-colors
                          flex items-center justify-center bg-foreground text-background gap-2 
-                        hover:bg-[#3F72AF] hover:text-lg text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-36"
+                        hover:bg-[#A6B1E1] hover:text-lg text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-36"
                         href="/login"
                     >
                         Log In
                     </a>
                     <a
-                        className="rounded-full border-2 border-solid border-[#c1dbf9] font-bold transition-colors flex items-center 
-                                justify-center hover:bg-[#f2f2f2] dark:hover:bg-cyan-400 hover:text-lg hover:border-transparent
+                        className="rounded-full border-2 border-solid border-[#424874] font-bold transition-colors flex items-center 
+                                justify-center hover:bg-[#A6B1E1] hover:text-lg hover:border-transparent
                                  hover:text-white text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-36"
                         href="/signup"
                     >
