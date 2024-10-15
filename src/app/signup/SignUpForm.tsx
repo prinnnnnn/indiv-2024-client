@@ -6,7 +6,7 @@ import React from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { User } from "@/common/model";
-import TextField from "./TextField";
+import TextField from "../ui/TextField";
 
 const formLabels = [
     {
