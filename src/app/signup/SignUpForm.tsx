@@ -6,7 +6,7 @@ import React from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { User } from "@/common/model";
-import TextField from "../ui/TextField";
+import TextField from "./TextField";
 
 const formLabels = [
     {
@@ -83,7 +83,7 @@ const SignUpForm = () => {
                     {/* BUTTON */}
                     <button
                         type="submit"
-                        className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:text-lg hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-40 sm:px-64 sm:min-w-44 "
+                        className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#2c2c2c] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-20 sm:px-40 "
 
                     >
                         <h3>Create Account</h3>

@@ -36,3 +36,13 @@ GOLD
 EB8317
 F3C623
 F4F6FF
+
+Light- blue
+[#1DA1F2]
+
+
+Dark gray 
+[#282828]
+
+gray 
+[#3e3e3e]

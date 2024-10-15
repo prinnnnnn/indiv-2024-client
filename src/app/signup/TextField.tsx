@@ -1,5 +1,5 @@
 import { Field, ErrorMessage } from "formik";
-import './FormInput.css'
+import '../ui/FormInput.css'
 interface CustomInputProps {
   label: string;
   name: string;
