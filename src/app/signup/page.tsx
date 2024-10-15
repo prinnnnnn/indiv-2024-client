@@ -4,7 +4,7 @@ import SignUpForm from "./SignUpForm";
 const SignupPage = () => {
     return (
         <div className="w-7/12">
-            <div className="flex flex-col justify-between items-center mt-10 gap-12">
+            <div className="flex flex-col justify-between items-center pt-10 gap-12">
                 {/* Headers */}
                 <div className="flex flex-col items-center">
                     <h2>Create an account</h2>
@@ -15,10 +15,12 @@ const SignupPage = () => {
                         </a>
                     </p>
                 </div>
+
                 {/* Forms, submit button */}
                 <div className="">
                     <SignUpForm />
                 </div>
+                
                 {/* Footer */}
                 <footer>
                     OR Continue with
