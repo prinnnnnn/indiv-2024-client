@@ -25,14 +25,14 @@ const formLabels = [
     },
     {
         label: "Firstname",
-        name: "firstname",
+        name: "firstName",
         type: "text",
         placeholder: "",
         // placeholder: "Enter your firstname...",
     },
     {
         label: "Lastname",
-        name: "lastname",
+        name: "lastName",
         type: "text",
         placeholder: "",
         // placeholder: "Enter your lastname...",
@@ -41,7 +41,7 @@ const formLabels = [
 
 const SignUpForm = () => {
     const registerSchema = yup.object().shape({
-        firstName: yup.string().required("required"),
+        firstname: yup.string().required("required"),
         lastName: yup.string().required("required"),
         email: yup.string().email("Invalid email").required("required"),
         password: yup.string().required("required"),

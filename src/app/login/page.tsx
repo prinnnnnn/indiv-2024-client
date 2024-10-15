@@ -3,8 +3,8 @@ import { TiGroup } from "react-icons/ti";
 
 const LoginPage = () => {
     return (
-        <main className="flex items-center justify-center md:h-screen">
-            <div className="relative mx-auto border-2 border-gray-600 rounded-lg flex w-full max-w-[400px] flex-col space-y-2.5 p-4 md:-mt-32">
+        <main className="flex items-center justify-center h-screen md:h-screen">
+            <div className="relative mx-auto border-2 border-gray-600 rounded-lg flex w-full flex-col space-y-2.5 p-4 md:-mt-32 md:p-8 lg:p-10">
                 <div className="flex h-20 w-full items-end rounded-lg p-3">
                     <h1 className=" flex text-5xl font-extrabold">
                         PRIN
