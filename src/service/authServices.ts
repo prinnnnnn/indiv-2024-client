@@ -14,6 +14,7 @@ interface loginArgs {
 export const login = ({ email, password }: loginArgs) => {
     /* return user info for redux store dispatching */
     /* POST - /auth/login */
+    return null;
 }
 
 export const logout = () => {
