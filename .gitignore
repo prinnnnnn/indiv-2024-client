@@ -31,6 +31,9 @@ yarn-error.log*
 # prettier
 .prettierrc
 
+# local assets
+/src/public
+
 # vercel
 .vercel
 

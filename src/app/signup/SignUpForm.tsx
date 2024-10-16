@@ -6,7 +6,7 @@ import React from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { User } from "@/common/model";
-import TextField from "./TextField";
+import TextField from "@/app/signup/TextField";
 
 const formLabels = [
     {
@@ -40,14 +40,12 @@ const formLabels = [
 ]
 
 const SignUpForm = () => {
+    
     const registerSchema = yup.object().shape({
         firstname: yup.string().required("required"),
         lastName: yup.string().required("required"),
         email: yup.string().email("Invalid email").required("required"),
         password: yup.string().required("required"),
-        // location: yup.string().required("required"),
-        // occupation: yup.string().required("required"),
-        // picture: yup.string().required("required"),
     });
 
     const handleSubmit = async () => {};
