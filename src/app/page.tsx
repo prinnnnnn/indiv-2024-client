@@ -1,11 +1,14 @@
+
 import Image from "next/image";
 import { GrUserManager, GrUserWorker } from "react-icons/gr";
-import { IoIosLogIn } from "react-icons/io";
 import { SiSnowflake } from "react-icons/si";
+import ToggleThemeBtn from "./ui/ToggleThemeBtn";
+
 
 export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+        <ToggleThemeBtn />
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <div className="flex items-center gap-3">
           <SiSnowflake className="text-[#1DA1F2] dark:text-orange-500 text-5xl dark:ms-0 my-auto" />
