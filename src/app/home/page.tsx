@@ -17,57 +17,54 @@ import SearchBar from "./SearchBar";
 const HomePage = () => {
     const menus = [
         {
-          name: "Home",
-          icon: <IoHome className="text-xl" />,
+            name: "Home",
+            icon: <IoHome className="text-xl" />,
         },
         {
-          name: "Explore",
-          icon: <MdExplore className="text-xl" />,
+            name: "Explore",
+            icon: <MdExplore className="text-xl" />,
         },
         {
-          name: "Notification",
-          icon: <IoMdNotifications className="text-xl" />,
+            name: "Notification",
+            icon: <IoMdNotifications className="text-xl" />,
         },
         {
-          name: "Chat",
-          icon: <IoIosChatbubbles className="text-xl" />,
+            name: "Chat",
+            icon: <IoIosChatbubbles className="text-xl" />,
         },
         {
-          name: "Profile",
-          icon: <CgProfile className="text-xl" />,
+            name: "Profile",
+            icon: <CgProfile className="text-xl" />,
         },
         {
-          name: "More",
-          icon: <CgMoreO className="text-xl" />,
+            name: "More",
+            icon: <CgMoreO className="text-xl" />,
         },
-      ];
+    ];
 
-  const pathName = usePathname();
+    const pathName = usePathname();
 
-  return (
-    <div className="flex flex-row justify-center w-full">
-      <div className="flex flex-row justify-between w-10/12 gap-5 pt-10">
+    return (
+        <div className="flex flex-row justify-center w-full">
+            <div className="flex flex-row justify-between w-10/12 gap-5 pt-10">
+                <SideNav menus={menus} />
 
-        <SideNav menus={menus} />
+                {/* feeds, Form for create post, posts of the followers */}
+                <div className="basis-1/2 bg-[#DBE2EF] dark:bg-[#282828] px-6 py-6 rounded-lg">
+                    <div className="flex flex-col gap-3">
+                        <SearchBar />
+                        <PostForm />
+                        {[1, 2, 3, 4, 5, 6].map((_, i) => (
+                            <PostWidget i={_} />
+                        ))}
+                    </div>
+                </div>
 
-        {/* feeds, Form for create post, posts of the followers */}
-        <div className="basis-1/2 bg-[#DBE2EF] dark:bg-[#282828] px-6 py-6 rounded-lg">
-          <div className="flex flex-col gap-3">
-            <SearchBar/>
-            <PostForm/>
-            {[1,2,3,4,5,6].map((_, i) => (
-              <PostWidget i={_}/>
-            ))}
-          </div>
+                {/* Seach, Trending, who to follow  */}
+                <SideBar />
+            </div>
         </div>
-
-        {/* Seach, Trending, who to follow  */}
-        <SideBar/>
-
-
-      </div>
-    </div>
-  );
+    );
 };
 
 export default HomePage;

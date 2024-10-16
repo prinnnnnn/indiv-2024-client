@@ -1,54 +1,54 @@
-import { createContext, useState } from "react";
+"use client"
 
+import { createContext, useContext, useState } from "react";
 
 type ThemeType = {
-  theme: string;
-  palette: Palette;
-  toggleTheme: () => void;
+    theme: string;
+    palette: Palette;
+    toggleTheme: () => void;
 };
 
 type Palette = {
-  text: string;
-  bg: string;
-  bgHover: string;
+    text: string;
+    bg: string;
+    bgHover: string;
 };
 
 const ThemeContext = createContext<ThemeType>({
-  theme: "",
-  palette: { text: "", bg: "", bgHover: "" },
-  toggleTheme: () => {},
+    theme: "",
+    palette: { text: "", bg: "", bgHover: "" },
+    toggleTheme: () => {},
 });
 
+export const useTheme = () => {
+    return useContext(ThemeContext);
+}
+
 const darkPalette: Palette = {
-  text: "text-white",
-  bg: "bg-[#282828]",
-  bgHover: "hover:bg-[#3e3e3e]",
+    text: "text-white",
+    bg: "bg-[#282828]",
+    bgHover: "hover:bg-[#3e3e3e]",
 };
 
 const lightPalette: Palette = {
-  text: "text-black",
-  bg: "bg-[#1DA1F2]",
-  bgHover: "hover:bg-blue-300",
+    text: "text-black",
+    bg: "bg-[#1DA1F2]",
+    bgHover: "hover:bg-blue-300",
 };
 
-// @ts-ignore
-export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState("light");
-  const [palette, setPalette] = useState(
-    lightPalette
-  );
-  const toggleTheme = () => {
-    console.log('toggle theme');
-    
-    setTheme(theme === "light" ? "dark" : "light");
-    setPalette(palette === lightPalette ? darkPalette : lightPalette);
-  };
+export const ThemeProvider = ({ children } : {
+    children: React.ReactNode;
+}) => {
+    const [theme, setTheme] = useState("light");
+    const [palette, setPalette] = useState(lightPalette);
+    const toggleTheme = () => {
+        setTheme(theme === "light" ? "dark" : "light");
+        setPalette(palette === lightPalette ? darkPalette : lightPalette);
+    };
 
-  return (
-    <ThemeContext.Provider value={{ theme, palette, toggleTheme}}>
-      {children}
-    </ThemeContext.Provider>
-  );
+    return (
+        <ThemeContext.Provider value={{ theme, palette, toggleTheme }}>
+            {children}
+        </ThemeContext.Provider>
+    );
 };
-
-export { ThemeContext };

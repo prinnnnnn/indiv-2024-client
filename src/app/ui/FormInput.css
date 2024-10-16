@@ -1,16 +1,15 @@
 :root {
-  --autofill-text-color: black;
+    --autofill-text-color: black;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --autofill-text-color: white;
-  }
+    :root {
+        --autofill-text-color: white;
+    }
 }
 
 input:-webkit-autofill {
-  -webkit-text-fill-color: var(--autofill-text-color);
-  -webkit-box-shadow: 0 0 0px 1000px transparent inset; /* Background color */
-  transition: background-color 5000s ease-in-out 0s; /* Prevent background from flashing */
+    -webkit-text-fill-color: var(--autofill-text-color);
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset; /* Background color */
+    transition: background-color 5000s ease-in-out 0s; /* Prevent background from flashing */
 }
-
