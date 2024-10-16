@@ -8,10 +8,9 @@ import { IoIosChatbubbles, IoMdNotifications } from "react-icons/io";
 /* Icons for navs */
 import { IoHome } from "react-icons/io5";
 import { MdExplore } from "react-icons/md";
-import { SiSnowflake } from "react-icons/si";
-import { TiGroup } from "react-icons/ti";
 import SideNav from "./SideNav";
 import SideBar from "./SideBar";
+import PostWidget from "./PostWidget";
 
 const HomePage = () => {
     const menus = [
@@ -57,9 +56,7 @@ const HomePage = () => {
               PostForm
             </div>
             {[1,2,3,4,5,6].map((_, i) => (
-              <div className="bg-white dark:bg-[#3e3e3e] w-full min-h-96 rounded-lg p-4 mb-2">
-                {i + 1}th Post
-              </div>
+              <PostWidget i={_}/>
             ))}
           </div>
         </div>
