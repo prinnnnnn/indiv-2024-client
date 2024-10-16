@@ -11,6 +11,8 @@ import { MdExplore } from "react-icons/md";
 import SideNav from "./SideNav";
 import SideBar from "./SideBar";
 import PostWidget from "./PostWidget";
+import PostForm from "./PostForm";
+import SearchBar from "./SearchBar";
 
 const HomePage = () => {
     const menus = [
@@ -51,10 +53,8 @@ const HomePage = () => {
         {/* feeds, Form for create post, posts of the followers */}
         <div className="basis-1/2 bg-[#DBE2EF] dark:bg-[#282828] px-6 py-6 rounded-lg">
           <div className="flex flex-col gap-3">
-            <div className="bg-white dark:bg-[#3e3e3e] w-full min-h-12 rounded-lg p-4">Home</div>
-            <div className="bg-white dark:bg-[#3e3e3e] w-full min-h-36 rounded-lg p-4 mb-5">
-              PostForm
-            </div>
+            <SearchBar/>
+            <PostForm/>
             {[1,2,3,4,5,6].map((_, i) => (
               <PostWidget i={_}/>
             ))}

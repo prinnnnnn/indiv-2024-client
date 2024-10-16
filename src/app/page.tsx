@@ -1,33 +1,36 @@
+
 import Image from "next/image";
 import { GrUserManager, GrUserWorker } from "react-icons/gr";
 import { SiSnowflake } from "react-icons/si";
+import ToggleThemeBtn from "./ui/ToggleThemeBtn";
+
 
 export default function Home() {
-    return (
-        <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-            <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-                <div className="flex items-center gap-3">
-                    <SiSnowflake className="text-[#1DA1F2] dark:text-orange-500 text-5xl dark:ms-0 my-auto" />
-                    <h1 className=" flex text-5xl font-extrabold">
-                        PRIN{""}
-                        <span className="dark:hidden">NN</span>
-                        <span className="hidden dark:inline-block text-black bg-orange-500 rounded-xl px-2 ms-1 me-2">
-                            HUB
-                        </span>
-                        {""}
-                    </h1>
-                </div>
-                <ul className="text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-                    <li className="mb-2">Indiv 2024/1 By </li>
-                    <li className="mb-2 flex">
-                        <GrUserManager className="me-2" /> Parinthorn
-                        Pornchaiwiwat
-                    </li>
-                    <li className="flex">
-                        <GrUserWorker className="me-2" />
-                        Kanisorn Puttaruksa
-                    </li>
-                </ul>
+  return (
+    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+        <ToggleThemeBtn />
+      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+        <div className="flex items-center gap-3">
+          <SiSnowflake className="text-[#1DA1F2] dark:text-orange-500 text-5xl dark:ms-0 my-auto" />
+          <h1 className=" flex text-5xl font-extrabold">
+            PRIN{""}
+            <span className="dark:hidden">NN</span>
+            <span className="hidden dark:inline-block text-black bg-orange-500 rounded-xl px-2 ms-1 me-2">
+              HUB
+            </span>
+            {""}
+          </h1>
+        </div>
+        <ul className="text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
+          <li className="mb-2">Indiv 2024/1 By </li>
+          <li className="mb-2 flex">
+            <GrUserManager className="me-2" /> Parinthorn Pornchaiwiwat
+          </li>
+          <li className="flex">
+            <GrUserWorker className="me-2" />
+            Kanisorn Puttaruksa
+          </li>
+        </ul>
 
                 <div className="flex gap-4 items-center flex-col sm:flex-row mx-auto">
                     <a
