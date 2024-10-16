@@ -3,6 +3,7 @@ import { SiSnowflake } from "react-icons/si";
 
 
 const LoginPage = () => {
+
   return (
     <main className="flex items-center justify-center h-screen md:h-screen">
       <div className="relative mx-auto md:border-2 border-gray-600 rounded-lg flex w-full flex-col space-y-2.5 p-4 md:-mt-32 md:p-8 lg:p-10">
