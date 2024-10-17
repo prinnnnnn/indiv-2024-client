@@ -31,7 +31,7 @@ const darkPalette: Palette = {
 };
 
 const lightPalette: Palette = {
-    text: "text-black",
+    text: "text-dark",
     bg: "bg-[#1DA1F2]",
     bgHover: "hover:bg-blue-300",
 };
