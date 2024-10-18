@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "./ui/ThemeContext";
+import StoreProvider from "@/stores/storeContext";
 
 export const metadata: Metadata = {
     title: "client",
@@ -30,7 +31,11 @@ export default function RootLayout({
             <body
                 className={`${sfDisplayReg.variable} ${sfDisplayBold.variable} antialiased py-10`}
             >
-                <ThemeProvider children={children}/>
+                <ThemeProvider>
+                    <StoreProvider>
+                        {children}
+                    </StoreProvider>
+                </ThemeProvider>
             </body>
         </html>
     );
