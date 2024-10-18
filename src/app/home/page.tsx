@@ -46,7 +46,7 @@ const HomePage = () => {
         },
     ];
 
-    const { theme, palette, toggleTheme } = useTheme();
+    const { palette } = useTheme();
 
     return (
         <div className="flex flex-row justify-center w-full">

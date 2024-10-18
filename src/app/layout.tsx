@@ -28,7 +28,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${sfDisplayReg.variable} ${sfDisplayBold.variable} antialiased`}
+                className={`${sfDisplayReg.variable} ${sfDisplayBold.variable} antialiased py-10`}
             >
                 <ThemeProvider children={children}/>
             </body>

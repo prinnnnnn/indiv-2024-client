@@ -6,7 +6,7 @@ import { IoIosMoon, IoIosSunny } from "react-icons/io";
 
 const ToggleThemeBtn = () => {
 
-    const { theme, palette, toggleTheme } =  useTheme();
+    const { theme, toggleTheme } =  useTheme();
 
     return (
         <div>

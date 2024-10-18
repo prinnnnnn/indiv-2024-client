@@ -6,13 +6,13 @@ const SearchBar = () => {
     const { palette } = useTheme();
 
     return (
-        <div className="flex">
+        <div>
             <input
-                className={`${palette.bgSecondary} focus:ring-2 focus:ring-[#1DA1F2] w-full min-h-12 rounded-lg p-4`}
+                className={`${palette.bgSecondary} focus:ring-[2px] focus:ring-${palette.primary}
+                             focus:outline-none w-full min-h-12 rounded-lg p-4`}
                 type="text"
                 placeholder="Discover posts, users, or topics..."
             />
-            {/* <FaSearch /> */}
         </div>
     );
 };
