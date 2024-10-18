@@ -13,6 +13,10 @@ import SideBar from "./SideBar";
 import PostWidget from "./PostWidget";
 import PostForm from "./PostForm";
 import SearchBar from "./SearchBar";
+import { useTheme } from "../ui/ThemeContext";
+import ToggleThemeBtn from "../ui/ToggleThemeBtn";
+import TrendsWidget from "./TrendsWidget";
+import PeopleWidget from "./PeopleWidget";
 
 const HomePage = () => {
     const menus = [
@@ -42,26 +46,37 @@ const HomePage = () => {
         },
     ];
 
-    const pathName = usePathname();
+    const { theme, palette, toggleTheme } = useTheme();
 
     return (
         <div className="flex flex-row justify-center w-full">
             <div className="flex flex-row justify-between w-10/12 gap-5 pt-10">
+                {/* Navigation Bar */}
                 <SideNav menus={menus} />
 
                 {/* feeds, Form for create post, posts of the followers */}
-                <div className="basis-1/2 bg-[#DBE2EF] dark:bg-[#282828] px-6 py-6 rounded-lg">
+                <div
+                    className={`basis-1/2 ${palette.background} px-6 py-6 rounded-lg`}
+                >
                     <div className="flex flex-col gap-3">
                         <SearchBar />
                         <PostForm />
-                        {[1, 2, 3, 4, 5, 6].map((_, i) => (
-                            <PostWidget i={_} />
+                        {[1, 2].map(x => (
+                            <PostWidget i={x} />
                         ))}
                     </div>
                 </div>
 
                 {/* Seach, Trending, who to follow  */}
-                <SideBar />
+                <div className={`flex-grow ${palette.background} rounded-lg px-6 py-6 h-fit`}>
+                    <div className="flex flex-col gap-4">
+                        <div className="flex">
+                            <ToggleThemeBtn />
+                        </div>
+                        <TrendsWidget />
+                        <PeopleWidget />
+                    </div>
+                </div>
             </div>
         </div>
     );

@@ -4,7 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "./ui/ThemeContext";
 
 export const metadata: Metadata = {
-    title: "PrinHub",
+    title: "client",
     description: "Indiv 2024",
 };
 
