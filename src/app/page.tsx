@@ -14,10 +14,10 @@ export default function Home() {
                     <SiSnowflake className="text-[#1DA1F2] dark:text-orange-500 text-5xl dark:ms-0 my-auto" />
                     <h1 className=" flex text-5xl font-extrabold">
                         PRIN{""}
-                        <span>NN</span>
-                        {/* <span className="hidden dark:inline-block text-black bg-orange-500 rounded-xl px-2 ms-1 me-2">
+                        <span className="dark:hidden">NN</span>
+                        <span className="hidden dark:inline-block text-black bg-orange-500 rounded-xl px-2 ms-1 me-2">
                             HUB
-                        </span> */}
+                        </span>
                         {""}
                     </h1>
                 </div>

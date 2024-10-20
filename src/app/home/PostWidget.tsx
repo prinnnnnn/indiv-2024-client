@@ -37,7 +37,7 @@ const PostWidget = ({ i }: PostProp) => {
                 {/* Contents */}
                 <div>
                     {/* Images */}
-                    <div className="relative w-full min-h-[70vh] bg-blue-300 dark:bg-gray-400 rounded-md mt-3 ">
+                    <div className="relative w-full min-h-[50vh] bg-blue-300 dark:bg-gray-400 rounded-md mt-3 ">
                         <Image
                             src={LeBron_Post}
                             alt="Post img"
