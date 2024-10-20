@@ -7,35 +7,28 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { User } from "@/common/model";
 import TextField from "@/app/signup/TextField";
+import { useTheme } from "../ui/ThemeContext";
 
 const formLabels = [
     {
         label: "Email",
         name: "email",
         type: "text",
-        placeholder: "",
-        // placeholder: "Enter your email...",
     },
     {
         label: "Password",
         name: "password",
         type: "password",
-        placeholder: "",
-        // placeholder: "Enter your password...",
     },
     {
         label: "Firstname",
         name: "firstName",
         type: "text",
-        placeholder: "",
-        // placeholder: "Enter your firstname...",
     },
     {
         label: "Lastname",
         name: "lastName",
         type: "text",
-        placeholder: "",
-        // placeholder: "Enter your lastname...",
     },
 ]
 
@@ -49,6 +42,7 @@ const SignUpForm = () => {
     });
 
     const handleSubmit = async () => {};
+    const { palette } = useTheme();
 
     return (
         <Formik
@@ -68,24 +62,30 @@ const SignUpForm = () => {
             }) => (
                 <form onSubmit={handleSubmit} className="flex flex-col gap-5 items-center">
                     {/* Form fields */}
-                    {formLabels.map(({ label, name, type, placeholder}) => {
+                    {formLabels.map(({ label, name, type }) => {
                         return (
                             <TextField
+                                key={name}
                                 label={label}
                                 name={name}
                                 type={type}
-                                placeholder={placeholder}
+                                placeholder=""
                             />
                         )
                     })}
                     {/* BUTTON */}
-                    <button
-                        type="submit"
-                        className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#2c2c2c] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-20 sm:px-40 "
+                    <div className="w-full flex flex-col items-center">
+                        <button
+                            type="submit"
+                            className={`rounded-full border border-solid bg-${palette.primary}
+                            flex items-center justify-center ${palette.bgHover} text-${palette.white}
+                            border-transparent sm:text-base
+                            sm:h-12 sm:px-4 py-1 md:w-full`}
+                        >
+                            <h3>Create Account</h3>
+                        </button>
 
-                    >
-                        <h3>Create Account</h3>
-                    </button>
+                    </div>
                 </form>
             )}
         </Formik>

@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "./ui/ThemeContext";
+import StoreProvider from "@/stores/storeContext";
 
 export const metadata: Metadata = {
-    title: "PrinHub",
+    title: "client",
     description: "Indiv 2024",
 };
 
@@ -28,9 +29,13 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${sfDisplayReg.variable} ${sfDisplayBold.variable} antialiased`}
+                className={`${sfDisplayReg.variable} ${sfDisplayBold.variable} antialiased py-10`}
             >
-                <ThemeProvider children={children}/>
+                <ThemeProvider>
+                    <StoreProvider>
+                        {children}
+                    </StoreProvider>
+                </ThemeProvider>
             </body>
         </html>
     );

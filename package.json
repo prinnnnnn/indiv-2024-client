@@ -12,6 +12,8 @@
         "axios": "^1.7.7",
         "formik": "^2.4.6",
         "heroicons": "^2.1.5",
+        "mobx": "^6.13.5",
+        "mobx-react-lite": "^4.0.7",
         "next": "14.2.15",
         "react": "^18",
         "react-dom": "^18",
