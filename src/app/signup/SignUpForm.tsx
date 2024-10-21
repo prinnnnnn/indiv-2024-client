@@ -35,7 +35,7 @@ const formLabels = [
 const SignUpForm = () => {
     
     const registerSchema = yup.object().shape({
-        firstname: yup.string().required("required"),
+        firstName: yup.string().required("required"),
         lastName: yup.string().required("required"),
         email: yup.string().email("Invalid email").required("required"),
         password: yup.string().required("required"),
@@ -75,16 +75,16 @@ const SignUpForm = () => {
                     })}
                     {/* BUTTON */}
                     <div className="w-full flex flex-col items-center">
+                        {/* bg-[#2fadfc] */}
                         <button
                             type="submit"
-                            className={`rounded-full border border-solid bg-${palette.primary}
+                            className={`rounded-full border border-solid bg-${palette.primary} 
                             flex items-center justify-center ${palette.bgHover} text-${palette.white}
                             border-transparent sm:text-base
                             sm:h-12 sm:px-4 py-1 md:w-full`}
                         >
                             <h3>Create Account</h3>
                         </button>
-
                     </div>
                 </form>
             )}

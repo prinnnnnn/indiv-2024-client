@@ -1,4 +1,5 @@
 // import axios from "axios"
+import { redirect } from "next/navigation"
 import { User } from "../common/model"
 
 export const register = async (user: User) => {

@@ -28,7 +28,7 @@ const TextField = ({ label, name, type, placeholder }: CustomInputProps) => {
             />
             <label
                 htmlFor={name}
-                className={`peer-focus:font-medium absolute text-sm text-${palette.primary}
+                className={`peer-focus:font-medium absolute text-sm text-${palette.primary} 
                  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0
                   rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-${palette.primary}
                  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 

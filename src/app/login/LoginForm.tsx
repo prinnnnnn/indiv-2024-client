@@ -4,7 +4,7 @@ import { login } from "@/service/authServices";
 import React, { useState } from "react";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 import { useTheme } from "../ui/ThemeContext";
-import ToggleThemeBtn from "../ui/ToggleThemeBtn";
+
 
 const LoginForm = () => {
     const [email, setEmail] = useState("");
@@ -112,7 +112,7 @@ const LoginForm = () => {
                 <button
                     aria-disabled={isPending}
                     type="submit"
-                    className={`mx-auto rounded-lg border border-solid border-black/[.08]
+                    className={`mx-auto mt-5 rounded-lg border border-solid border-black/[.08]
                      dark:border-white/[.145] transition-colors flex items-center justify-center
                       bg-${palette.primary} text-${palette.white} ${palette.bgHover} hover:text-lg hover:border-transparent
                        text-sm sm:text-base h-8 sm:h-10 px-4 sm:px-5 sm:min-w-44`}

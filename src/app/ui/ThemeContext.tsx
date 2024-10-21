@@ -12,7 +12,7 @@ type Palette = {
     text: string;
     primary: string;
     secondary: string;
-    background: string;
+    bgPrimary: string;
     bgSecondary: string;
     accent: string;
     link: string;
@@ -34,17 +34,17 @@ export const useTheme = () => {
 
 const lightPalette: Palette = {
     text: "black",
-    primary: "[#1DA1F2]",
+    primary: "[2fadfc]",
     secondary: "[#32a5fd]",
-    background: "bg-[#DBE2EF]",
-    bgSecondary: "bg-white",
+    bgPrimary: "bg-white",
+    bgSecondary: "bg-[#DBE2EF]",
     accent: "[#112D4E]",
     link: "[#3F72AF]",
     border: "[#0F4C75]",
     success: "[#21BF73]",
     warning: "[#F07B3F]",
     error: "[#FF0000]",
-    bgHover: "hover:bg-[#006BFF]",
+    bgHover: "hover:bg-[#72beee]",
     white: "[#FFFFFF]",
     black: "[#000000]",
 };
@@ -53,8 +53,8 @@ const darkPalette: Palette = {
     text: "white",
     primary: "orange-500",
     secondary: "[#FF8F00]",
-    background: "bg-[#282828]",
-    bgSecondary: "bg-[#3e3e3e]",
+    bgPrimary: "bg-[#3e3e3e]",
+    bgSecondary: "bg-[#282828]",
     accent: "[#F94C10]",
     link: "[#3F72AF]",
     border: "[#0F4C75]",
