@@ -10,18 +10,16 @@ const ToggleThemeButton = () => {
   return (
     <div>
       <button
-        className={`text-${palette.primary}`}
+        style={{color: palette.primary}}
         onClick={() => toggleTheme()}
       >
         {theme === "light" ? (
           <IoIosSunny
-            // fontSize={size}
-            className={`inline-block text-${palette.primary} text-5xl`}
+            className={`inline-block text-5xl`}
           />
         ) : (
           <IoIosMoon
-            // fontSize={size}
-            className={`inline-block text-${palette.primary} text-5xl`}
+            className={`inline-block text-5xl`}
           />
         )}
         {/* Toggle Theme */}

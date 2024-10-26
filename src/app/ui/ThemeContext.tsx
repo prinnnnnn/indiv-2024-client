@@ -21,8 +21,8 @@ type Palette = {
     warning: string;
     error: string;
     bgHover: string;
-    white: "[#FFFFFF]";
-    black: "[#000000]";
+    white: "#FFFFFF";
+    black: "#000000";
 };
 
 /* @ts-ignore */
@@ -34,36 +34,36 @@ export const useTheme = () => {
 
 const lightPalette: Palette = {
     text: "black",
-    primary: "[2fadfc]",
-    secondary: "[#32a5fd]",
-    bgPrimary: "bg-white",
-    bgSecondary: "bg-[#DBE2EF]",
-    accent: "[#112D4E]",
-    link: "[#3F72AF]",
-    border: "[#0F4C75]",
-    success: "[#21BF73]",
-    warning: "[#F07B3F]",
-    error: "[#FF0000]",
-    bgHover: "hover:bg-[#72beee]",
-    white: "[#FFFFFF]",
-    black: "[#000000]",
+    primary: "#2fadfc",
+    secondary: "#32a5fd",
+    bgPrimary: "#ffffff",
+    bgSecondary: "#DBE2EF",
+    accent: "#222D4E",
+    link: "#3F72AF",
+    border: "#0F4C75",
+    success: "#21BF73",
+    warning: "#F07B3F",
+    error: "#FF0000",
+    bgHover: "#72beee",
+    white: "#FFFFFF",
+    black: "#000000",
 };
 
 const darkPalette: Palette = {
     text: "white",
-    primary: "orange-500",
-    secondary: "[#FF8F00]",
-    bgPrimary: "bg-[#3e3e3e]",
-    bgSecondary: "bg-[#282828]",
-    accent: "[#F94C10]",
-    link: "[#3F72AF]",
-    border: "[#0F4C75]",
-    success: "[#06D001]",
-    warning: "[#FF6600]",
-    error: "[#DA1212]",
-    bgHover: "hover:bg-[#EB8317]",
-    white: "[#FFFFFF]",
-    black: "[#000000]",
+    primary: "#ff7525",
+    secondary: "#FF8F00",
+    bgPrimary: "#3e3e3e",
+    bgSecondary: "#282828",
+    accent: "#696969",
+    link: "#3F72AF",
+    border: "#0F4C75",
+    success: "#06D001",
+    warning: "#FF6600",
+    error: "#DA1212",
+    bgHover: "#ffb76f",
+    white: "#FFFFFF",
+    black: "#000000",
 };
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {

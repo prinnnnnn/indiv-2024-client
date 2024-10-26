@@ -4,17 +4,22 @@ import Image from "next/image";
 import { GrUserManager, GrUserWorker } from "react-icons/gr";
 import { SiSnowflake } from "react-icons/si";
 import { useTheme } from "./ui/ThemeContext";
+import ToggleThemeButton from "./ui/ToggleThemeButton";
+import './ui/hoverable.css'
 
 export default function Home() {
   const { palette, theme } = useTheme();
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-sf-display-regular)]">
-      {/* <ToggleThemeBtn /> */}
+      <div className="absolute top-2 md:top-5 right-2 md:right-5">
+        <ToggleThemeButton />
+      </div>
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <div className="flex items-center gap-3">
           <SiSnowflake
-            className={`text-${palette.primary} text-5xl dark:ms-0 my-auto`}
+            className={`text-5xl dark:ms-0 my-auto`}
+            style={{color: palette.primary}}
           />
           <h1 className=" flex text-5xl font-extrabold">
             PRIN{""}
@@ -22,7 +27,8 @@ export default function Home() {
               <span className="me-9">NN</span>
             ) : (
               <span
-                className={`text-black bg-${palette.primary} rounded-xl px-2 ms-1`}
+                className={`text-black rounded-xl px-2 ms-1`}
+                style={{background: palette.primary}}
               >
                 HUB
               </span>
@@ -43,20 +49,28 @@ export default function Home() {
 
         <div className="flex flex-row w-full gap-4 justify-around items-center sm:flex-row mx-auto px-2">
           <a
-            className={`rounded-full border ${palette.bgPrimary}
+            className={`rounded-full border hoverable
                                     font-bold border-solid border-transparent transition-colors 
                                     flex items-center justify-center 
-                                    gap-2 ${palette.bgHover} hover:text-lg text-white
+                                    gap-2  hover:text-lg text-white
                                      text-sm sm:text-base h-8 sm:h-10 px-4 sm:px-5 md:w-1/2`}
             href="/login"
+            style={{
+              "--bg-color": palette.primary,
+              "--bg-hover": palette.bgHover,
+            } as any}
           >
             Log In
           </a>
           <a
-            className={`rounded-full border border-solid border-${palette.primary}
-                         transition-colors flex items-center justify-center ${palette.bgHover} hover:text-white
-                          hover:text-lg hover:border-transparent text-sm sm:text-base h-8 sm:h-10 px-4 sm:px-5 sm:min-w-[80] md:w-1/2`}
+            className={`rounded-full border border-solid hoverable
+                         transition-colors flex items-center justify-center hover:text-white
+                          hover:text-lg border-transparent text-sm sm:text-base h-8 sm:h-10 px-4 sm:px-5 sm:min-w-[80] md:w-1/2`}
             href="/signup"
+            style={{
+              "--bg-color": palette.bgPrimary,
+              "--bg-hover": palette.accent,
+            } as any}
           >
             Register
           </a>

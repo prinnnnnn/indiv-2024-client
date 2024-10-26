@@ -22,7 +22,8 @@ const PostWidget = ({ i }: PostProp) => {
   return (
     <>
       <div
-        className={`${palette.bgPrimary} w-full min-h-96 rounded-lg p-4 mb-2`}
+        className={`w-full min-h-96 rounded-lg p-4 mb-2`}
+        style={{background: palette.bgPrimary}}
       >
         {/* Header */}
         <div className="flex flex-row gap-2 items-center">
@@ -36,7 +37,8 @@ const PostWidget = ({ i }: PostProp) => {
           </div>
           <h4>{username}</h4>
           <div>
-            <MdVerified className={`mt-0.5 text-xl text-${palette.primary}`} />
+            <MdVerified className={`mt-0.5 text-xl`}
+            style={{color: palette.primary}} />
           </div>
         </div>
 

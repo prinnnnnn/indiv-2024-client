@@ -16,7 +16,6 @@ import { useTheme } from "../ui/ThemeContext";
 import ToggleThemeButton from "../ui/ToggleThemeButton";
 import TrendsWidget from "./TrendsWidget";
 import PeopleWidget from "./PeopleWidget";
-import { RiLogoutCircleRLine } from "react-icons/ri";
 
 const HomePage = () => {
   const menus = [
@@ -59,7 +58,8 @@ const HomePage = () => {
 
         {/* feeds, Form for create post, posts of the followers */}
         <div
-          className={`basis-5/6 md:basis-1/2 ${palette.bgSecondary} px-6 py-6 rounded-lg`}
+          className={`basis-5/6 md:basis-1/2 px-6 py-6 rounded-lg`}
+          style={{background: palette.bgSecondary}}
         >
           <div className="flex flex-col gap-3">
             <SearchBar />
@@ -72,7 +72,8 @@ const HomePage = () => {
 
         {/* Trending, who to follow  */}
         <div
-          className={`flex-grow ${palette.bgSecondary} hidden md:block rounded-lg px-6 py-6 h-fit`}
+          className={`flex-grow hidden md:block rounded-lg px-6 py-6 h-fit`}
+          style={{background: palette.bgSecondary}}
         >
           <div className="flex flex-col gap-4">
             <TrendsWidget />

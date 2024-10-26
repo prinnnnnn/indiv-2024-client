@@ -6,7 +6,8 @@ const PostForm = () => {
     const { palette } = useTheme();
 
     return (
-        <div className={`${palette.bgPrimary} w-full min-h-36 rounded-lg p-4 mb-5`}>
+        <div className={`w-full min-h-36 rounded-lg p-4 mb-5`}
+        style={{background: palette.bgPrimary}}>
             What's on your mind?
         </div>
     );

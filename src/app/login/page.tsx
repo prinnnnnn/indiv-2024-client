@@ -16,7 +16,8 @@ const LoginPage = () => {
       <div className="relative mx-auto md:border-2 border-gray-600 rounded-lg flex w-full flex-col space-y-2.5 p-4 md:-mt-32 md:p-8 lg:p-10">
         <div className="flex h-20 w-full rounded-lg p-3 items-center gap-2">
           <SiSnowflake
-            className={`text-${palette.primary} text-5xl ms-2 dark:ms-0`}
+            className={`text-5xl ms-2 dark:ms-0`}
+            style={{color: palette.primary}}
           />
           <h1 className=" flex text-5xl font-extrabold">
             PRIN
@@ -24,7 +25,8 @@ const LoginPage = () => {
               <span className="me-9">NN</span>
             ) : (
               <span
-                className={`text-black bg-${palette.primary} rounded-xl px-2 ms-1`}
+                className={`flex text-black rounded-xl px-2 ms-1`}
+                style={{background: palette.primary}}
               >
                 HUB
               </span>
@@ -37,7 +39,7 @@ const LoginPage = () => {
         </div>
         <p className="mt-2">
           Doesn't have an account?{" "}
-          <a className={`text-${palette.primary}`} href="/signup">
+          <a style={{color: palette.primary}} href="/signup">
             <u>
               <b>Sign up here</b>
             </u>

@@ -36,13 +36,15 @@ const SideNav: React.FC<SideNavProp> = ({ menus }) => {
   console.log(palette);
 
   return (
-    <div className={`flex-grow-0 md:flex-grow ${palette.bgSecondary} rounded-lg h-fit`}>
+    <div
+      className={`flex-grow-0 md:flex-grow rounded-lg h-fit`}
+      style={{ background: palette.bgSecondary }}
+    >
       <div className="flex flex-col px-4 pb-6 pt-2 items-start">
         <div
-          // text-[#1DA1F2]
-          className={`flex flex-row gap-2 items-center mx-auto md:mx-0 pt-3 text-${palette.primary}  `}
+          className={`flex flex-row gap-2 items-center mx-auto md:mx-0 pt-3`}
+          style={{ color: palette.primary }}
         >
-          {/* <div className={`flex flex-row gap-2 items-center pt-3 text-orange-500`}> */}
           <SiSnowflake className={`text-5xl me-0`} />
           <div className="hidden md:block">
             <h2 className={theme === "light" ? "text-black" : "text-white"}>
@@ -51,7 +53,8 @@ const SideNav: React.FC<SideNavProp> = ({ menus }) => {
                 <span className="me-9">NN</span>
               ) : (
                 <span
-                  className={`text-black bg-${palette.primary} rounded-xl px-2 ms-1`}
+                  className={`text-black rounded-xl px-2 ms-1`}
+                  style={{ background: palette.primary }}
                 >
                   HUB
                 </span>
@@ -60,7 +63,8 @@ const SideNav: React.FC<SideNavProp> = ({ menus }) => {
           </div>
         </div>
         <div
-          className={`${palette.bgPrimary} w-full mt-4 px-3 py-4 flex flex-col gap-3 rounded-lg`}
+          className={`w-full mt-4 px-3 py-4 flex flex-col gap-3 rounded-lg`}
+          style={{ background: palette.bgPrimary }}
         >
           {menus.map(({ name, icon }) => {
             let style = "flex flex-row items-center px-2 py-2 ";
