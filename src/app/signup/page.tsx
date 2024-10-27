@@ -22,14 +22,15 @@ const SignupPage = () => {
       </div>
       <div
         className={`flex flex-col w-full md:w-6/12 justify-center bg-transparent
-            items-center gap-12 lg:border-2 border-gray-600 rounded-lg px-20 py-8 text-${palette.text}`}
+            items-center gap-12 lg:border-2 border-gray-600 rounded-lg px-20 py-8`}
+        style={{color: palette.text}}
       >
         {/* Headers */}
         <div className="flex flex-col items-center text-center">
           <h2 className="my-3">Create an account</h2>
           <p>
             Already have an account?{" "}
-            <a href="/login">
+            <a href="/login" style={{color:palette.secondary}}>
               <br className="sm:hidden" />
               <u>
                 <b>Log In</b>

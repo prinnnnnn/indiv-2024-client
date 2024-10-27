@@ -1,11 +1,9 @@
 "use client";
 
-import React from "react";
-
 /* form */
 import { Formik } from "formik";
 import * as yup from "yup";
-import { User } from "@/common/model";
+import "../ui/hoverable.css"
 import TextField from "@/app/signup/TextField";
 import { useTheme } from "../ui/ThemeContext";
 
@@ -78,10 +76,15 @@ const SignUpForm = () => {
                         {/* bg-[#2fadfc] */}
                         <button
                             type="submit"
-                            className={`rounded-full border border-solid bg-${palette.primary} 
-                            flex items-center justify-center ${palette.bgHover} text-${palette.white}
+                            className={`hoverable rounded-full border border-solid 
+                            flex items-center justify-center
                             border-transparent sm:text-base
                             sm:h-12 sm:px-4 py-1 md:w-full`}
+                            style={
+                                {
+                                  "--bg-color": palette.primary,
+                                  "--bg-hover": palette.bgHover,
+                                } as any}
                         >
                             <h3>Create Account</h3>
                         </button>

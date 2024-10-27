@@ -33,7 +33,6 @@ const SideNav: React.FC<SideNavProp> = ({ menus }) => {
     }
   };
 
-  console.log(palette);
 
   return (
     <div
@@ -67,15 +66,16 @@ const SideNav: React.FC<SideNavProp> = ({ menus }) => {
           style={{ background: palette.bgPrimary }}
         >
           {menus.map(({ name, icon }) => {
-            let style = "flex flex-row items-center px-2 py-2 ";
+            let className = "flex flex-row items-center px-2 py-2 ";
+            let style = {color: palette.text}
 
             if (pathName.slice(1, pathName.length) === name.toLowerCase())
-              style += `text-${palette.primary}`;
+              style = {color: palette.primary}
 
             // console.log(style);
 
             return (
-              <div className={style}>
+              <div className={className} style={style}>
                 {icon}
                 <p className="hidden md:block ml-2 text-lg">{name}</p>
               </div>

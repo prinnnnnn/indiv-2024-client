@@ -43,15 +43,15 @@ const LoginForm = () => {
   return (
     <form onSubmit={handleSubmit} className="space-y-3 w-full">
       {/* <ToggleThemeBtn /> */}
-      <div className={`relative z-0 w-full mb-5 group`}>
+      <div className={`relative z-0 w-full mb-5 group `}>
         <input
           type="email"
           name="floating_email"
           id="floating_email"
-          className={`block py-2.5 px-0 w-full text-sm bg-transparent 
-                    border-0 border-b-2 border-[${palette.text}] appearance-none
-                    focus:border-[${palette.primary}] focus:outline-none focus:ring-0 peer`}
-          style={{}}
+          className={`input-peer block py-2.5 px-0 w-full text-sm bg-transparent 
+                    border-0 border-b-2 appearance-none
+                    focus:outline-none focus:ring-0 peer`}
+          style={{ "--primary-color": palette.primary } as any}
           placeholder=" "
           required
           value={email}
@@ -59,10 +59,12 @@ const LoginForm = () => {
         />
         <label
           htmlFor="floating_email"
-          className={`peer-focus:font-medium absolute text-sm text-${palette.text} duration-300 transform \
+          className={`label-peer
+                      peer-focus:font-medium absolute text-sm duration-300 transform
                      -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 
-                      peer-focus:text-${palette.primary} peer-placeholder-shown:scale-100
-                       peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}
+                      peer-placeholder-shown:scale-100
+                      peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}
+          style={{ "--primary-color": palette.primary } as any}
         >
           Email address
         </label>
@@ -72,9 +74,10 @@ const LoginForm = () => {
           type="password"
           name="floating_password"
           id="floating_password"
-          className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 
-                            appearance-none text-[${palette.text}] focus:outline-none border-[${palette.text}]
-                            focus:ring-0 focus:border-[${palette.primary}] peer`}
+          className={`input-peer block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 
+                            appearance-none  focus:outline-none 
+                            focus:ring-0 peer`}
+          style={{ "--primary-color": palette.primary } as any}
           placeholder=" "
           required
           value={password}
@@ -82,10 +85,11 @@ const LoginForm = () => {
         />
         <label
           htmlFor="floating_password"
-          className={`peer-focus:font-medium absolute text-sm text-${palette.text} duration-300 transform
+          className={`label-peer peer-focus:font-medium absolute text-sm duration-300 transform
                      -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4
-                      peer-focus:text-${palette.primary} peer-placeholder-shown:scale-100
+                       peer-placeholder-shown:scale-100
                        peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}
+          style={{ "--primary-color": palette.primary } as any}
         >
           Password
         </label>
@@ -105,7 +109,7 @@ const LoginForm = () => {
         <label
           htmlFor="remember"
           className={`ms-2 text-sm font-medium`}
-          style={{color: palette.secondary}}
+          style={{ color: palette.secondary }}
         >
           terms and conditions
         </label>
@@ -118,10 +122,12 @@ const LoginForm = () => {
                     dark:border-white/[.145] transition-colors flex items-center justify-center
                         hover:text-lg hover:border-transparent
                         text-sm sm:text-base h-8 sm:h-10 px-4 sm:px-5 sm:min-w-44`}
-          style={{
-            "--bg-color": palette.primary,
-            "--bg-hover": palette.bgHover,
-          } as any}
+          style={
+            {
+              "--bg-color": palette.primary,
+              "--bg-hover": palette.bgHover,
+            } as any
+          }
         >
           <b>{isPending ? "Submitting..." : "Login"}</b>
         </button>
