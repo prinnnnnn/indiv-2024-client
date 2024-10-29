@@ -1,10 +1,24 @@
-// import axios from "axios"
+import axios from "axios"
 import { redirect } from "next/navigation"
-import { User } from "../common/model"
+import { RegisterForm, User } from "../common/model"
 
-export const register = async (user: User) => {
-    /*  */
-    // await axios.post(`${serverUrl}/auth/register`, user);
+export const register = async (user: RegisterForm) => {
+
+    console.log(user);
+    
+    const options = {
+        method: 'POST',
+        url: 'http://localhost:3001/auth/register',
+        headers: {'Content-Type': 'application/json'},
+        data: user, 
+      };
+      
+      try {
+        const { data } = await axios.request(options);
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
 }
 
 interface loginArgs {

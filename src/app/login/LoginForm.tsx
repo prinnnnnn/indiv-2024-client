@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 import { useTheme } from "../ui/ThemeContext";
 import "../ui/hoverable.css";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -13,6 +14,8 @@ const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isPending, setIsPending] = useState(false);
   const { palette } = useTheme();
+
+  const router = useRouter()
 
   // console.log(palette);
 
@@ -33,6 +36,7 @@ const LoginForm = () => {
       } else {
         console.log("Login successful");
       }
+      router.push('/home')
     } catch (error: any) {
       setErrorMessage("An unexpected error occurred.");
     } finally {
@@ -51,7 +55,7 @@ const LoginForm = () => {
           className={`input-peer block py-2.5 px-0 w-full text-sm bg-transparent 
                     border-0 border-b-2 appearance-none
                     focus:outline-none focus:ring-0 peer`}
-          style={{ "--primary-color": palette.primary } as any}
+                    style={{ "--primary-color": palette.primary, color: palette.text } as any}
           placeholder=" "
           required
           value={email}
@@ -77,7 +81,7 @@ const LoginForm = () => {
           className={`input-peer block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 
                             appearance-none  focus:outline-none 
                             focus:ring-0 peer`}
-          style={{ "--primary-color": palette.primary } as any}
+                            style={{ "--primary-color": palette.primary, color: palette.text } as any}
           placeholder=" "
           required
           value={password}
@@ -103,7 +107,6 @@ const LoginForm = () => {
             checked={rememberMe}
             onChange={(e) => setRememberMe(e.target.checked)}
             className={`w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-[${palette.primary}]`}
-            required
           />
         </div>
         <label
@@ -111,7 +114,7 @@ const LoginForm = () => {
           className={`ms-2 text-sm font-medium`}
           style={{ color: palette.secondary }}
         >
-          terms and conditions
+          Remember me
         </label>
       </div>
       <div className="">
