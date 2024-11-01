@@ -1,13 +1,11 @@
 import axios from "axios"
 import rootStore from "@/stores/rootStore"
 // import '@/envConfig'
-import { RegisterForm, User } from "../common/model"
+import { RegisterForm, User } from "@/common/model"
 
 const serverAddr = `http://localhost:3001`
 
 export const register = async (user: RegisterForm) => {
-
-    // console.log(`Server address: ${serverAddr}`);
 
     const options = {
         method: 'POST',
@@ -32,8 +30,7 @@ interface loginArgs {
 }
 
 export const login = async ({ email, password }: loginArgs) => {
-    /* return user info for store updating */
-    /* POST - /auth/login */
+
     const options = {
         method: 'POST',
         url: `${serverAddr}/auth/login`,
@@ -43,7 +40,7 @@ export const login = async ({ email, password }: loginArgs) => {
 
     try {
         const { data: { user, token} } = await axios.request(options);
-        
+        rootStore.login(user, token);
 
     } catch (error) {
         throw error;
@@ -51,5 +48,6 @@ export const login = async ({ email, password }: loginArgs) => {
 }
 
 export const logout = () => {
-    /* delete userId, jwt token in redux store */
+    /* delete userId, jwt token in central store */
+    rootStore.logout();
 }

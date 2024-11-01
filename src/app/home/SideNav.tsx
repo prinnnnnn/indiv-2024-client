@@ -25,10 +25,9 @@ const SideNav: React.FC<SideNavProp> = ({ menus }) => {
     const clientLogOut = () => {
         try {
             logout();
-            // alert('loggin out')
             router.push("/login");
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             alert("error");
         }
     };
