@@ -1,10 +1,29 @@
-// import axios from "axios"
-import { redirect } from "next/navigation"
-import { User } from "../common/model"
+import axios from "axios"
+import rootStore from "@/stores/rootStore"
+// import '@/envConfig'
+import { RegisterForm, User } from "../common/model"
 
-export const register = async (user: User) => {
-    /*  */
-    // await axios.post(`${serverUrl}/auth/register`, user);
+const serverAddr = `http://localhost:3001`
+
+export const register = async (user: RegisterForm) => {
+
+    // console.log(`Server address: ${serverAddr}`);
+
+    const options = {
+        method: 'POST',
+        url: `${serverAddr}/auth/register`,
+        headers: { 'Content-Type': 'application/json' },
+        data: user,
+    };
+
+    try {
+        const { data: { user, token } } = await axios.request(options);
+        rootStore.login(user, token);
+
+    } catch (error) {
+        throw error
+    }
+
 }
 
 interface loginArgs {
@@ -12,10 +31,23 @@ interface loginArgs {
     password: string
 }
 
-export const login = ({ email, password }: loginArgs) => {
-    /* return user info for redux store dispatching */
+export const login = async ({ email, password }: loginArgs) => {
+    /* return user info for store updating */
     /* POST - /auth/login */
-    return null;
+    const options = {
+        method: 'POST',
+        url: `${serverAddr}/auth/login`,
+        headers: { 'Content-Type': 'application/json' },
+        data: { email, password }
+    };
+
+    try {
+        const { data: { user, token} } = await axios.request(options);
+        
+
+    } catch (error) {
+        throw error;
+    }
 }
 
 export const logout = () => {

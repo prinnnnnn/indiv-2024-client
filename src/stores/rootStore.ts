@@ -18,8 +18,9 @@ export class RootStore {
 
     }
 
-    async login() {
-
+    async login(user: User, token: string) {
+        this.user = user;
+        this.token = token;
     }
 
     async updateInfo() {

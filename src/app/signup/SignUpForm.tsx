@@ -1,17 +1,20 @@
 "use client";
 
 /* form */
-import { Formik } from "formik";
+import { Formik, FormikHelpers } from "formik";
 import * as yup from "yup";
 import "../ui/hoverable.css"
 import TextField from "@/app/signup/TextField";
 import { useTheme } from "../ui/ThemeContext";
+import { RegisterForm } from "@/common/model";
+import { register } from "@/service/authServices"
+import { useRouter } from "next/navigation";
 
 const formLabels = [
     {
         label: "Email",
         name: "email",
-        type: "text",
+        type: "email",
     },
     {
         label: "Password",
@@ -39,13 +42,34 @@ const SignUpForm = () => {
         password: yup.string().required("required"),
     });
 
-    const handleSubmit = async () => {};
+    const router = useRouter();
+
+    const handleFormSubmit = async (
+        values: RegisterForm,
+        onSubmitProps: FormikHelpers<RegisterForm>
+    ) => {
+        try {
+            await register(values)
+            router.push('/home')    
+            onSubmitProps.resetForm();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const initialForm = {
+        email: "",
+        password: "",
+        firstName: "",
+        lastName: "",
+    };
+
     const { palette } = useTheme();
 
     return (
         <Formik
-            onSubmit={handleSubmit}
-            initialValues={{}}
+            onSubmit={handleFormSubmit}
+            initialValues={initialForm}
             validationSchema={registerSchema}
         >
             {({
