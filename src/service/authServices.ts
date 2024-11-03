@@ -1,24 +1,29 @@
 import axios from "axios"
-import { redirect } from "next/navigation"
-import { RegisterForm, User } from "../common/model"
+// import '@/envConfig'
+import { RegisterForm, User } from "@/common/model"
+
+const serverAddr = `http://localhost:3001`
 
 export const register = async (user: RegisterForm) => {
 
-    console.log(user);
-    
     const options = {
         method: 'POST',
-        url: 'http://localhost:3001/auth/register',
-        headers: {'Content-Type': 'application/json'},
-        data: user, 
-      };
-      
-      try {
-        const { data } = await axios.request(options);
-        console.log(data);
-      } catch (error) {
-        console.error(error);
-      }
+        url: `${serverAddr}/auth/register`,
+        headers: { 'Content-Type': 'application/json' },
+        data: user,
+    };
+
+    try {
+        const { data: { user, token } } = await axios.request(options);
+        return {
+            user,
+            token,
+        }
+
+    } catch (error) {
+        throw error
+    }
+
 }
 
 interface loginArgs {
@@ -26,12 +31,22 @@ interface loginArgs {
     password: string
 }
 
-export const login = ({ email, password }: loginArgs) => {
-    /* return user info for redux store dispatching */
-    /* POST - /auth/login */
-    return null;
-}
+export const login = async ({ email, password }: loginArgs) => {
 
-export const logout = () => {
-    /* delete userId, jwt token in redux store */
+    const options = {
+        method: 'POST',
+        url: `${serverAddr}/auth/login`,
+        headers: { 'Content-Type': 'application/json' },
+        data: { email, password }
+    };
+
+    try {
+        const { data: { user, token} } = await axios.request(options);
+        return {
+            user, token
+        }
+
+    } catch (error) {
+        throw error;
+    }
 }

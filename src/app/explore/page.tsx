@@ -1,21 +1,10 @@
-"use client";
+"use client"
 
-import React from "react";
-
+import ToggleThemeButton from "@/app/ui/ToggleThemeButton";
 import SideNav from "@/app/ui/SideNav";
-import PostWidget from "./PostWidget";
-import PostForm from "./PostForm";
-import SearchBar from "./SearchBar";
-import { useTheme } from "../ui/ThemeContext";
-import ToggleThemeButton from "../ui/ToggleThemeButton";
-import TrendsWidget from "./TrendsWidget";
-import PeopleWidget from "./PeopleWidget";
-import { useRouter } from "next/navigation";
+import { useTheme } from "@/app/ui/ThemeContext";
 
-const HomePage = () => {
-
-    const router = useRouter();
-
+const DiscoveryPage = () => {
     const { palette } = useTheme();
 
     return (
@@ -33,11 +22,10 @@ const HomePage = () => {
                     style={{ background: palette.bgSecondary }}
                 >
                     <div className="flex flex-col gap-3">
-                        <SearchBar />
-                        <PostForm />
+                        {/* <SearchBar />
                         {[1, 2].map(x => (
                             <PostWidget i={x} />
-                        ))}
+                        ))} */}
                     </div>
                 </div>
 
@@ -47,8 +35,7 @@ const HomePage = () => {
                     style={{ background: palette.bgSecondary }}
                 >
                     <div className="flex flex-col gap-4">
-                        <TrendsWidget />
-                        <PeopleWidget />
+                        Right
                     </div>
                 </div>
             </div>
@@ -56,4 +43,4 @@ const HomePage = () => {
     );
 };
 
-export default HomePage;
+export default DiscoveryPage;

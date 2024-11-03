@@ -1,47 +1,98 @@
 import { Post, User } from "@/common/model";
-import { makeAutoObservable } from "mobx";
+import { action, computed, makeObservable, observable, autorun, runInAction } from "mobx";
+import { enableStaticRendering } from "mobx-react-lite";
 
+enableStaticRendering(typeof window === "undefined");
 export class RootStore {
 
     user: User | null
-    token: string | null
     followers: User[]
     feeds: Post[]
+    createdAt: number
 
     constructor() {
 
         this.user = null;
         this.followers = [];
-        this.token = "";
         this.feeds = [];
-        makeAutoObservable(this);
+        this.createdAt = Date.now()
+
+        makeObservable(this, {
+
+            /* Observables */
+            user: observable,
+            followers: observable,
+            feeds: observable,
+            createdAt: observable,
+
+            /* actions */
+            login: action,
+            updateUserInfo: action,
+            followUser: action,
+            likePost: action,
+
+            /* computed */
+            getUserInfo: computed,
+            homeFeeds: computed,
+
+        })
+        
+        /* autorun */
+        autorun(this.logUserDetails)
+    }
+
+    logUserDetails = () => {
+        console.log(`Current user: ${this.user}`);
+        console.log(`State created at: ${this.createdAt}`);
+    }
+    
+    get getUserInfo() {
+        return this.user 
+    }
+    
+    get homeFeeds() {
+        return this.feeds;
+    }
+
+    login(user: User, token: string) {
+        this.user = user;
+
+        if (typeof window === undefined) {
+            console.log(`mobx's Login Called at server`);
+        } else {
+            console.log(`mobx's Login Called at client`);
+        }
+
+        document.cookie = `token=${token}; path=/; max-age=${86400}; samesite=strict`;
+    }
+
+    logout() {
+        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        this.user = null;
+        this.followers = [];
+        this.feeds = [];
+    }
+
+    updateUserInfo(payload: User) {
+        this.user = {
+            ...this.user,
+            ...payload,
+        }
+    }
+
+    followUser() {
 
     }
 
-    async login() {
+    likePost() {
 
     }
 
-    async updateInfo() {
+    commentPost() {
 
     }
 
-    async followUser() {
-
-    }
-
-    async likePost() {
-
-    }
-
-    async commentPost() {
-
-    }
-
-    async sendMessage() {
+    sendMessage() {
 
     }
 }
-
-const rootStore = new RootStore();
-export default rootStore;

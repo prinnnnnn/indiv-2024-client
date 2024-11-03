@@ -6,16 +6,16 @@ import * as yup from "yup";
 import "../ui/hoverable.css"
 import TextField from "@/app/signup/TextField";
 import { useTheme } from "../ui/ThemeContext";
-import { values } from "mobx";
-import { RegisterForm, User } from "@/common/model";
-import { register } from "@/service/authServices";
-import { redirect, useRouter } from "next/navigation";
+import { RegisterForm } from "@/common/model";
+import { register } from "@/service/authServices"
+import { useRouter } from "next/navigation";
+import { useStore } from "@/stores/storeContext";
 
 const formLabels = [
     {
         label: "Email",
         name: "email",
-        type: "text",
+        type: "email",
     },
     {
         label: "Password",
@@ -44,16 +44,22 @@ const SignUpForm = () => {
     });
 
     const router = useRouter();
+    const store = useStore();
 
     const handleFormSubmit = async (
         values: RegisterForm,
         onSubmitProps: FormikHelpers<RegisterForm>
     ) => {
-        // console.log("Submit handler is called...");
-        await register(values)
-        router.push('/home')
-        onSubmitProps.resetForm();
+        try {
+            const { user, token } = await register(values)
+            store!.login(user, token);
+            router.push('/home')    
+            onSubmitProps.resetForm();
+        } catch (error) {
+            console.log(error);
+        }
     };
+
     const initialForm = {
         email: "",
         password: "",
