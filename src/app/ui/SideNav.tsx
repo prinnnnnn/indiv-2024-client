@@ -1,11 +1,21 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React from "react";
 import { SiSnowflake } from "react-icons/si";
-import { useTheme } from "../ui/ThemeContext";
+import { useTheme } from "./ThemeContext";
 import { RiLogoutCircleRLine } from "react-icons/ri";
-import { logout } from "@/service/authServices";
+import { useStore } from "@/stores/storeContext";
+
+/* Icons for navs */
+import { CgMoreO, CgProfile } from "react-icons/cg";
+import { IoIosChatbubbles, IoMdNotifications } from "react-icons/io";
+import { IoHome } from "react-icons/io5";
+import { MdExplore } from "react-icons/md";
+
+/* Client-Routing */
+import Link from 'next/link'
 
 interface MenuItem {
     name: string;
@@ -13,18 +23,50 @@ interface MenuItem {
 }
 
 interface SideNavProp {
-    menus: MenuItem[];
+    menus?: MenuItem[];
 }
 
-const SideNav: React.FC<SideNavProp> = ({ menus }) => {
-    const pathName = usePathname();
-    const { theme, palette } = useTheme();
+const defaultMenus = [
+    {
+        name: "Home",
+        icon: <IoHome className="text-xl" />,
+    },
+    {
+        name: "Explore",
+        icon: <MdExplore className="text-xl" />,
+    },
+    {
+        name: "Notification",
+        icon: <IoMdNotifications className="text-xl" />,
+    },
+    {
+        name: "Chat",
+        icon: <IoIosChatbubbles className="text-xl" />,
+    },
+    {
+        name: "Profile",
+        icon: <CgProfile className="text-xl" />,
+    },
+    {
+        name: "More",
+        icon: <CgMoreO className="text-xl" />,
+    },
+];
 
+const SideNav: React.FC<SideNavProp> = ({ menus }) => {
+
+    if (!menus) {
+        menus = defaultMenus;
+    }
+    
+    const { theme, palette } = useTheme();
+    const pathName = usePathname();
     const router = useRouter();
+    const store = useStore();
 
     const clientLogOut = () => {
         try {
-            logout();
+            store!.logout();
             router.push("/login");
         } catch (error) {
             // console.log(error);
@@ -67,7 +109,7 @@ const SideNav: React.FC<SideNavProp> = ({ menus }) => {
                     className={`w-full mt-4 px-3 py-4 flex flex-col gap-3 rounded-lg`}
                     style={{ background: palette.bgPrimary }}
                 >
-                    {menus.map(({ name, icon }) => {
+                    {menus.map(({ name, icon }, idx) => {
                         let className = "flex flex-row items-center px-2 py-2 ";
                         let style = { color: palette.text };
 
@@ -80,10 +122,10 @@ const SideNav: React.FC<SideNavProp> = ({ menus }) => {
                         // console.log(style);
 
                         return (
-                            <div className={className} style={style}>
-                                {icon}
+                            <div className={className} style={style} key={`${name}-${idx}`}>
+                                <Link href={`/${name.toLowerCase()}`}>{icon}</Link>
                                 <p className="hidden md:block ml-2 text-lg">
-                                    {name}
+                                    <Link href={`/${name.toLowerCase()}`}>{name}</Link>
                                 </p>
                             </div>
                         );

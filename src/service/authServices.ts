@@ -1,5 +1,4 @@
 import axios from "axios"
-import rootStore from "@/stores/rootStore"
 // import '@/envConfig'
 import { RegisterForm, User } from "@/common/model"
 
@@ -16,7 +15,10 @@ export const register = async (user: RegisterForm) => {
 
     try {
         const { data: { user, token } } = await axios.request(options);
-        rootStore.login(user, token);
+        return {
+            user,
+            token,
+        }
 
     } catch (error) {
         throw error
@@ -40,14 +42,11 @@ export const login = async ({ email, password }: loginArgs) => {
 
     try {
         const { data: { user, token} } = await axios.request(options);
-        rootStore.login(user, token);
+        return {
+            user, token
+        }
 
     } catch (error) {
         throw error;
     }
-}
-
-export const logout = () => {
-    /* delete userId, jwt token in central store */
-    rootStore.logout();
 }

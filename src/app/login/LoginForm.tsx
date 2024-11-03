@@ -4,9 +4,10 @@ import "../ui/FormInput.css";
 import { login } from "@/service/authServices";
 import React, { useState } from "react";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
-import { useTheme } from "../ui/ThemeContext";
 import "../ui/hoverable.css";
+import { useTheme } from "../ui/ThemeContext";
 import { useRouter } from "next/navigation";
+import { useStore } from "@/stores/storeContext";
 
 const LoginForm = () => {
     
@@ -18,6 +19,7 @@ const LoginForm = () => {
     const { palette } = useTheme();
 
     const router = useRouter();
+    const store = useStore();
 
     // console.log(palette);
 
@@ -33,7 +35,8 @@ const LoginForm = () => {
 
         try {
 
-            await login({ email, password });
+            const { user, token } = await login({ email, password });
+            store!.login(user, token);
             console.log("Login successful");
             router.push("/home");
 

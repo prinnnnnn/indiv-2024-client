@@ -1,17 +1,21 @@
 import { Post, User } from "@/common/model";
 import { action, computed, makeObservable, observable, autorun, runInAction } from "mobx";
+import { enableStaticRendering } from "mobx-react-lite";
 
+enableStaticRendering(typeof window === "undefined");
 export class RootStore {
 
     user: User | null
     followers: User[]
     feeds: Post[]
+    createdAt: number
 
     constructor() {
 
         this.user = null;
         this.followers = [];
         this.feeds = [];
+        this.createdAt = Date.now()
 
         makeObservable(this, {
 
@@ -19,6 +23,7 @@ export class RootStore {
             user: observable,
             followers: observable,
             feeds: observable,
+            createdAt: observable,
 
             /* actions */
             login: action,
@@ -38,8 +43,8 @@ export class RootStore {
 
     logUserDetails = () => {
         console.log(`Current user: ${this.user}`);
+        console.log(`State created at: ${this.createdAt}`);
     }
-
     
     get getUserInfo() {
         return this.user 
@@ -48,10 +53,16 @@ export class RootStore {
     get homeFeeds() {
         return this.feeds;
     }
-    
 
     login(user: User, token: string) {
         this.user = user;
+
+        if (typeof window === undefined) {
+            console.log(`mobx's Login Called at server`);
+        } else {
+            console.log(`mobx's Login Called at client`);
+        }
+
         document.cookie = `token=${token}; path=/; max-age=${86400}; samesite=strict`;
     }
 
@@ -85,6 +96,3 @@ export class RootStore {
 
     }
 }
-
-const rootStore = new RootStore();
-export default rootStore;

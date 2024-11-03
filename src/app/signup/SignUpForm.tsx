@@ -9,6 +9,7 @@ import { useTheme } from "../ui/ThemeContext";
 import { RegisterForm } from "@/common/model";
 import { register } from "@/service/authServices"
 import { useRouter } from "next/navigation";
+import { useStore } from "@/stores/storeContext";
 
 const formLabels = [
     {
@@ -43,13 +44,15 @@ const SignUpForm = () => {
     });
 
     const router = useRouter();
+    const store = useStore();
 
     const handleFormSubmit = async (
         values: RegisterForm,
         onSubmitProps: FormikHelpers<RegisterForm>
     ) => {
         try {
-            await register(values)
+            const { user, token } = await register(values)
+            store!.login(user, token);
             router.push('/home')    
             onSubmitProps.resetForm();
         } catch (error) {
