@@ -6,3 +6,10 @@
 .hoverable:hover {
     background-color: var(--bg-hover);
 }
+
+/* style={
+    {
+        "--bg-color": palette.primary,
+        "--bg-hover": palette.bgHover,
+    } as any
+} */

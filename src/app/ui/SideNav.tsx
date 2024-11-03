@@ -35,22 +35,22 @@ const defaultMenus = [
         name: "Explore",
         icon: <MdExplore className="text-xl" />,
     },
-    {
-        name: "Notification",
-        icon: <IoMdNotifications className="text-xl" />,
-    },
-    {
-        name: "Chat",
-        icon: <IoIosChatbubbles className="text-xl" />,
-    },
+    // {
+    //     name: "Notification",
+    //     icon: <IoMdNotifications className="text-xl" />,
+    // },
+    // {
+    //     name: "Chat",
+    //     icon: <IoIosChatbubbles className="text-xl" />,
+    // },
     {
         name: "Profile",
         icon: <CgProfile className="text-xl" />,
     },
-    {
-        name: "More",
-        icon: <CgMoreO className="text-xl" />,
-    },
+    // {
+    //     name: "More",
+    //     icon: <CgMoreO className="text-xl" />,
+    // },
 ];
 
 const SideNav: React.FC<SideNavProp> = ({ menus }) => {
