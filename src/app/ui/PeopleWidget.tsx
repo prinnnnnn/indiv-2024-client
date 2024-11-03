@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme } from "../ui/ThemeContext";
+import { useTheme } from "./ThemeContext";
 
 const PeopleWidget = () => {
 

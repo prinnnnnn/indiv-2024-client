@@ -1,0 +1,58 @@
+"use client";
+
+import { User } from "@/common/model";
+import { useTheme } from "../ui/ThemeContext";
+import LeBron from "@/public/assets/LeBron.png";
+import LeBron_Cover from "@/public/assets/LeBron_Cover.jpg";
+import Image from "next/image";
+
+interface ProfileProp {
+  user: User;
+}
+
+const Profile = () => {
+  const { palette } = useTheme();
+
+  return (
+    <div
+      className={`w-full min-h-96 rounded-lg p-4 mb-2`}
+      style={{ background: palette.bgPrimary }}
+    >
+      {/* Cover image */}
+      <Image
+        src={LeBron_Cover}
+        alt="User Cover"
+        className="w-full xl:h-[20rem] lg:h-[18rem] md:h-[16rem] sm:h-[14rem] h-[11rem] object-cover"
+      />
+
+      {/* Profile Image and Name */}
+      <div className="sm:w-[80%] xs:w-[60%] mx-auto flex flex-col md:flex-row items-center md:items-start">
+        <div className=" pb-[-40] aspect-square w-1/4 lg:w-[12rem] md:w-[10rem] sm:w-[8rem] xs:w-[7rem] relative lg:bottom-[3rem] sm:bottom-[2rem] bottom-[3rem]">
+          <Image
+            src={LeBron}
+            alt="Profile img"
+            layout="fill"
+            className="object-cover rounded-md"
+            style={{outline: `3px solid ${palette.secondary}`}}
+          />
+        </div>
+
+        <div className="flex w-full md:my-6 sm:mx-4 md:pl-4">
+          <h1 className="text-xl lg:text-4xl md:text-3xl sm:text-xl text-center md:text-left">
+            Lebron James
+          </h1>
+        </div>
+      </div>
+
+      {/* Bio */}
+      <div className="my-4 md:my-0 xl:w-[80%] lg:w-[90%] md:w-[90%] sm:w-[92%] xs:w-[90%] mx-auto flex flex-col gap-4 items-center relative xl:-top-6">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus
+        blanditiis reiciendis harum possimus atque iste tempora tempore sint
+        sunt debitis?
+        <p className="w-fit text-md"></p>
+      </div>
+    </div>
+  );
+};
+
+export default Profile;

@@ -8,7 +8,7 @@ import { MdBookmarkAdd, MdVerified } from "react-icons/md";
 import { FaCommentDots } from "react-icons/fa";
 import { AiFillFire } from "react-icons/ai";
 import { IoIosShareAlt } from "react-icons/io";
-import { useTheme } from "../ui/ThemeContext";
+import { useTheme } from "./ThemeContext";
 import { Post } from "@/common/model";
 
 interface PostProp {
@@ -16,7 +16,7 @@ interface PostProp {
     post?: Post;
 }
 
-const PostWidget = ({ i }: PostProp) => {
+const PostWidget = ({ i, post }: PostProp) => {
     const username = "LeBron James";
 
     const { palette } = useTheme();
@@ -24,12 +24,12 @@ const PostWidget = ({ i }: PostProp) => {
     return (
         <>
             <div
-                className={`w-full min-h-96 rounded-lg p-4 mb-2`}
+                className={`w-full min-h-80 rounded-lg p-4 mb-2`}
                 style={{ background: palette.bgPrimary }}
             >
                 {/* Header */}
-                <div className="flex flex-row gap-2 items-center">
-                    <div className="relative w-[25px] h-[25px]">
+                <div className="flex flex-row gap-3 items-center mb-2">
+                    <div className="relative w-[50px] h-[50px]">
                         <Image
                             src={LeBron}
                             alt="Profile img"
@@ -37,10 +37,10 @@ const PostWidget = ({ i }: PostProp) => {
                             className="object-cover rounded-full"
                         />
                     </div>
-                    <h4>{username}</h4>
+                    <h4 className="text-xl md:text-2xl">{username}</h4>
                     <div>
                         <MdVerified
-                            className={`mt-0.5 text-xl`}
+                            className={`mt-auto text-2xl md:text-3xl`}
                             style={{ color: palette.primary }}
                         />
                     </div>
@@ -54,14 +54,12 @@ const PostWidget = ({ i }: PostProp) => {
                             src={LeBron_Post}
                             alt="Post img"
                             layout="responsive"
-                            width={1600} // Example width
-                            height={900} // Example height to maintain aspect ratio
                             className="object-contain rounded-md"
                         />
                     </div>
 
                     {/* Buttons */}
-                    <div className=" my-4 flex flex-row justify-around ">
+                    <div className=" my-4 flex flex-row justify-around md:text-2xl">
                         <div className="flex items-center gap-0">
                             <b>12.4M</b>
                             <AiFillFire fontSize={25} />
@@ -82,7 +80,7 @@ const PostWidget = ({ i }: PostProp) => {
                     </div>
 
                     {/* Captions */}
-                    <div className="">
+                    <div className="text-xl md:text-2xl">
                         <p>
                             <span className="font-bold">{username}</span>{" "}
                             Ballin' with the boys. 🏀
