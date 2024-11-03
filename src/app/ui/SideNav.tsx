@@ -9,8 +9,7 @@ import { RiLogoutCircleRLine } from "react-icons/ri";
 import { useStore } from "@/stores/storeContext";
 
 /* Icons for navs */
-import { CgMoreO, CgProfile } from "react-icons/cg";
-import { IoIosChatbubbles, IoMdNotifications } from "react-icons/io";
+import { CgProfile } from "react-icons/cg";
 import { IoHome } from "react-icons/io5";
 import { MdExplore } from "react-icons/md";
 
