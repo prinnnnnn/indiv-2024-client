@@ -1,12 +1,3 @@
-:root {
-    --autofill-text-color: black;
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --autofill-text-color: white;
-    }
-}
 
 input:-webkit-autofill {
     -webkit-text-fill-color: var(--autofill-text-color);

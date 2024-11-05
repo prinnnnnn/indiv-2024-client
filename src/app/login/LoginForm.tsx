@@ -63,6 +63,7 @@ const LoginForm = () => {
                         {
                             "--primary-color": palette.primary,
                             color: palette.text,
+                            "--autofill-text-color" :palette.text
                         } as any
                     }
                     placeholder=" "
@@ -94,6 +95,7 @@ const LoginForm = () => {
                         {
                             "--primary-color": palette.primary,
                             color: palette.text,
+                            "--autofill-text-color" :palette.text
                         } as any
                     }
                     placeholder=" "
