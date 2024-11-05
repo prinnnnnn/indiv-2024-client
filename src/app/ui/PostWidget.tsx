@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { FC } from "react";
 import LeBron from "@/public/assets/LeBron.png";
 import LeBron_Post from "@/public/assets/LeBron_Post.jpg";
 import { MdBookmarkAdd, MdVerified } from "react-icons/md";
@@ -12,11 +12,11 @@ import { useTheme } from "./ThemeContext";
 import { Post } from "@/common/model";
 
 interface PostProp {
-    i: number;
+    // i: number;
     post?: Post;
 }
 
-const PostWidget = ({ i, post }: PostProp) => {
+const PostWidget: FC<PostProp> = ({ post }) => {
     const username = "LeBron James";
 
     const { palette } = useTheme();

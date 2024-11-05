@@ -43,6 +43,7 @@ export class RootStore {
 
     logUserDetails = () => {
         console.log(`Current user: ${this.user}`);
+        console.log(`User's home feeds: ${this.feeds}`);
         console.log(`State created at: ${this.createdAt}`);
     }
     
@@ -63,7 +64,6 @@ export class RootStore {
             console.log(`mobx's Login Called at client`);
         }
 
-        document.cookie = `token=${token}; path=/; max-age=${86400}; samesite=strict`;
     }
 
     logout() {
@@ -78,6 +78,10 @@ export class RootStore {
             ...this.user,
             ...payload,
         }
+    }
+
+    setFeeds(posts: Post[]) {
+        this.feeds = posts;
     }
 
     followUser() {
