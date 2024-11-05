@@ -32,6 +32,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <PeopleWidget />
           </div>
         </div>
+
       </div>
     </div>
   );

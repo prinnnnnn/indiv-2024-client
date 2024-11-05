@@ -9,12 +9,13 @@ import { RiLogoutCircleRLine } from "react-icons/ri";
 import { useStore } from "@/stores/storeContext";
 
 /* Icons for navs */
-import { CgProfile } from "react-icons/cg";
+import { CgMoreO, CgProfile } from "react-icons/cg";
 import { IoHome } from "react-icons/io5";
 import { MdExplore } from "react-icons/md";
 
 /* Client-Routing */
 import Link from 'next/link'
+import { IoIosChatbubbles, IoMdNotifications } from "react-icons/io";
 
 interface MenuItem {
     name: string;
@@ -34,22 +35,22 @@ const defaultMenus = [
         name: "Explore",
         icon: <MdExplore className="text-xl" />,
     },
-    // {
-    //     name: "Notification",
-    //     icon: <IoMdNotifications className="text-xl" />,
-    // },
-    // {
-    //     name: "Chat",
-    //     icon: <IoIosChatbubbles className="text-xl" />,
-    // },
+    {
+        name: "Notification",
+        icon: <IoMdNotifications className="text-xl" />,
+    },
+    {
+        name: "Chat",
+        icon: <IoIosChatbubbles className="text-xl" />,
+    },
     {
         name: "Profile",
         icon: <CgProfile className="text-xl" />,
     },
-    // {
-    //     name: "More",
-    //     icon: <CgMoreO className="text-xl" />,
-    // },
+    {
+        name: "More",
+        icon: <CgMoreO className="text-xl" />,
+    },
 ];
 
 const SideNav: React.FC<SideNavProp> = ({ menus }) => {
