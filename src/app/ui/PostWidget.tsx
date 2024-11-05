@@ -10,6 +10,7 @@ import { AiFillFire } from "react-icons/ai";
 import { IoIosShareAlt } from "react-icons/io";
 import { useTheme } from "./ThemeContext";
 import { Post } from "@/common/model";
+import { getPresignedUrl } from "@/service/storageService";
 
 interface PostProp {
     // i: number;
@@ -49,14 +50,16 @@ const PostWidget: FC<PostProp> = ({ post }) => {
                 {/* Contents */}
                 <div>
                     {/* Images */}
-                    <div className="relative w-full aspect-w-16 aspect-h-9 bg-blue-300 dark:bg-gray-400 rounded-md mt-3 ">
-                        <Image
-                            src={LeBron_Post}
-                            alt="Post img"
-                            layout="responsive"
-                            className="object-contain rounded-md"
-                        />
-                    </div>
+                    {post?.imageUrl && (
+                        <div className="relative w-full aspect-w-16 aspect-h-9 bg-blue-300 dark:bg-gray-400 rounded-md mt-3 ">
+                            <img
+                                src={`${post.imageUrl}`}
+                                alt="Post img"
+                                // layout="responsive"
+                                className="object-contain rounded-md"
+                            />
+                        </div>
+                    )}
 
                     {/* Buttons */}
                     <div className=" my-4 flex flex-row justify-around md:text-2xl">
@@ -83,7 +86,7 @@ const PostWidget: FC<PostProp> = ({ post }) => {
                     <div className="text-xl md:text-2xl">
                         <p>
                             <span className="font-bold">{username}</span>{" "}
-                            Ballin' with the boys. 🏀
+                            {post?.content}
                         </p>
                     </div>
                 </div>

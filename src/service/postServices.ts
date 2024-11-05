@@ -1,4 +1,6 @@
+import { Post } from "@/common/model";
 import axios from "axios"
+import { getPresignedUrl } from "./storageService";
 
 const serverAddr = process.env.SERVER_ADDRESS;
 
@@ -17,7 +19,13 @@ export const fetchAllPosts = async () => {
     try {
         const { data } = await axios.request(options);
         console.log(data);
-        return data;
+        const posts = await Promise.all(
+            (data as Post[]).map(async (post) => ({
+                ...post,
+                imageUrl: await getPresignedUrl(post.imageUrl),
+            }))
+        );
+        return posts;
     } catch (error) {
         console.error(error);
     }

@@ -43,7 +43,8 @@ export class RootStore {
 
     logUserDetails = () => {
         console.log(`Current user: ${this.user}`);
-        console.log(`User's home feeds: ${this.feeds}`);
+        console.log(`User's home feeds...`);
+        console.log(this.feeds);
         console.log(`State created at: ${this.createdAt}`);
     }
     

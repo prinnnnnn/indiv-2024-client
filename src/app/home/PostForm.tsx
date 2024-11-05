@@ -6,7 +6,6 @@ import { ImAttachment } from "react-icons/im";
 import { ChangeEvent, DragEvent, useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import "@/app/ui/hoverable.css";
-import { getPresignedUrl } from "@/service/storageService";
 
 const PostForm = () => {
     const { palette } = useTheme();
