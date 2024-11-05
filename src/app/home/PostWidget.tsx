@@ -1,23 +1,22 @@
 "use client";
 
 import Image from "next/image";
-import React, { FC } from "react";
+import React from "react";
 import LeBron from "@/public/assets/LeBron.png";
 import LeBron_Post from "@/public/assets/LeBron_Post.jpg";
 import { MdBookmarkAdd, MdVerified } from "react-icons/md";
 import { FaCommentDots } from "react-icons/fa";
 import { AiFillFire } from "react-icons/ai";
 import { IoIosShareAlt } from "react-icons/io";
-import { useTheme } from "./ThemeContext";
+import { useTheme } from "../ui/ThemeContext";
 import { Post } from "@/common/model";
-import { getPresignedUrl } from "@/service/storageService";
 
 interface PostProp {
-    // i: number;
+    i: number;
     post?: Post;
 }
 
-const PostWidget: FC<PostProp> = ({ post }) => {
+const PostWidget = ({ i }: PostProp) => {
     const username = "LeBron James";
 
     const { palette } = useTheme();
@@ -25,12 +24,12 @@ const PostWidget: FC<PostProp> = ({ post }) => {
     return (
         <>
             <div
-                className={`w-full min-h-80 rounded-lg p-4 mb-2`}
+                className={`w-full min-h-96 rounded-lg p-4 mb-2`}
                 style={{ background: palette.bgPrimary }}
             >
                 {/* Header */}
-                <div className="flex flex-row gap-3 items-center mb-2">
-                    <div className="relative w-[50px] h-[50px]">
+                <div className="flex flex-row gap-2 items-center">
+                    <div className="relative w-[25px] h-[25px]">
                         <Image
                             src={LeBron}
                             alt="Profile img"
@@ -38,10 +37,10 @@ const PostWidget: FC<PostProp> = ({ post }) => {
                             className="object-cover rounded-full"
                         />
                     </div>
-                    <h4 className="text-xl md:text-2xl">{username}</h4>
+                    <h4>{username}</h4>
                     <div>
                         <MdVerified
-                            className={`mt-auto text-2xl md:text-3xl`}
+                            className={`mt-0.5 text-xl`}
                             style={{ color: palette.primary }}
                         />
                     </div>
@@ -50,19 +49,19 @@ const PostWidget: FC<PostProp> = ({ post }) => {
                 {/* Contents */}
                 <div>
                     {/* Images */}
-                    {post?.imageUrl && (
-                        <div className="relative w-full aspect-w-16 aspect-h-9 bg-blue-300 dark:bg-gray-400 rounded-md mt-3 ">
-                            <img
-                                src={`${post.imageUrl}`}
-                                alt="Post img"
-                                // layout="responsive"
-                                className="object-contain rounded-md"
-                            />
-                        </div>
-                    )}
+                    <div className="relative w-full aspect-w-16 aspect-h-9 bg-blue-300 dark:bg-gray-400 rounded-md mt-3 ">
+                        <Image
+                            src={LeBron_Post}
+                            alt="Post img"
+                            layout="responsive"
+                            width={1600} // Example width
+                            height={900} // Example height to maintain aspect ratio
+                            className="object-contain rounded-md"
+                        />
+                    </div>
 
                     {/* Buttons */}
-                    <div className=" my-4 flex flex-row justify-around md:text-2xl">
+                    <div className=" my-4 flex flex-row justify-around ">
                         <div className="flex items-center gap-0">
                             <b>12.4M</b>
                             <AiFillFire fontSize={25} />
@@ -83,10 +82,10 @@ const PostWidget: FC<PostProp> = ({ post }) => {
                     </div>
 
                     {/* Captions */}
-                    <div className="text-xl md:text-2xl">
+                    <div className="">
                         <p>
                             <span className="font-bold">{username}</span>{" "}
-                            {post?.content}
+                            Ballin' with the boys. 🏀
                         </p>
                     </div>
                 </div>

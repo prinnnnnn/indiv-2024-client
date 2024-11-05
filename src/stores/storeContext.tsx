@@ -20,7 +20,6 @@ export const useStore = () => {
 const initializeStore = () => {
     const _store = store ?? new RootStore();
 
-    // For SSG and SSR always create a new store
     if (typeof window === "undefined") {
         console.log(`initialized called at Server`);
         return _store;
@@ -28,7 +27,6 @@ const initializeStore = () => {
         console.log(`initialized called at Client`);
     }
 
-    // Create the store once in the client
     if (!store) store = _store;
 
     return _store;

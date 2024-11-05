@@ -8,6 +8,8 @@ import "../ui/hoverable.css";
 import { useTheme } from "../ui/ThemeContext";
 import { useRouter } from "next/navigation";
 import { useStore } from "@/stores/storeContext";
+import { fetchAllPosts } from "@/service/postServices";
+import { Post } from "@/common/model";
 
 const LoginForm = () => {
     
@@ -38,6 +40,8 @@ const LoginForm = () => {
             const { user, token } = await login({ email, password });
             store!.login(user, token);
             console.log("Login successful");
+            const posts: Post[] = await fetchAllPosts();
+            store!.setFeeds(posts)
             router.push("/home");
 
         } catch (error: any) {
