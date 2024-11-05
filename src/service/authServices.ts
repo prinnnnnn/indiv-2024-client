@@ -6,8 +6,6 @@ import { fetchAllPosts } from "./postServices";
 const serverAddr = process.env.SERVER_ADDRESS;
 
 export const register = async (user: RegisterForm) => {
-
-    // console.log(serverAddr);
     
     const options = {
         method: 'POST',
@@ -36,8 +34,6 @@ interface loginArgs {
 }
 
 export const login = async ({ email, password }: loginArgs) => {
-    
-    // console.log(serverAddr);
     
     const options = {
         method: 'POST',

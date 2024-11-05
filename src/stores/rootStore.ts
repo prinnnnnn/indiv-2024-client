@@ -6,23 +6,29 @@ enableStaticRendering(typeof window === "undefined");
 export class RootStore {
 
     user: User | null
+    followings: number[] // for checking if user follow ones
     followers: User[]
     feeds: Post[]
+    likedPostIds: number[] // for checking if user like it
     createdAt: number
 
     constructor() {
 
         this.user = null;
+        this.followings = [];
         this.followers = [];
         this.feeds = [];
+        this.likedPostIds = [];
         this.createdAt = Date.now()
 
         makeObservable(this, {
 
             /* Observables */
             user: observable,
+            followings: observable,
             followers: observable,
             feeds: observable,
+            likedPostIds: observable,
             createdAt: observable,
 
             /* actions */
@@ -30,6 +36,8 @@ export class RootStore {
             updateUserInfo: action,
             followUser: action,
             likePost: action,
+            isFollowed: action,
+            isPostLiked: action,
 
             /* computed */
             getUserInfo: computed,
@@ -56,7 +64,15 @@ export class RootStore {
         return this.feeds;
     }
 
-    login(user: User, token: string) {
+    isFollowed(userId: number) {
+        return this.followings.includes(userId);
+    }
+
+    isPostLiked(postId: number) {
+        return this.likedPostIds.includes(postId)
+    }
+
+    login(user: User) {
         this.user = user;
 
         if (typeof window === undefined) {
@@ -83,6 +99,14 @@ export class RootStore {
 
     setFeeds(posts: Post[]) {
         this.feeds = posts;
+    }
+
+    setFollowings(userIds: number[]) {
+        this.followings = userIds;
+    }
+
+    setLikedPosts(postIds: number[]) {
+        this.likedPostIds = postIds;
     }
 
     followUser() {

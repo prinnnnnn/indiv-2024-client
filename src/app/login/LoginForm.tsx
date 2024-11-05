@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useStore } from "@/stores/storeContext";
 import { fetchAllPosts } from "@/service/postServices";
 import { Post } from "@/common/model";
+import { fetchFollowings } from "@/service/userServices";
 
 const LoginForm = () => {
     
@@ -22,7 +23,7 @@ const LoginForm = () => {
 
     const router = useRouter();
     const store = useStore();
-
+    
     // console.log(palette);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -37,11 +38,21 @@ const LoginForm = () => {
 
         try {
 
-            const { user, token } = await login({ email, password });
-            store!.login(user, token);
+            const { user } = await login({ email, password });
+            store!.login(user);
             console.log("Login successful");
-            const posts: Post[] = await fetchAllPosts();
+            /* TODO
+            1. fetch all followers' posts
+            2. fetch all followings ids
+            3. fetch all liked posts's ids
+            */
+
+            /* followers' posts */
+            const posts = await fetchAllPosts() as Post[];
             store!.setFeeds(posts)
+
+            /* followings' id */
+            // const followings = await fetchFollowings(user.id);
             router.push("/home");
 
         } catch (error: any) {
