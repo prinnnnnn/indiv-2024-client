@@ -22,7 +22,8 @@ type Palette = {
     error: string;
     bgHover: string;
     white: "#FFFFFF";
-    black: "#000000";
+    black: "#000000"; 
+    hovarble: string;
 };
 
 /* @ts-ignore */
@@ -47,6 +48,7 @@ const lightPalette: Palette = {
     bgHover: "#72beee",
     white: "#FFFFFF",
     black: "#000000",
+    hovarble: "hover:bg-[72beee]"
 };
 
 const darkPalette: Palette = {
@@ -64,6 +66,7 @@ const darkPalette: Palette = {
     bgHover: "#ffb76f",
     white: "#FFFFFF",
     black: "#000000",
+    hovarble: "hover:bg-[ffb76f]"
 };
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
