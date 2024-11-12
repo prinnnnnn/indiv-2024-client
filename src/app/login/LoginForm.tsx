@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { useStore } from "@/stores/storeContext";
 import { fetchAllPosts } from "@/service/postServices";
 import { Post } from "@/common/model";
-import { fetchFollowings } from "@/service/userServices";
+// import { useObserver } from "mobx-react-lite";
 
 const LoginForm = () => {
     
@@ -53,7 +53,7 @@ const LoginForm = () => {
 
             /* followings' id */
             // const followings = await fetchFollowings(user.id);
-            router.push("/home");
+            router.push("/home-mvvm");
 
         } catch (error: any) {
             setErrorMessage("An unexpected error occurred.");

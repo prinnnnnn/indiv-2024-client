@@ -7,9 +7,18 @@ import SideNav from "@/app/ui/SideNav";
 import TrendsWidget from "@/app/home/TrendsWidget";
 import SearchBar from "../home/SearchBar";
 import PostForm from "../home/PostForm";
+import { observer, useObserver } from "mobx-react-lite";
+import { useState } from "react";
+import { HomeViewModel } from "./HomeViewModel";
+import { useStore } from "@/stores/storeContext";
+import PostWidget from "../ui/PostWidget";
 
 const HomePage = () => {
+
     const { palette } = useTheme();
+    const store = useStore();
+    const [viewModel] = useState(new HomeViewModel(store?.user!, store?.homeFeeds!));
+
     return (
         <div className="flex flex-row justify-center w-full">
             <div className="absolute top-2 md:top-5 right-2 md:right-5">
@@ -24,11 +33,13 @@ const HomePage = () => {
                     className={`basis-5/6 md:basis-1/2 px-6 py-6 rounded-lg`}
                     style={{ background: palette.bgSecondary }}
                 >
-                    <SearchBar />
-                    <PostForm />
-                    {/* {store?.homeFeeds.map(post => (
-                        <PostWidget post={post} />
-                    ))} */}
+                    <div className="flex flex-col gap-3">
+                        <SearchBar />
+                        <PostForm />
+                        {viewModel.homeFeeds && viewModel.homeFeeds.map(post => (
+                            <PostWidget post={post} />
+                        ))}
+                    </div>
                 </div>
 
                 {/* Trending, who to follow  */}
@@ -46,4 +57,4 @@ const HomePage = () => {
     );
 };
 
-export default HomePage;
+export default observer(HomePage);
