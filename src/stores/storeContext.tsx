@@ -1,7 +1,7 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { RootStore } from "./rootStore";
+import React, { createContext, useContext } from "react";
+import { RootStore } from "@/stores/rootStore";
 // import { useRouter } from "next/navigation";
 
 let store: RootStore | null = null;

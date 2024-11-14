@@ -1,8 +1,8 @@
 import { Post, User } from "@/common/model";
-import { action, computed, makeObservable, observable, autorun, runInAction } from "mobx";
-import { enableStaticRendering } from "mobx-react-lite";
+// import { action, computed, makeObservable, observable, autorun, runInAction } from "mobx";
+// import { enableStaticRendering } from "mobx-react-lite";
 
-enableStaticRendering(typeof window === "undefined");
+// enableStaticRendering(typeof window === "undefined");
 export class RootStore {
 
     user: User | null
@@ -21,32 +21,32 @@ export class RootStore {
         this.likedPostIds = [];
         this.createdAt = Date.now()
 
-        makeObservable(this, {
+    //     makeObservable(this, {
 
-            /* Observables */
-            user: observable,
-            followings: observable,
-            followers: observable,
-            feeds: observable,
-            likedPostIds: observable,
-            createdAt: observable,
+    //         /* Observables */
+    //         user: observable,
+    //         followings: observable,
+    //         followers: observable,
+    //         feeds: observable,
+    //         likedPostIds: observable,
+    //         createdAt: observable,
 
-            /* actions */
-            login: action,
-            updateUserInfo: action,
-            followUser: action,
-            likePost: action,
-            isFollowed: action,
-            isPostLiked: action,
+    //         /* actions */
+    //         login: action,
+    //         updateUserInfo: action,
+    //         followUser: action,
+    //         likePost: action,
+    //         isFollowed: action,
+    //         isPostLiked: action,
 
-            /* computed */
-            getUserInfo: computed,
-            homeFeeds: computed,
+    //         /* computed */
+    //         getUserInfo: computed,
+    //         homeFeeds: computed,
 
-        })
+    //     })
         
-        /* autorun */
-        autorun(this.logUserDetails)
+    //     /* autorun */
+    //     autorun(this.logUserDetails)
     }
 
     logUserDetails = () => {
