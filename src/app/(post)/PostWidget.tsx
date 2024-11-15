@@ -1,24 +1,38 @@
 "use client";
 
+/* React */
 import Image from "next/image";
 import React, { FC } from "react";
-import LeBron from "@/public/assets/LeBron.png";
-import LeBron_Post from "@/public/assets/LeBron_Post.jpg";
+// import LeBron from "@/public/assets/LeBron.png";
+// import LeBron_Post from "@/public/assets/LeBron_Post.jpg";
+
+/* picture */
+import defaultProfile from "@/public/assets/default-profile.jpg"
+
+/* Icons */
 import { MdBookmarkAdd, MdVerified } from "react-icons/md";
 import { FaCommentDots } from "react-icons/fa";
 import { AiFillFire } from "react-icons/ai";
 import { IoIosShareAlt } from "react-icons/io";
-import { useTheme } from "./ThemeContext";
+
+/* Theme */
+import { useTheme } from "@/app/ui/ThemeContext";
+
+/* Model */
 import { Post } from "@/common/model";
-import { getPresignedUrl } from "@/service/storageService";
 
 interface PostProp {
-    // i: number;
     post?: Post;
 }
 
+const names = [
+    "Lionel Messi",
+    "Lamine Yamal"
+]
+
 const PostWidget: FC<PostProp> = ({ post }) => {
-    const username = "LeBron James";
+
+    const username = names[Math.floor(Math.random() * names.length)]
 
     const { palette } = useTheme();
 
@@ -32,7 +46,7 @@ const PostWidget: FC<PostProp> = ({ post }) => {
                 <div className="flex flex-row gap-3 items-center mb-2">
                     <div className="relative w-[50px] h-[50px]">
                         <Image
-                            src={LeBron}
+                            src={defaultProfile}
                             alt="Profile img"
                             layout="fill"
                             className="object-cover rounded-full"

@@ -1,6 +1,9 @@
 import { useTheme } from "../ui/ThemeContext";
 import Image from "next/image";
-import LeBron from "@/public/assets/LeBron.png";
+
+/* picture */
+import defaultProfile from "@/public/assets/default-profile.jpg"
+
 import { BsFillSendPlusFill } from "react-icons/bs";
 import { ImAttachment } from "react-icons/im";
 import { ChangeEvent, DragEvent, useEffect, useState } from "react";
@@ -61,7 +64,7 @@ const PostForm = () => {
             <div className="flex justify-between">
                 <div className="relative w-[50px] h-[50px]">
                     <Image
-                        src={LeBron}
+                        src={defaultProfile}
                         alt="Profile img"
                         layout="fill"
                         className="object-cover rounded-full"
@@ -125,7 +128,7 @@ const PostForm = () => {
                                     <div className="flex gap-5 items-center ">
                                         <div className="relative w-[50px] h-[50px]">
                                             <Image
-                                                src={LeBron}
+                                                src={defaultProfile}
                                                 alt="Profile img"
                                                 layout="fill"
                                                 className="object-cover rounded-full"

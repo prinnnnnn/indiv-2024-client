@@ -2,8 +2,11 @@
 
 import { User } from "@/common/model";
 import { useTheme } from "../ui/ThemeContext";
-import LeBron from "@/public/assets/LeBron.png";
-import LeBron_Cover from "@/public/assets/LeBron_Cover.jpg";
+
+/* picture */
+import defaultProfile from "@/public/assets/default-profile.jpg"
+import defaultCover from "@/public/assets/default-cover.jpg"
+
 import Image from "next/image";
 import "@/app/ui/hoverable.css";
 
@@ -21,7 +24,7 @@ const Profile = () => {
         >
             {/* Cover image */}
             <Image
-                src={LeBron_Cover}
+                src={defaultCover}
                 alt="User Cover"
                 className="w-full xl:h-[20rem] lg:h-[18rem] md:h-[16rem] sm:h-[14rem] h-[11rem] object-cover rounded-lg"
             />
@@ -30,7 +33,7 @@ const Profile = () => {
             <div className="sm:w-[80%] xs:w-[60%] mx-auto flex flex-col md:flex-row items-center md:items-start">
                 <div className=" pb-[-40] aspect-square w-1/4 lg:w-[12rem] md:w-[10rem] sm:w-[8rem] xs:w-[7rem] relative lg:bottom-[3rem] sm:bottom-[2rem] bottom-[3rem]">
                     <Image
-                        src={LeBron}
+                        src={defaultProfile}
                         alt="Profile img"
                         layout="fill"
                         className="object-cover rounded-md"

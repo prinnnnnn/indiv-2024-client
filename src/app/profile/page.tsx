@@ -1,7 +1,9 @@
 "use client";
 
-import PostWidget from "../ui/PostWidget";
+import PostWidget from "@/app/(post)/PostWidget";
 import Profile from "./Profile";
+
+
 
 const ProfilePage = () => {
     return (
