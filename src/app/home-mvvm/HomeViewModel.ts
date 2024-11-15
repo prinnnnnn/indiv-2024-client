@@ -1,17 +1,30 @@
 import { Post, User } from "@/common/model";
-import { makeAutoObservable, observable } from "mobx";
+import { autorun, makeAutoObservable, toJS } from "mobx";
 
+type PageState = {
+    user: User | null,
+    posts: Post[] | null,
+}
 export class HomeViewModel {
 
-    // @observable
-    public user: User | null
-
-    // @observable
-    public homeFeeds: Post[] | null
-
-    constructor(user: User, feeds: Post[]) {
-        this.user = user;
-        this.homeFeeds = feeds;
-        makeAutoObservable(this);
+    private data: PageState = {
+        user: null,
+        posts: null,
     }
+
+    constructor(payload: PageState) {
+
+        this.data = payload;
+        makeAutoObservable(this);
+        
+    }
+
+    get user() {
+        return this.data.user;
+    }
+
+    get homeFeeds() {
+        return this.data.posts;
+    }
+
 }

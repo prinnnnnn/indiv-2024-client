@@ -1,11 +1,23 @@
 "use client";
 
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useEffect } from "react";
 import { RootStore } from "@/stores/rootStore";
+import { cookies } from "next/headers";
 // import { useRouter } from "next/navigation";
 
 let store: RootStore | null = null;
 const StoreContext = createContext<RootStore | null>(store);
+
+function getCookie(name: string) {
+    const cookies = document.cookie.split('; ');
+    for (let cookie of cookies) {
+        const [key, value] = cookie.split('=');
+        if (key === name) {
+            return decodeURIComponent(value);
+        }
+    }
+    return null; 
+}
 
 export const useStore = () => {
     const context = useContext(StoreContext);
@@ -34,6 +46,17 @@ const initializeStore = () => {
 
 const StoreProvider = ({ children }: { children: React.ReactNode }) => {
     const store = initializeStore();
+
+    useEffect(() => {
+
+        // console.log(`side effect triggered at StoreProvider to load persisted state`);
+
+        if (getCookie("token")) {
+            // console.log(`Loading persisted state from localStorage`);
+            store.loadFromLocalStorage();
+        }
+
+    }, []);
 
     return (
         <StoreContext.Provider value={store}>{children}</StoreContext.Provider>

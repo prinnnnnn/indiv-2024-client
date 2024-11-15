@@ -8,7 +8,7 @@ import TrendsWidget from "@/app/home/TrendsWidget";
 import SearchBar from "../home/SearchBar";
 import PostForm from "../home/PostForm";
 import { observer, useObserver } from "mobx-react-lite";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HomeViewModel } from "./HomeViewModel";
 import { useStore } from "@/stores/storeContext";
 import PostWidget from "../ui/PostWidget";
@@ -17,7 +17,14 @@ const HomePage = () => {
 
     const { palette } = useTheme();
     const store = useStore();
-    const [viewModel] = useState(new HomeViewModel(store?.user!, store?.homeFeeds!));
+    const [viewModel, setViewModel] = useState<HomeViewModel | null>();
+
+    useEffect(() => {
+        setViewModel(new HomeViewModel({
+            user: store!.getUserInfo,
+            posts: store!.homeFeeds,
+        }));
+    }, [])
 
     return (
         <div className="flex flex-row justify-center w-full">
@@ -36,7 +43,7 @@ const HomePage = () => {
                     <div className="flex flex-col gap-3">
                         <SearchBar />
                         <PostForm />
-                        {viewModel.homeFeeds && viewModel.homeFeeds.map(post => (
+                        {viewModel && viewModel.homeFeeds && viewModel.homeFeeds.map(post => (
                             <PostWidget post={post} />
                         ))}
                     </div>

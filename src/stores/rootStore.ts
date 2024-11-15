@@ -1,79 +1,81 @@
 import { Post, User } from "@/common/model";
+import { autorun, computed, makeAutoObservable, makeObservable, toJS } from "mobx";
 // import { action, computed, makeObservable, observable, autorun, runInAction } from "mobx";
 // import { enableStaticRendering } from "mobx-react-lite";
 
 // enableStaticRendering(typeof window === "undefined");
-export class RootStore {
 
+type AppState = {
     user: User | null
     followings: number[] // for checking if user follow ones
     followers: User[]
-    feeds: Post[]
+    posts: Post[]
     likedPostIds: number[] // for checking if user like it
     createdAt: number
+}
+
+export class RootStore {
+
+    private data: AppState = {
+        user: null,
+        followings: [],
+        followers: [],
+        posts: [],
+        likedPostIds: [],
+        createdAt: 0,
+    }
+    
 
     constructor() {
 
-        this.user = null;
-        this.followings = [];
-        this.followers = [];
-        this.feeds = [];
-        this.likedPostIds = [];
-        this.createdAt = Date.now()
+        this.data.createdAt = Date.now()
+        makeObservable(this, {
+            getUserInfo: computed,
+            homeFeeds: computed,
+        })
 
-    //     makeObservable(this, {
+        autorun(() => {
+            if (this.getUserInfo) {
+                localStorage.setItem("AppState", JSON.stringify(toJS(this.data)));
+            }
+            this.logUserDetails();
+        })
 
-    //         /* Observables */
-    //         user: observable,
-    //         followings: observable,
-    //         followers: observable,
-    //         feeds: observable,
-    //         likedPostIds: observable,
-    //         createdAt: observable,
+    }
 
-    //         /* actions */
-    //         login: action,
-    //         updateUserInfo: action,
-    //         followUser: action,
-    //         likePost: action,
-    //         isFollowed: action,
-    //         isPostLiked: action,
-
-    //         /* computed */
-    //         getUserInfo: computed,
-    //         homeFeeds: computed,
-
-    //     })
-        
-    //     /* autorun */
-    //     autorun(this.logUserDetails)
+    loadFromLocalStorage() {
+        const storedData = localStorage.getItem("AppState");
+        if (storedData) {
+            // console.log(storedData);
+            this.data = JSON.parse(storedData);
+        }
     }
 
     logUserDetails = () => {
-        console.log(`Current user: ${this.user}`);
+        console.log(`Current user: ${this.data.user}`);
         console.log(`User's home feeds...`);
-        console.log(this.feeds);
-        console.log(`State created at: ${this.createdAt}`);
+        console.log(this.data.posts);
+        console.log(`State created at: ${this.data.createdAt}`);
     }
     
     get getUserInfo() {
-        return this.user 
+        return this.data.user 
     }
     
     get homeFeeds() {
-        return this.feeds;
+        return this.data.posts;
     }
 
     isFollowed(userId: number) {
-        return this.followings.includes(userId);
+        return this.data.followings.includes(userId);
     }
 
     isPostLiked(postId: number) {
-        return this.likedPostIds.includes(postId)
+        return this.data.likedPostIds.includes(postId)
     }
 
     login(user: User) {
-        this.user = user;
+        this.data.user = user;
 
         if (typeof window === undefined) {
             console.log(`mobx's Login Called at server`);
@@ -85,28 +87,28 @@ export class RootStore {
 
     logout() {
         document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        this.user = null;
-        this.followers = [];
-        this.feeds = [];
+        this.data.user = null;
+        this.data.followers = [];
+        this.data.posts = [];
     }
 
     updateUserInfo(payload: User) {
-        this.user = {
-            ...this.user,
+        this.data.user = {
+            ...this.data.user,
             ...payload,
         }
     }
 
     setFeeds(posts: Post[]) {
-        this.feeds = posts;
+        this.data.posts = posts;
     }
 
     setFollowings(userIds: number[]) {
-        this.followings = userIds;
+        this.data.followings = userIds;
     }
 
     setLikedPosts(postIds: number[]) {
-        this.likedPostIds = postIds;
+        this.data.likedPostIds = postIds;
     }
 
     followUser() {

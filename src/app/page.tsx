@@ -6,8 +6,9 @@ import { SiSnowflake } from "react-icons/si";
 import { useTheme } from "./ui/ThemeContext";
 import ToggleThemeButton from "./ui/ToggleThemeButton";
 import "./ui/hoverable.css";
+import { observer } from "mobx-react-lite";
 
-export default function Home() {
+function Home() {
     
     const { palette, theme } = useTheme();
 
@@ -132,3 +133,5 @@ export default function Home() {
         </div>
     );
 }
+
+export default Home;
