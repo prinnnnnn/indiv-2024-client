@@ -10,6 +10,7 @@ type AppState = {
     followings: number[] // for checking if user follow ones
     followers: User[]
     posts: Post[]
+    userPosts: Post[]
     likedPostIds: number[] // for checking if user like it
     createdAt: number
 }
@@ -21,6 +22,7 @@ export class RootStore {
         followings: [],
         followers: [],
         posts: [],
+        userPosts: [],
         likedPostIds: [],
         createdAt: 0,
     }
@@ -66,6 +68,10 @@ export class RootStore {
         return this.data.posts;
     }
 
+    get userPosts() {
+        return this.data.userPosts;
+    }
+
     isFollowed(userId: number) {
         return this.data.followings.includes(userId);
     }
@@ -83,6 +89,8 @@ export class RootStore {
             console.log(`mobx's Login Called at client`);
         }
 
+        localStorage.setItem("AppState", JSON.stringify(toJS(this.data)));
+
     }
 
     logout() {
@@ -90,6 +98,7 @@ export class RootStore {
         this.data.user = null;
         this.data.followers = [];
         this.data.posts = [];
+        localStorage.removeItem("AppState");
     }
 
     updateUserInfo(payload: User) {
@@ -101,6 +110,10 @@ export class RootStore {
 
     setFeeds(posts: Post[]) {
         this.data.posts = posts;
+    }
+
+    setUserFeeds(posts: Post[]) {
+        this.data.userPosts = posts;
     }
 
     setFollowings(userIds: number[]) {

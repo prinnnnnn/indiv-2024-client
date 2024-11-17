@@ -16,6 +16,8 @@ import { observer, useObserver } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { HomeViewModel } from "./HomeViewModel";
 import { useStore } from "@/stores/storeContext";
+import { fetchAllPosts } from "@/service/postServices";
+import { Post } from "@/common/model";
 
 const HomePage = () => {
 
@@ -24,11 +26,18 @@ const HomePage = () => {
     const [viewModel, setViewModel] = useState<HomeViewModel | null>();
 
     useEffect(() => {
-        setViewModel(new HomeViewModel({
-            user: store!.getUserInfo,
-            posts: store!.homeFeeds,
-        }));
-    }, [])
+        const fetchData = async () => {
+            const posts = await fetchAllPosts() as Post[];
+            store!.setFeeds(posts);
+            setViewModel(new HomeViewModel({
+                user: store!.getUserInfo,
+                posts: store!.homeFeeds,
+            }));
+        };
+    
+        fetchData();
+    }, []);
+
 
     return (
         <div className="flex flex-row justify-center w-full">
@@ -50,7 +59,7 @@ const HomePage = () => {
                         {viewModel && viewModel.homeFeeds && viewModel.homeFeeds.map(post => (
                             <PostWidget post={post} />
                         ))}
-                        {viewModel && viewModel.homeFeeds && [1, 2, 3, 4, 5].map(() => <PostWidget post={viewModel.homeFeeds[0]} />)}
+                        {/* {viewModel && viewModel.homeFeeds && .map(() => <PostWidget post={viewModel.homeFeeds[0]} />)} */}
                     </div>
                 </div>
 

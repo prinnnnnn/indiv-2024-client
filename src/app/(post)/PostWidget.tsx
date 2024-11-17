@@ -25,14 +25,14 @@ interface PostProp {
     post?: Post;
 }
 
-const names = [
-    "Lionel Messi",
-    "Lamine Yamal"
-]
+// const names = [
+//     "Lionel Messi",
+//     "Lamine Yamal"
+// ]
 
 const PostWidget: FC<PostProp> = ({ post }) => {
 
-    const username = names[Math.floor(Math.random() * names.length)]
+    const username = `author Id = ${post?.authorId}`
 
     const { palette } = useTheme();
 
