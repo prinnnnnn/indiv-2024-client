@@ -53,7 +53,7 @@ const LoginForm = () => {
 
             /* followings' id */
             // const followings = await fetchFollowings(user.id);
-            router.push("/home-mvvm");
+            router.push("/home");
 
         } catch (error: any) {
             setErrorMessage("An unexpected error occurred.");

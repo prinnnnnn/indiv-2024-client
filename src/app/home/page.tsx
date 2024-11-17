@@ -69,4 +69,4 @@ const HomePage = () => {
     );
 };
 
-export default HomePage;
+export default observer(HomePage);
