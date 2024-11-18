@@ -53,6 +53,8 @@ const SignUpForm = () => {
         try {
             const { user, token } = await register(values)
             store!.login(user, token);
+            console.log('pushing to home');
+            
             router.push('/home')    
             onSubmitProps.resetForm();
         } catch (error) {

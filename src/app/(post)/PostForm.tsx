@@ -9,6 +9,8 @@ import { ImAttachment } from "react-icons/im";
 import { ChangeEvent, DragEvent, useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import "@/app/ui/hoverable.css";
+import { createPost } from "@/service/postServices";
+import { set } from "date-fns";
 
 const PostForm = () => {
   const { palette } = useTheme();
@@ -23,15 +25,16 @@ const PostForm = () => {
     setPostText("");
   };
 
+  const [postText, setPostText] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [isPending, setIsPending] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   const autoGrow = (element: HTMLTextAreaElement) => {
     element.style.height = "auto"; // Reset height to allow shrinking
     element.style.height = `${Math.max(element.scrollHeight, 50)}px`; // Set height based on content or minimum height
   };
-
-  const [postText, setPostText] = useState("");
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
   // Handle the file selected through input
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -41,9 +44,23 @@ const PostForm = () => {
     }
   };
 
-  const handleSubmit = () => {
-    console.log(`post text: ${postText}`);
-    console.log(`post image: ${selectedImage}`);
+  const handleSubmit = async () => {
+    setIsPending(true);
+    setErrorMessage("")
+    const formData = new FormData();
+    formData.append("content", postText);
+    if (selectedImage) formData.append("picture", selectedImage);
+
+    try {
+      await createPost(formData);
+      setErrorMessage("TEST")
+    } catch (error: any) {
+      setErrorMessage("An unexpected error occurred.");
+    } finally {
+      setIsPending(false);
+      closeModal();
+      setPostText("");
+    }
   };
 
   // Handle file dropped into the upload area
@@ -106,13 +123,11 @@ const PostForm = () => {
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-[60vw] min-w-[300px] md:min-w-[500px] my-6 mx-auto max-w-3xl max-h-[80vh]">
-              
               {/*content*/}
               <div
                 className="border-0 rounded-lg shadow-lg relative flex flex-col w-full outline-none focus:outline-none"
                 style={{ background: palette.bgPrimary }}
               >
-
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                   <h3 className="text-3xl font-semibold">Create Post</h3>
@@ -196,6 +211,7 @@ const PostForm = () => {
 
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                  <p className="text-red-500 my-auto">{errorMessage}</p>
                   <button
                     className="text-gray-400 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
@@ -204,13 +220,12 @@ const PostForm = () => {
                     Cancel
                   </button>
                   <button
+                    aria-disabled={isPending}
                     className="hoverable text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => {
-                        handleSubmit()
-                        setPostText("")
-                        setSelectedImage(null)
-                        setShowModal(false)}}
+                      handleSubmit();
+                    }}
                     style={
                       {
                         "--bg-color": palette.primary,
@@ -218,7 +233,7 @@ const PostForm = () => {
                       } as any
                     }
                   >
-                    Post
+                    <b>{isPending ? "Posting..." : "Post"}</b>
                   </button>
                 </div>
               </div>

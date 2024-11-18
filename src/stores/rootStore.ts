@@ -81,6 +81,10 @@ export class RootStore {
     }
 
     login(user: User) {
+
+        console.log('logging in');
+        
+
         this.data.user = user;
 
         if (typeof window === undefined) {

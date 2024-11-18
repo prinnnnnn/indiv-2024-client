@@ -18,6 +18,7 @@ export interface Post {
     updatedAt: Date
     imageUrl: string
     authorId: number
+    author: User
 }
 
 export interface RegisterForm {

@@ -60,7 +60,7 @@ const PostWidget: FC<PostProp> = ({ post }) => {
             />
           </div>
         </div>
-        <p>{format(new Date(post!.createdAt), "dd MMMM yyyy HH:mm")}</p>
+        <p className="text-sm">{format(new Date(post!.createdAt), "dd MMMM yyyy HH:mm")}</p>
 
         {/* Contents */}
         <div>

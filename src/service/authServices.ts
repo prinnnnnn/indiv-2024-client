@@ -7,10 +7,14 @@ const serverAddr = process.env.SERVER_ADDRESS;
 
 export const register = async (user: RegisterForm) => {
     
+    console.log('registering');
+    
+
     const options = {
         method: 'POST',
         url: `${serverAddr}/auth/register`,
         headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
         data: user,
     };
     
