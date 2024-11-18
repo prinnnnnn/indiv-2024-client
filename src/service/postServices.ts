@@ -5,8 +5,7 @@ import { getPresignedUrl } from "./storageService";
 const serverAddr = process.env.SERVER_ADDRESS;
 
 export const createPost = async () => {
-    /* userId from redux store */
-    /* POST - /posts/ */
+
 }
 
 export const fetchAllPosts = async () => {
