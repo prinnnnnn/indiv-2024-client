@@ -36,7 +36,7 @@ export const fetchAllPosts = async () => {
     const posts = await Promise.all(
       (data as Post[]).map(async (post) => ({
         ...post,
-        imageUrl: await getPresignedUrl(post.imageUrl),
+        imageUrl: post.imageUrl ? await getPresignedUrl(post.imageUrl) : null,
         profileImg: post.author.profilePath ? await getPresignedUrl(post.author.profilePath) : null,
         // profileImg: await getPresignedUrl(post.imageUrl),
       }))
