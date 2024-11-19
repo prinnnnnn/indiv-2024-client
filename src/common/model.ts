@@ -6,7 +6,7 @@ export interface User {
     lastName: string
     profilePath: string
     bio: string
-    coverPhoto: string
+    coverPhotoUrl: string
     createdAt: Date
     updatedAt: Date
 }
@@ -19,6 +19,7 @@ export interface Post {
     imageUrl: string
     authorId: number
     author: User
+    profileImg: string
 }
 
 export interface RegisterForm {

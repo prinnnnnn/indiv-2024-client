@@ -27,7 +27,7 @@ const ProfilePage = () => {
 
   return (
     <div className="flex flex-col gap-3">
-      <Profile />
+      <Profile user={null} />
       {store!.userPosts
         .slice()
         .sort((a, b) => {

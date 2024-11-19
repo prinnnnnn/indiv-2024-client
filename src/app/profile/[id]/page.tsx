@@ -1,10 +1,20 @@
-import { notFound } from "next/navigation";
-import React from "react";
+"use client";
 
-const page = () => {
-  notFound();
+import { fetchUserInfo } from "@/service/userServices";
+import React, { useEffect } from "react";
+import Profile from "../Profile";
+import { User } from "@/common/model";
 
-  return <div>page</div>;
-};
+async function page({ params }: { params: { id: string } }) {
+  const id = params.id;
+
+  return (
+    <div className="">
+      <div className="flex flex-col gap-3">
+        <p>Profile ID: {id}</p>
+      </div>
+    </div>
+  );
+}
 
 export default page;

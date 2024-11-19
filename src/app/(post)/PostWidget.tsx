@@ -45,14 +45,26 @@ const PostWidget: FC<PostProp> = ({ post }) => {
         {/* Header */}
         <div className="flex flex-row gap-3 items-center mb-2">
           <div className="relative w-[50px] h-[50px]">
-            <Image
-              src={defaultProfile}
-              alt="Profile img"
-              layout="fill"
-              className="object-cover rounded-full"
-            />
+            {post!.profileImg ? (
+              <img
+                src={`${post!.profileImg}`}
+                alt="Profile img"
+                className="object-cover w-full h-full rounded-full"
+              />
+            ) : (
+              <Image
+                src={defaultProfile}
+                alt="Profile img"
+                className="object-cover w-full h-full rounded-full"
+              />
+            )}
           </div>
-          <h4 className="text-lg md:text-xl">{username}</h4>
+          <div className="flex flex-col justify-center">
+            <h4 className="text-lg md:text-xl">{username}</h4>
+            <p className="text-sm">
+              {format(new Date(post!.createdAt), "dd MMMM yyyy HH:mm")}
+            </p>
+          </div>
           <div>
             <MdVerified
               className={`mt-auto text-2xl md:text-3xl`}
@@ -60,7 +72,6 @@ const PostWidget: FC<PostProp> = ({ post }) => {
             />
           </div>
         </div>
-        <p className="text-sm">{format(new Date(post!.createdAt), "dd MMMM yyyy HH:mm")}</p>
 
         {/* Contents */}
         <div>
@@ -86,15 +97,15 @@ const PostWidget: FC<PostProp> = ({ post }) => {
         {/* Buttons */}
         <div className=" my-4 flex flex-row justify-around text-lg md:text-xl">
           <div className="flex items-center gap-0">
-            <b>12.4M</b>
+            {/* <b>12.4M</b> */}
             <AiFillFire fontSize={25} />
           </div>
           <div className="flex items-center gap-1">
-            <b>505k</b>
+            {/* <b>505k</b> */}
             <FaCommentDots fontSize={25} />
           </div>
           <div className="flex items-center gap-0">
-            <b>67.3k</b>
+            {/* <b>67.3k</b> */}
             <div>
               <IoIosShareAlt fontSize={25} />
             </div>

@@ -9,11 +9,15 @@ import { ImAttachment } from "react-icons/im";
 import { ChangeEvent, DragEvent, useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import "@/app/ui/hoverable.css";
-import { createPost } from "@/service/postServices";
-import { set } from "date-fns";
+import { createPost, fetchAllPosts } from "@/service/postServices";
+import { useStore } from "@/stores/storeContext";
+import { Post } from "@/common/model";
+import { useRouter } from "next/navigation";
 
 const PostForm = () => {
   const { palette } = useTheme();
+  const store = useStore()
+  const router = useRouter()
 
   const closeModal = () => {
     setShowModal(false);
@@ -44,22 +48,33 @@ const PostForm = () => {
     }
   };
 
+  const fetchPosts = async () => {
+    const posts = (await fetchAllPosts()) as Post[];
+    store!.setFeeds(posts);
+  }
+
   const handleSubmit = async () => {
     setIsPending(true);
     setErrorMessage("")
     const formData = new FormData();
-    formData.append("content", postText);
+    if (postText !== "") formData.append("content", postText);
     if (selectedImage) formData.append("picture", selectedImage);
 
     try {
-      await createPost(formData);
-      setErrorMessage("TEST")
+      const post = await createPost(formData);
+      console.log(post);
+      
     } catch (error: any) {
       setErrorMessage("An unexpected error occurred.");
     } finally {
+      await fetchPosts()
+      setPostText("");
       setIsPending(false);
       closeModal();
-      setPostText("");
+
+      // Hard reload to fetch data 
+      window.location.reload();
+      
     }
   };
 
@@ -222,7 +237,7 @@ const PostForm = () => {
                   <button
                     aria-disabled={isPending}
                     className="hoverable text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
+                    type="submit"
                     onClick={() => {
                       handleSubmit();
                     }}

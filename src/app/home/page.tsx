@@ -25,6 +25,7 @@ const HomePage = () => {
   const [viewModel, setViewModel] = useState<HomeViewModel | null>();
 
   useEffect(() => {
+    console.log(store!.getUserInfo);
     const fetchData = async () => {
       const posts = (await fetchAllPosts()) as Post[];
       store!.setFeeds(posts);
