@@ -2,44 +2,50 @@
 
 import PostWidget from "@/app/(post)/PostWidget";
 import Profile from "./Profile";
-import { useEffect } from "react";
-import { fetchAllPosts, fetchPosts } from "@/service/postServices";
-import { Post } from "@/common/model";
+import { useEffect, useState } from "react";
+import { fetchAllPosts, fetchUserPosts } from "@/service/postServices";
+import { Post, User } from "@/common/model";
 import { useStore } from "@/stores/storeContext";
 
 const ProfilePage = () => {
-  const store = useStore();
+    const store = useStore();
+    const [userId, setUserId] = useState<number | null>(null);
+    let user: User | null;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const user = store!.getUserInfo;
-      console.log(`user : ${user}`);
-      const userPosts = (await fetchAllPosts()) as Post[];
-      // if (user) {
-      //     userPosts = await fetchPosts(user.id) as Post[];
-      //     console.log(userPosts);
-      // }
-      store!.setUserFeeds(userPosts);
-    };
+    useEffect(() => {
+        const fetchData = async () => {
 
-    fetchData();
-  }, []);
+            user = store!.getUserInfo;
+            console.log(`user : ${user}`);
 
-  return (
-    <div className="flex flex-col gap-3">
-      <Profile user={null} />
-      {store!.userPosts
-        .slice()
-        .sort((a, b) => {
-          return (
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-          );
-        })
-        .map((post) => (
-          <PostWidget post={post} />
-        ))}
-    </div>
-  );
+            let userPosts: Post[] = [];
+            if (user) {
+                setUserId(user.id);
+                userPosts = (await fetchUserPosts(user.id)) as Post[];
+            }
+
+            store!.setUserFeeds(userPosts);
+        };
+
+        fetchData();
+    }, [userId]);
+
+    return (
+        <div className="flex flex-col gap-3">
+            <Profile />
+            {store!.userPosts
+                .slice()
+                .sort((a, b) => {
+                    return (
+                        new Date(b.createdAt).getTime() -
+                        new Date(a.createdAt).getTime()
+                    );
+                })
+                .map(post => (
+                    <PostWidget post={post} />
+                ))}
+        </div>
+    );
 };
 
 export default ProfilePage;

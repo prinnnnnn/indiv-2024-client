@@ -49,11 +49,11 @@ export const fetchAllPosts = async () => {
     }
 };
 
-export const fetchPosts = async (userId: Number | null) => {
+export const fetchUserPosts = async (userId: Number | null) => {
 
     const options = {
         method: "GET",
-        url: `${serverAddr}/posts/${userId}/feeds`,
+        url: `${serverAddr}/posts/user`,
         withCredentials: true,
     };
 
@@ -64,7 +64,8 @@ export const fetchPosts = async (userId: Number | null) => {
         const posts = await Promise.all(
             (data as Post[]).map(async (post) => ({
                 ...post,
-                imageUrl: await getPresignedUrl(post.imageUrl),
+                imageUrl: post.imageUrl ? await getPresignedUrl(post.imageUrl) : null,
+                profileImg: post.author.profilePath ? await getPresignedUrl(post.author.profilePath) : null,
             }))
         );
         return posts;
