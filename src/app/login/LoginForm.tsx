@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useStore } from "@/stores/storeContext";
 import { fetchAllPosts } from "@/service/postServices";
 import { Post } from "@/common/model";
+import { fetchFollowings } from "@/service/userServices";
 // import { useObserver } from "mobx-react-lite";
 
 const LoginForm = () => {
@@ -39,6 +40,8 @@ const LoginForm = () => {
         try {
 
             const { user } = await login({ email, password });
+            console.log(`Response from LoginForm...`);
+            console.log(user);
             store!.login(user);
             console.log("Login successful");
             /* TODO

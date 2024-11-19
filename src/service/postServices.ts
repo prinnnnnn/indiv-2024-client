@@ -5,78 +5,80 @@ import { getPresignedUrl } from "./storageService";
 const serverAddr = process.env.SERVER_ADDRESS;
 
 export const createPost = async (formData: FormData) => {
-  console.log("creating test");
+    console.log("creating test");
 
-  const options: AxiosRequestConfig = {
-    method: "POST",
-    // TODO: implement userId from state 
-    url: "http://localhost:3001/posts/11",
-    data: formData,
-    withCredentials: true,
-  };
+    const options: AxiosRequestConfig = {
+        method: "POST",
+        // TODO: implement userId from state 
+        url: `${serverAddr}/posts/`,
+        data: formData,
+        withCredentials: true,
+    };
 
-  try {
-    const { data } = await axios.request(options);
-    console.log(data);
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
+    try {
+        const { data } = await axios.request(options);
+        console.log(data);
+        return data;
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 export const fetchAllPosts = async () => {
-  const options = {
-    method: "GET",
-    url: `${serverAddr}/posts/`,
-    withCredentials: true,
-  };
 
-  try {
-    const { data } = await axios.request(options);
-    const posts = await Promise.all(
-      (data as Post[]).map(async (post) => ({
-        ...post,
-        imageUrl: await getPresignedUrl(post.imageUrl),
-        profileImg: post.author.profilePath ? await getPresignedUrl(post.author.profilePath) : null,
-        // profileImg: await getPresignedUrl(post.imageUrl),
-      }))
-    );
-    console.log(posts);
-    return posts;
-  } catch (error) {
-    console.error(error);
-  }
+    const options = {
+        method: "GET",
+        url: `${serverAddr}/posts/`,
+        withCredentials: true,
+    };
+
+    try {
+        const { data } = await axios.request(options);
+        const posts = await Promise.all(
+            (data as Post[]).map(async (post) => ({
+                ...post,
+                imageUrl: post.imageUrl ? await getPresignedUrl(post.imageUrl) : null,
+                profileImg: post.author.profilePath ? await getPresignedUrl(post.author.profilePath) : null,
+                // profileImg: await getPresignedUrl(post.imageUrl),
+            }))
+        );
+        console.log(posts);
+        return posts;
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 export const fetchPosts = async (userId: Number | null) => {
-  const options = {
-    method: "GET",
-    url: `http://localhost:3001/posts/${userId}/feeds`,
-    withCredentials: true,
-  };
 
-  try {
-    const { data } = await axios.request(options);
-    console.log("fetching user posts");
-    console.log(data);
-    const posts = await Promise.all(
-      (data as Post[]).map(async (post) => ({
-        ...post,
-        imageUrl: await getPresignedUrl(post.imageUrl),
-      }))
-    );
-    return posts;
-  } catch (error) {
-    console.error(error);
-  }
+    const options = {
+        method: "GET",
+        url: `${serverAddr}/posts/${userId}/feeds`,
+        withCredentials: true,
+    };
+
+    try {
+        const { data } = await axios.request(options);
+        console.log("fetching user posts");
+        console.log(data);
+        const posts = await Promise.all(
+            (data as Post[]).map(async (post) => ({
+                ...post,
+                imageUrl: await getPresignedUrl(post.imageUrl),
+            }))
+        );
+        return posts;
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 export const fetchFollowersPosts = async () => {
-  /* userId from redux store */
-  /* GET - /posts/:userId/feeds */
+    /* userId from redux store */
+    /* GET - /posts/:userId/feeds */
 };
 
 export const likePost = async (postId: number) => {
-  /* userId from redux store */
-  /* PATCH - /posts/:userId/:postId */
+    /* userId from redux store */
+    /* PATCH - /posts/:userId/:postId */
 };
