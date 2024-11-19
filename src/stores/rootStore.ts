@@ -1,5 +1,5 @@
 import { Post, User } from "@/common/model";
-import { autorun, computed, makeAutoObservable, makeObservable, toJS } from "mobx";
+import { autorun, computed, makeAutoObservable, makeObservable, observable, toJS } from "mobx";
 // import { action, computed, makeObservable, observable, autorun, runInAction } from "mobx";
 // import { enableStaticRendering } from "mobx-react-lite";
 
@@ -17,7 +17,7 @@ type AppState = {
 
 export class RootStore {
 
-    private data: AppState = {
+    public data: AppState = {
         user: null,
         followings: [],
         followers: [],
@@ -32,6 +32,7 @@ export class RootStore {
 
         this.data.createdAt = Date.now()
         makeObservable(this, {
+            data: observable,
             getUserInfo: computed,
             homeFeeds: computed,
         })

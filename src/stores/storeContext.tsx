@@ -52,7 +52,7 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
         // console.log(`side effect triggered at StoreProvider to load persisted state`);
 
         if (getCookie("token")) {
-            console.log(`Loading persisted state from localStorage`);
+            // console.log(`Loading persisted state from localStorage`);
             store.loadFromLocalStorage();
         }
 
