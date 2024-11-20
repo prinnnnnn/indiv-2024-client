@@ -84,6 +84,7 @@ export class RootStore {
     login(user: User) {
 
         console.log('logging in');
+        console.log(user)
         
 
         this.data.user = user;

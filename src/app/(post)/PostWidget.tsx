@@ -86,16 +86,14 @@ const PostWidget: FC<PostProp> = ({ post }) => {
               />
             </div>
           ) : (
-            <div className="text-lg md:text-xl">
-              <p>
-                <span className="font-bold">{username}</span> {post?.content}
-              </p>
+            <div className="text-lg md:text-xl mx-16">
+              <p className="">{post?.content}</p>
             </div>
           )}
         </div>
 
         {/* Buttons */}
-        <div className=" my-4 flex flex-row justify-around text-lg md:text-xl">
+        <div className=" mt-4 flex flex-row justify-around text-lg md:text-xl">
           <div className="flex items-center gap-0">
             {/* <b>12.4M</b> */}
             <AiFillFire fontSize={25} />
@@ -116,8 +114,8 @@ const PostWidget: FC<PostProp> = ({ post }) => {
         </div>
 
         {/* Captions with image. */}
-        {post?.imageUrl && (
-          <div className="text-lg md:text-xl">
+        {post?.imageUrl && post!.content !== "" && (
+          <div className="text-lg md:text-xl mt-4">
             <p>
               <span className="font-bold">{username}</span> {post?.content}
             </p>

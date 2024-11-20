@@ -71,6 +71,7 @@ export const fetchUserPosts = async (userId: Number | null) => {
         return posts;
     } catch (error) {
         console.error(error);
+        return []
     }
 };
 
