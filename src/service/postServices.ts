@@ -43,7 +43,7 @@ export const fetchAllPosts = async () => {
             }))
         );
         console.log(posts);
-        return posts;
+        return posts as Post[];
     } catch (error) {
         console.error(error);
     }

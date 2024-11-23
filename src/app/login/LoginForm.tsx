@@ -40,8 +40,8 @@ const LoginForm = () => {
         try {
 
             const { user } = await login({ email, password });
-            console.log(`Response from LoginForm...`);
-            console.log(user);
+            // console.log(`Response from LoginForm...`);
+            // console.log(user);
             store!.login(user);
             console.log("Login successful");
             /* TODO

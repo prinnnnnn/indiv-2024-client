@@ -16,10 +16,10 @@ export interface Post {
     content: string
     createdAt: Date
     updatedAt: Date
-    imageUrl: string
+    imageUrl?: string
     authorId: number
     author: User
-    profileImg: string
+    profileImg?: string
 }
 
 export interface RegisterForm {

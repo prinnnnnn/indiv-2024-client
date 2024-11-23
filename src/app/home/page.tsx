@@ -20,25 +20,9 @@ import { fetchAllPosts } from "@/service/postServices";
 import { Post } from "@/common/model";
 
 const HomePage = () => {
+
     const { palette } = useTheme();
-    const store = useStore();
-    const [viewModel, setViewModel] = useState<HomeViewModel | null>();
-
-    useEffect(() => {
-        console.log(store!.getUserInfo);
-        const fetchData = async () => {
-            const posts = (await fetchAllPosts()) as Post[];
-            store!.setFeeds(posts);
-            setViewModel(
-                new HomeViewModel({
-                    user: store!.getUserInfo,
-                    posts: store!.homeFeeds,
-                })
-            );
-        };
-
-        fetchData();
-    }, []);
+    const [viewModel] = useState<HomeViewModel>(() => new HomeViewModel());
 
     return (
         <div className="flex flex-row justify-center w-full">
@@ -46,6 +30,7 @@ const HomePage = () => {
                 <ToggleThemeButton />
             </div>
             <div className="flex flex-row justify-evenly md:justify-between w-full md:w-10/12 gap-0 sm:gap-5 pt-10">
+                
                 {/* Navigation Bar */}
                 <SideNav />
 
@@ -68,7 +53,6 @@ const HomePage = () => {
                                     );
                                 })
                                 .map(post => <PostWidget post={post} />)}
-                        {/* {viewModel && viewModel.homeFeeds && .map(() => <PostWidget post={viewModel.homeFeeds[0]} />)} */}
                     </div>
                 </div>
 
@@ -81,6 +65,7 @@ const HomePage = () => {
                         <TrendsWidget />
                         <PeopleWidget />
                     </div>
+
                 </div>
             </div>
         </div>

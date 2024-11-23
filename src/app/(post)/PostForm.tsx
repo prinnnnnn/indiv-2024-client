@@ -54,6 +54,7 @@ const PostForm = () => {
     };
 
     const handleSubmit = async () => {
+        
         setIsPending(true);
         setErrorMessage("");
         const formData = new FormData();
