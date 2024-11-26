@@ -33,6 +33,7 @@ export const fetchAllPosts = async () => {
     };
 
     try {
+        
         const { data } = await axios.request(options);
         const posts = await Promise.all(
             (data as Post[]).map(async (post) => ({
@@ -42,7 +43,7 @@ export const fetchAllPosts = async () => {
                 // profileImg: await getPresignedUrl(post.imageUrl),
             }))
         );
-        console.log(posts);
+
         return posts as Post[];
     } catch (error) {
         console.error(error);

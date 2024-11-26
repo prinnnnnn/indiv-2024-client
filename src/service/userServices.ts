@@ -4,11 +4,12 @@ import { getPresignedUrl } from "./storageService";
 
 const serverAddr = process.env.SERVER_ADDRESS;
 
-export const fetchFollowings = async (userId: number) => {
+export const fetchFollowings = async () => {
     
-    const options = {
+    const options: AxiosRequestConfig = {
         method: "GET",
-        url: `${serverAddr}/users/following/${userId}`,
+        url: `${serverAddr}/users/following/`,
+        withCredentials: true,
     };
 
     try {
@@ -23,18 +24,18 @@ export const followUser = async () => {
     
 };
 
-export const fetchUserInfo = async (userId: number) => {
-    console.log(`fetching user user id:${userId}`);
+export const fetchUserInfo = async () => {
+    // console.log(`fetching user user id:${userId}`);
 
     const options: AxiosRequestConfig = {
         method: "GET",
-        url: `http://localhost:3001/users/${userId}`,
+        url: `http://localhost:3001/users/`,
         withCredentials: true,
     };
 
     try {
         const { data } = await axios.request(options);
-        console.log(data);
+        // console.log(data);
         const userInfo: User = {
             ...data,
             coverPhotoUrl: data.coverPhotoUrl

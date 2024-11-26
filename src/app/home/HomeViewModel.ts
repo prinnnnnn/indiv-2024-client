@@ -1,48 +1,59 @@
+"use client"
+
 import { Post, User } from "@/common/model";
 import { fetchAllPosts } from "@/service/postServices";
 import { fetchFollowings, fetchUserInfo } from "@/service/userServices";
 import { getCookie } from "@/utils/helpers";
-import { autorun, makeObservable, makeAutoObservable, toJS, computed, action } from "mobx";
+import { autorun, makeObservable, makeAutoObservable, toJS, computed, action, runInAction, observable } from "mobx";
 
-type PageState = {
-    user: User | null,
-    posts: Post[] | null,
-}
 export class HomeViewModel {
 
-    private data: PageState = {
-        user: null,
-        posts: null,
-    }
-
-    private user: User | undefined;
-    private posts: Post[] | undefined;
-    private followingIds: number[] | undefined;
+    public user: User | undefined;
+    public posts: Post[] | undefined;
+    public followingIds: number[] | undefined;
     // private likedPostIds: number[];
 
-    private initData = async (userId: number) => {
+    private initData = async () => {
+        try {
 
-        /* fetch user info */
-        this.user = await fetchUserInfo(userId);
-        
-        /* fetch followings Id */
-        this.followingIds = await fetchFollowings(userId);
+            /* fetch user info */
+            const userInfo = await fetchUserInfo();
+            runInAction(() => {
+                this.user = userInfo;
+            });
+            
+            /* fetch followings Id */
+            const followingIds = await fetchFollowings();
+            runInAction(() => {
+                this.followingIds = followingIds;
+            });
+            
+            /* fetch follower posts */
+            const posts = await fetchAllPosts();
+            runInAction(() => {
+                this.posts = posts;
+            });
 
-        /* fetch follower posts */
-        this.posts = await fetchAllPosts();
-
-        /* fetch posts'id liked by user */
-        // this.likedPostIds
-
-    }
+            /* fetch posts'id liked by user */
+            // Add similar pattern for likedPostIds
+        } catch (error) {
+            console.error("Error initializing data:", error);
+        }
+    };
 
     constructor() {
 
-        // const userId ;
-
-        this.initData(4);
-
+        
+        this.user = undefined;
+        this.posts = [];
+        this.followingIds = [];
+        this.initData();
+        
         makeObservable(this, {
+
+            /* observable */
+            user: observable,
+            posts: observable,
 
             /* computed */
             userInfo: computed,
@@ -53,8 +64,18 @@ export class HomeViewModel {
             followUser: action,
 
         });
-        
+
+
+        autorun(() => {
+            console.log(`Current state of home view model...`);
+            console.log(this.user);
+            console.log(this.posts);
+            console.log(this.followingIds);
+            console.log(`\n\n`);
+        })
+
     }
+
 
     get userInfo() {
         return this.user;
@@ -64,12 +85,16 @@ export class HomeViewModel {
         return this.posts;
     }
 
+    createPost(post: Post) {
+
+    }
+
     likePost() {
-        
+
     }
 
     followUser() {
 
-    } 
+    }
 
 }

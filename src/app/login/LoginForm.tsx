@@ -42,8 +42,8 @@ const LoginForm = () => {
             const { user } = await login({ email, password });
             // console.log(`Response from LoginForm...`);
             // console.log(user);
-            store!.login(user);
-            console.log("Login successful");
+            // store!.login(user);
+            // console.log("Login successful");
             /* TODO
             1. fetch all followers' posts
             2. fetch all followings ids
@@ -51,8 +51,8 @@ const LoginForm = () => {
             */
 
             /* followers' posts */
-            const posts = await fetchAllPosts() as Post[];
-            store!.setFeeds(posts)
+            // const posts = await fetchAllPosts() as Post[];
+            // store!.setFeeds(posts)
 
             /* followings' id */
             // const followings = await fetchFollowings(user.id);

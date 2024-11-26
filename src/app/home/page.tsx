@@ -15,9 +15,9 @@ import PostWidget from "@/app/(post)/PostWidget";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { HomeViewModel } from "./HomeViewModel";
-import { useStore } from "@/stores/storeContext";
-import { fetchAllPosts } from "@/service/postServices";
-import { Post } from "@/common/model";
+// import { useStore } from "@/stores/storeContext";
+// import { fetchAllPosts } from "@/service/postServices";
+// import { Post } from "@/common/model";
 
 const HomePage = () => {
 

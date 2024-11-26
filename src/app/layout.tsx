@@ -31,9 +31,9 @@ export default function RootLayout({
       <body
         className={`${sfDisplayReg.variable} ${sfDisplayBold.variable} antialiased`}
       >
-        <StoreProvider>
+        {/* <StoreProvider> */}
           <ThemeProvider>{children}</ThemeProvider>
-        </StoreProvider>
+        {/* </StoreProvider> */}
       </body>
     </html>
   );
