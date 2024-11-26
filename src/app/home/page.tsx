@@ -15,9 +15,6 @@ import PostWidget from "@/app/(post)/PostWidget";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { HomeViewModel } from "./HomeViewModel";
-// import { useStore } from "@/stores/storeContext";
-// import { fetchAllPosts } from "@/service/postServices";
-// import { Post } from "@/common/model";
 
 const HomePage = () => {
 
@@ -41,7 +38,7 @@ const HomePage = () => {
                 >
                     <div className="flex flex-col gap-3">
                         <SearchBar />
-                        <PostForm />
+                        <PostForm vm={viewModel}/>
                         {viewModel &&
                             viewModel.homeFeeds &&
                             viewModel.homeFeeds

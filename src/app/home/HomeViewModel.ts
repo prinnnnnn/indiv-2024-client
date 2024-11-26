@@ -4,6 +4,7 @@ import { Post, User } from "@/common/model";
 import { fetchAllPosts } from "@/service/postServices";
 import { fetchFollowings, fetchUserInfo } from "@/service/userServices";
 import { getCookie } from "@/utils/helpers";
+import assert from "assert";
 import { autorun, makeObservable, makeAutoObservable, toJS, computed, action, runInAction, observable } from "mobx";
 
 export class HomeViewModel {
@@ -14,7 +15,10 @@ export class HomeViewModel {
     // private likedPostIds: number[];
 
     private initData = async () => {
+        
         try {
+
+            assert(window !== undefined);
 
             /* fetch user info */
             const userInfo = await fetchUserInfo();
@@ -86,7 +90,7 @@ export class HomeViewModel {
     }
 
     createPost(post: Post) {
-
+        this.posts?.push(post);
     }
 
     likePost() {

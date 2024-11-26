@@ -10,13 +10,12 @@ import { ChangeEvent, DragEvent, useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import "@/app/ui/hoverable.css";
 import { createPost, fetchAllPosts } from "@/service/postServices";
-import { useStore } from "@/stores/storeContext";
-import { Post } from "@/common/model";
+import { HomeViewModel } from "@/app/home/HomeViewModel";
 // import { useRouter } from "next/navigation";
 
-const PostForm = () => {
+const PostForm = ({ vm }: { vm: HomeViewModel}) => {
     const { palette } = useTheme();
-    const store = useStore();
+    // const store = useStore();
     // const router = useRouter()
 
     const closeModal = () => {
@@ -48,11 +47,6 @@ const PostForm = () => {
         }
     };
 
-    const fetchPosts = async () => {
-        const posts = (await fetchAllPosts()) as Post[];
-        store!.setFeeds(posts);
-    };
-
     const handleSubmit = async () => {
         
         setIsPending(true);
@@ -63,11 +57,10 @@ const PostForm = () => {
 
         try {
             const post = await createPost(formData);
-            console.log(post);
+            vm.createPost(post);
         } catch (error: any) {
             setErrorMessage("An unexpected error occurred.");
         } finally {
-            await fetchPosts();
             setPostText("");
             setIsPending(false);
             closeModal();
