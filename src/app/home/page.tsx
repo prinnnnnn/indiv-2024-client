@@ -2,7 +2,7 @@
 
 import { useTheme } from "@/app/ui/ThemeContext";
 import ToggleThemeButton from "@/app/ui/ToggleThemeButton";
-import PeopleWidget from "@/app/ui/PeopleWidget";
+import PeopleWidget from "@/app/(people)/PeopleWidget";
 
 /* Components */
 import SideNav from "@/app/ui/SideNav";

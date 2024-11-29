@@ -11,7 +11,7 @@ const s3 = new S3Client({
 });
 
 export const getPresignedUrl = async (filename: string) => {
-    // console.log(process.env.SERVER_ADDRESS);
+    
     const command = new GetObjectCommand({
         Bucket: process.env.R2_BUCKET_NAME!,
         Key: filename,
@@ -19,4 +19,5 @@ export const getPresignedUrl = async (filename: string) => {
 
     const signedUrl = await getSignedUrl(s3, command, { expiresIn: 3600 });
     return signedUrl;
+    
 };

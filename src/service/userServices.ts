@@ -29,7 +29,7 @@ export const fetchUserInfo = async () => {
 
     const options: AxiosRequestConfig = {
         method: "GET",
-        url: `http://localhost:3001/users/`,
+        url: `${serverAddr}/users/`,
         withCredentials: true,
     };
 

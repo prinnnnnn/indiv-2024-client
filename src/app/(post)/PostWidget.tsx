@@ -47,6 +47,7 @@ const PostWidget: FC<PostProp> = ({ post }) => {
                     <div className="relative w-[50px] h-[50px]">
                         {post!.profileImg ? (
                             <img
+                                key={`${post?.profileImg}`}
                                 src={`${post!.profileImg}`}
                                 alt="Profile img"
                                 className="object-cover w-full h-full rounded-full"
@@ -103,6 +104,9 @@ const PostWidget: FC<PostProp> = ({ post }) => {
                     <div className="flex items-center gap-0">
                         {/* <b>12.4M</b> */}
                         <AiFillFire fontSize={25} />
+
+                        {/* liked post */}
+                        {/* <AiFillFire fontSize={25} color={`${palette.primary}`}/> */} 
                     </div>
                     <div className="flex items-center gap-1">
                         {/* <b>505k</b> */}

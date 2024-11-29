@@ -1,6 +1,6 @@
 "use client";
 
-import PeopleWidget from "../ui/PeopleWidget";
+import PeopleWidget from "../(people)/PeopleWidget";
 import SideNav from "../ui/SideNav";
 import { useTheme } from "../ui/ThemeContext";
 import ToggleThemeButton from "../ui/ToggleThemeButton";

@@ -93,6 +93,10 @@ export class HomeViewModel {
         this.posts?.push(post);
     }
 
+    rollBackCreatePost() {
+        this.posts?.pop();
+    }
+
     likePost() {
 
     }
