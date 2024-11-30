@@ -24,7 +24,7 @@ const TrendsWidget = () => {
             <hr className="mt-1" />
             <div className="flex flex-col pr-5 py-2 justify-around gap-3">
                 {trends.map(trend => (
-                    <div className="flex flex-col">
+                    <div className="flex flex-col" key={trend.word}>
                         <b>#{trend.word}</b>
                         <p>{trend.numTweets} posts</p>
                         <hr className="mt-1" />

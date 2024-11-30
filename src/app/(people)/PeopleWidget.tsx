@@ -1,25 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useTheme } from "../ui/ThemeContext";
 import Image from "next/image";
 import defaultProfile from "@/public/assets/default-profile.jpg";
+import { User } from "@/common/model";
+import axios from "axios";
+import { fetchRandomUsers } from "@/service/userServices";
 
 const SuggestionCard = ({
-    name = "Leo Messi",
-    bio = "The best player in the world",
-}) => {
+    user
+}: { user: User }) => {
     return (
         <div className="flex flex-row">
             <div className="relative w-[40px] h-[40px]">
-                <Image
+                {user.profilePath && <img
+                    src={user.profilePath}
+                    alt="Profile img"
+                    className="object-cover rounded-full mt-[0.3rem]"
+                />}
+                {!user.profilePath && <Image
                     src={defaultProfile}
                     alt="Profile img"
                     layout="fill"
                     className="object-cover rounded-full mt-[0.3rem]"
-                />
+                />}
             </div>
             <div className="px-2 flex flex-col flex-grow">
-                <b>{name}</b>
-                <p>{bio}</p>
+                <b>{`${user.firstName} ${user.lastName}`}</b>
+                <p>{user.bio}</p>
             </div>
         </div>
     );
@@ -35,8 +42,19 @@ const mockUsers = [
 
 const PeopleWidget = () => {
     const { palette } = useTheme();
+    const [users, setUsers] = useState<User[] | null>(null);
 
-    // useEffect
+    useEffect(() => {
+
+        const fetchdata = async () => {
+            const users = await fetchRandomUsers();
+            console.log(users);
+            setUsers(users!);
+        }
+
+        fetchdata();
+
+    }, [])
 
     return (
         <div
@@ -49,8 +67,8 @@ const PeopleWidget = () => {
             <h3 style={{ color: palette.primary }}>Who to follows</h3>
     
             <div className="mt-3 flex flex-col justify-around gap-3">
-                {mockUsers.map(user => (
-                    <SuggestionCard name={user.name} bio={user.bio} />
+                {users && users.map(user => (
+                    <SuggestionCard user={user} key={user.id}/>
                 ))}
             </div>
         </div>

@@ -2,7 +2,7 @@
 
 /* React */
 import Image from "next/image";
-import React, { FC, useEffect, useMemo, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { format } from "date-fns";
 
 /* picture */
@@ -22,24 +22,22 @@ import { Post } from "@/common/model";
 import { HomeViewModel } from "../home/HomeViewModel";
 import { observer } from "mobx-react-lite";
 import { formatNumber } from "@/utils/helpers";
+import { PostWidgetVM } from "@/utils/viewModel";
 
 interface PostProp {
-    post?: Post;
-    vm: HomeViewModel;
+    post: Post;
+    vm: PostWidgetVM;
 }
 
 const PostWidget: FC<PostProp> = ({ post, vm }) => {
 
     const username = `${post!.author.firstName} ${post!.author.lastName}`;
-
+    // const [isLiked, setLiked] = useState<boolean>(vm.isLikedByLoggedInUser(post.id))
     const { palette } = useTheme();
 
-    // const [isLiked, setLiked] = useState<boolean>(vm.isLikedByLoggedInUser(post!.id));
-
     useEffect(() => {
-        // setLiked(vm.isLikedByLoggedInUser(post!.id));
-        // console.log(`side effect run at PostWidget`);
-    }, [vm.isLoading]);
+        // setLiked(vm.isLikedByLoggedInUser(post.id))
+    }, [vm.isLoading])
 
     return (
         <>

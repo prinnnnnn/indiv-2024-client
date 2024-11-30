@@ -4,10 +4,11 @@ import { Post, User } from "@/common/model";
 import { fetchAllPosts, fetchLikedPostsIds, likePost } from "@/service/postServices";
 import { fetchFollowings, fetchUserInfo } from "@/service/userServices";
 import { getCookie } from "@/utils/helpers";
+import { PostWidgetVM } from "@/utils/viewModel";
 import assert from "assert";
 import { autorun, makeObservable, computed, action, runInAction, observable } from "mobx";
 
-export class HomeViewModel {
+export class HomeViewModel implements PostWidgetVM {
 
     user: User | undefined;
     posts: Post[] | undefined;
@@ -49,7 +50,8 @@ export class HomeViewModel {
             this.isLoading = false;
             
         } catch (error) {
-            console.error("Error initializing data:", error);
+            if (!(error instanceof ReferenceError))
+                console.error("Error initializing data:", error);
         }
     };
 
@@ -84,15 +86,15 @@ export class HomeViewModel {
         });
 
 
-        autorun(() => {
-            console.log(`Current state of home view model...`);
-            // console.log(this.user);
-            // console.log(this.posts);
-            // console.log(this.followingIds);
-            console.log(this.likedPostIds);
-            console.log(this.isLoading);
-            console.log(`\n\n`);
-        })
+        // autorun(() => {
+        //     console.log(`Current state of home view model...`);
+        //     // console.log(this.user);
+        //     // console.log(this.posts);
+        //     // console.log(this.followingIds);
+        //     console.log(this.likedPostIds);
+        //     console.log(this.isLoading);
+        //     console.log(`\n\n`);
+        // })
 
     }
 
@@ -115,8 +117,6 @@ export class HomeViewModel {
     async likePost(postId: number) {
 
         try {
-
-            // console.log(`likePost got called inside viewModel`);
 
             const type = await likePost(postId);
     

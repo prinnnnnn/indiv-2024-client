@@ -12,29 +12,33 @@ import "@/app/ui/hoverable.css";
 import { useEffect, useState } from "react";
 import { fetchUserInfo } from "@/service/userServices";
 import { useStore } from "@/stores/storeContext";
+import { ProfileViewModel } from "./ProfileViewModel";
+import { observer } from "mobx-react-lite";
 
 interface ProfileProp {
-    userId?: number;
+    vm: ProfileViewModel
 }
 
-const Profile = ({ userId }: ProfileProp) => {
+const Profile = ({ vm }: ProfileProp) => {
+
     const { palette } = useTheme();
-    const store = useStore();
-    const [user, setUser] = useState(() => store?.getUserInfo);
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        const fetchData = async () => {
-            /* @ts-ignore */
-            fetchUserInfo(userId)
-                .then(res => setUser(res));
-        }
+    //     const fetchData = async () => {
+    //         /* @ts-ignore */
+    //         fetchUserInfo(userId)
+    //             .then(res => setUser(res));
+    //     }
 
-        if (userId) {
-            fetchData();
-        } 
+    //     if (userId) {
+    //         fetchData();
+    //     } 
 
-    }, []);
+    // }, []);
+    if (vm.isLoading) {
+        return <div>Loading...</div>
+    }
 
     return (
         <div
@@ -42,9 +46,9 @@ const Profile = ({ userId }: ProfileProp) => {
             style={{ background: palette.bgPrimary }}
         >
             {/* Cover image */}
-            {user?.coverPhotoUrl ? (
+            {vm.user && vm.user.coverPhotoUrl ? (
                 <img
-                    src={user.coverPhotoUrl}
+                    src={vm.user.coverPhotoUrl}
                     alt="User Cover"
                     className="w-full xl:h-[20rem] lg:h-[18rem] md:h-[16rem] sm:h-[14rem] h-[11rem] object-cover rounded-lg"
                 />
@@ -84,7 +88,7 @@ const Profile = ({ userId }: ProfileProp) => {
                     </div>
 
                     <h1 className="text-xl lg:text-4xl md:text-3xl sm:text-xl text-center md:text-left">
-                        {`${user.firstName} ${user.lastName}`}
+                        {`${vm.user!.firstName} ${vm.user!.lastName}`}
                     </h1>
 
                     <div className="hidden md:block mx-auto mt-3 md:mx-5 md:my-auto justify-center items-center">
@@ -114,4 +118,4 @@ const Profile = ({ userId }: ProfileProp) => {
     );
 };
 
-export default Profile;
+export default observer(Profile);

@@ -5,7 +5,7 @@ import { getPresignedUrl } from "./storageService";
 const serverAddr = process.env.SERVER_ADDRESS;
 
 export const fetchFollowings = async () => {
-    
+
     const options: AxiosRequestConfig = {
         method: "GET",
         url: `${serverAddr}/users/following/`,
@@ -21,7 +21,7 @@ export const fetchFollowings = async () => {
 };
 
 export const followUser = async () => {
-    
+
 };
 
 export const fetchUserInfo = async () => {
@@ -53,5 +53,28 @@ export const fetchUserInfo = async () => {
 };
 
 export const updateProfileCoverPicture = async () => {
+
+}
+
+export const fetchRandomUsers = async () => {
+
+    try {
+
+        const { data } = await axios.get(`${serverAddr}/users/random`, { withCredentials: true });
+
+        const randomUsers = await Promise.all(data.map(async (user: User) => {
+            return {
+                ...user,
+                profilePath: user.profilePath
+                    ? await getPresignedUrl(user.profilePath)
+                    : null,
+            }
+        }))
+
+        return randomUsers;
+
+    } catch (error) {
+        console.error(error)
+    }
 
 }

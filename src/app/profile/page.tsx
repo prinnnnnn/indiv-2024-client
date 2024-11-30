@@ -6,34 +6,17 @@ import { useEffect, useState } from "react";
 import { fetchAllPosts, fetchUserPosts } from "@/service/postServices";
 import { Post, User } from "@/common/model";
 import { useStore } from "@/stores/storeContext";
+import { ProfileViewModel } from "./ProfileViewModel";
+import { observer } from "mobx-react-lite";
 
 const ProfilePage = () => {
-    const store = useStore();
-    const [userId, setUserId] = useState<number | null>(null);
-    let user: User | null;
-
-    useEffect(() => {
-        const fetchData = async () => {
-
-            user = store!.getUserInfo;
-            console.log(`user : ${user}`);
-
-            let userPosts: Post[] = [];
-            if (user) {
-                setUserId(user.id);
-                userPosts = (await fetchUserPosts(user.id)) as Post[];
-            }
-
-            store!.setUserFeeds(userPosts);
-        };
-
-        fetchData();
-    }, [userId]);
+    
+    const [viewModel] = useState<ProfileViewModel>(new ProfileViewModel());
 
     return (
         <div className="flex flex-col gap-3">
-            <Profile />
-            {store!.userPosts
+            <Profile vm={viewModel}/>
+            {viewModel.posts && viewModel.posts
                 .slice()
                 .sort((a, b) => {
                     return (
@@ -42,10 +25,10 @@ const ProfilePage = () => {
                     );
                 })
                 .map(post => (
-                    <PostWidget post={post} />
+                    <PostWidget post={post} vm={viewModel}/>
                 ))}
         </div>
     );
 };
 
-export default ProfilePage;
+export default observer(ProfilePage);
