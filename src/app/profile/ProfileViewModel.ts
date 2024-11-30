@@ -55,7 +55,7 @@ export class ProfileViewModel implements PostWidgetVM {
         }
     };
 
-    constructor() {
+    constructor(id?: number) {
         
         this.user = undefined;
         this.posts = [];

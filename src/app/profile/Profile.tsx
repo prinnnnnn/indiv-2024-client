@@ -1,6 +1,5 @@
 "use client";
 
-import { User } from "@/common/model";
 import { useTheme } from "../ui/ThemeContext";
 
 /* picture */
@@ -9,9 +8,6 @@ import defaultCover from "@/public/assets/default-cover.jpg";
 
 import Image from "next/image";
 import "@/app/ui/hoverable.css";
-import { useEffect, useState } from "react";
-import { fetchUserInfo } from "@/service/userServices";
-import { useStore } from "@/stores/storeContext";
 import { ProfileViewModel } from "./ProfileViewModel";
 import { observer } from "mobx-react-lite";
 
@@ -23,19 +19,6 @@ const Profile = ({ vm }: ProfileProp) => {
 
     const { palette } = useTheme();
 
-    // useEffect(() => {
-
-    //     const fetchData = async () => {
-    //         /* @ts-ignore */
-    //         fetchUserInfo(userId)
-    //             .then(res => setUser(res));
-    //     }
-
-    //     if (userId) {
-    //         fetchData();
-    //     } 
-
-    // }, []);
     if (vm.isLoading) {
         return <div>Loading...</div>
     }
