@@ -47,7 +47,7 @@ export class HomeViewModel {
             })
 
             this.isLoading = false;
-            // Add similar pattern for likedPostIds
+            
         } catch (error) {
             console.error("Error initializing data:", error);
         }
@@ -122,8 +122,16 @@ export class HomeViewModel {
     
             if (type === "dislike") {
                 this.likedPostIds = this.likedPostIds!.filter(id => postId !== id);
+                this.posts = this.posts!.map(post => (post.id === postId ? {
+                    ...post,
+                    likeCounts: post.likeCounts - 1,
+                } : post))
             } else {
                 this.likedPostIds!.push(postId);
+                this.posts = this.posts!.map(post => (post.id === postId ? {
+                    ...post,
+                    likeCounts: post.likeCounts + 1,
+                } : post))
             }
 
             console.log(this.likedPostIds);

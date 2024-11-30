@@ -20,6 +20,7 @@ export interface Post {
     authorId: number
     author: User
     profileImg?: string
+    likeCounts: number
 }
 
 export interface RegisterForm {

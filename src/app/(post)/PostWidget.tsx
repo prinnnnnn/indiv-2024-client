@@ -21,6 +21,7 @@ import { useTheme } from "@/app/ui/ThemeContext";
 import { Post } from "@/common/model";
 import { HomeViewModel } from "../home/HomeViewModel";
 import { observer } from "mobx-react-lite";
+import { formatNumber } from "@/utils/helpers";
 
 interface PostProp {
     post?: Post;
@@ -33,11 +34,11 @@ const PostWidget: FC<PostProp> = ({ post, vm }) => {
 
     const { palette } = useTheme();
 
-    const [isLiked, setLiked] = useState<boolean>(vm.isLikedByLoggedInUser(post!.id));
+    // const [isLiked, setLiked] = useState<boolean>(vm.isLikedByLoggedInUser(post!.id));
 
     useEffect(() => {
-        setLiked(vm.isLikedByLoggedInUser(post!.id));
-        console.log(`side effect run at PostWidget`);
+        // setLiked(vm.isLikedByLoggedInUser(post!.id));
+        // console.log(`side effect run at PostWidget`);
     }, [vm.isLoading]);
 
     return (
@@ -105,9 +106,10 @@ const PostWidget: FC<PostProp> = ({ post, vm }) => {
 
                 {/* Buttons */}
                 <div className=" my-4 flex flex-row justify-around text-lg md:text-xl">
-                    <button className="flex items-center gap-0" onClick={async () => {await vm.likePost(post!.id); setLiked(prev => !prev)}}>
-                        {/* <b>12.4M</b> */}
-                        {isLiked ? (
+                    <button className="flex items-center gap-0" onClick={async () => {await vm.likePost(post!.id); }}>
+                    {/* <button className="flex items-center gap-0" onClick={async () => {await vm.likePost(post!.id); setLiked(prev => !prev)}}> */}
+                        <b>{formatNumber(post!.likeCounts)}</b>
+                        {vm.isLikedByLoggedInUser(post!.id) ? (
                             <AiFillFire
                                 fontSize={25}
                                 color={`${palette.primary}`}
@@ -119,11 +121,11 @@ const PostWidget: FC<PostProp> = ({ post, vm }) => {
                         {/* liked post */}
                     </button>
                     <div className="flex items-center gap-1">
-                        {/* <b>505k</b> */}
+                        <b>0</b>
                         <FaCommentDots fontSize={25} />
                     </div>
                     <div className="flex items-center gap-0">
-                        {/* <b>67.3k</b> */}
+                        <b>0</b>
                         <div>
                             <IoIosShareAlt fontSize={25} />
                         </div>
