@@ -49,7 +49,7 @@ const HomePage = () => {
                                         new Date(a.createdAt).getTime()
                                     );
                                 })
-                                .map(post => <PostWidget post={post} />)}
+                                .map(post => <PostWidget post={post} vm={viewModel} />)}
                     </div>
                 </div>
 

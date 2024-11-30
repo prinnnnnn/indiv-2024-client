@@ -2,10 +2,8 @@
 
 /* React */
 import Image from "next/image";
-import React, { FC } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import { format } from "date-fns";
-// import LeBron from "@/public/assets/LeBron.png";
-// import LeBron_Post from "@/public/assets/LeBron_Post.jpg";
 
 /* picture */
 import defaultProfile from "@/public/assets/default-profile.jpg";
@@ -21,20 +19,26 @@ import { useTheme } from "@/app/ui/ThemeContext";
 
 /* Model */
 import { Post } from "@/common/model";
+import { HomeViewModel } from "../home/HomeViewModel";
+import { observer } from "mobx-react-lite";
 
 interface PostProp {
     post?: Post;
+    vm: HomeViewModel;
 }
 
-// const names = [
-//     "Lionel Messi",
-//     "Lamine Yamal"
-// ]
+const PostWidget: FC<PostProp> = ({ post, vm }) => {
 
-const PostWidget: FC<PostProp> = ({ post }) => {
     const username = `${post!.author.firstName} ${post!.author.lastName}`;
 
     const { palette } = useTheme();
+
+    const [isLiked, setLiked] = useState<boolean>(vm.isLikedByLoggedInUser(post!.id));
+
+    useEffect(() => {
+        setLiked(vm.isLikedByLoggedInUser(post!.id));
+        console.log(`side effect run at PostWidget`);
+    }, [vm.isLoading]);
 
     return (
         <>
@@ -101,13 +105,19 @@ const PostWidget: FC<PostProp> = ({ post }) => {
 
                 {/* Buttons */}
                 <div className=" my-4 flex flex-row justify-around text-lg md:text-xl">
-                    <div className="flex items-center gap-0">
+                    <button className="flex items-center gap-0" onClick={async () => {await vm.likePost(post!.id); setLiked(prev => !prev)}}>
                         {/* <b>12.4M</b> */}
-                        <AiFillFire fontSize={25} />
+                        {isLiked ? (
+                            <AiFillFire
+                                fontSize={25}
+                                color={`${palette.primary}`}
+                            />
+                        ) : (
+                            <AiFillFire fontSize={25} />
+                        )}
 
                         {/* liked post */}
-                        {/* <AiFillFire fontSize={25} color={`${palette.primary}`}/> */} 
-                    </div>
+                    </button>
                     <div className="flex items-center gap-1">
                         {/* <b>505k</b> */}
                         <FaCommentDots fontSize={25} />
@@ -137,4 +147,4 @@ const PostWidget: FC<PostProp> = ({ post }) => {
     );
 };
 
-export default PostWidget;
+export default observer(PostWidget);

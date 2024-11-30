@@ -81,6 +81,39 @@ export const fetchFollowersPosts = async () => {
 };
 
 export const likePost = async (postId: number) => {
-    /* userId from redux store */
-    /* PATCH - /posts/:userId/:postId */
+    /* PATCH - /posts/:postId */
+
+    try {
+
+        const options = {
+            method: "PATCH",
+            url: `${serverAddr}/posts/${postId}`,
+            withCredentials: true,
+        };
+
+        const response = await axios.request(options);
+
+        // return {
+        return response.status === 200 ? "dislike" : "like";
+            // data: response.data,
+        // }
+        
+    } catch (error) {
+        throw error;
+    }
+
 };
+
+export const fetchLikedPostsIds = async () => {
+
+    try {
+
+        const likeRecords = await axios.get(`${serverAddr}/posts/likesRecord/`, { withCredentials: true });
+
+        return likeRecords;
+        
+    } catch (error) {
+        throw error;
+    }
+
+}

@@ -1,18 +1,20 @@
 "use client"
 
 import { Post, User } from "@/common/model";
-import { fetchAllPosts } from "@/service/postServices";
+import { fetchAllPosts, fetchLikedPostsIds, likePost } from "@/service/postServices";
 import { fetchFollowings, fetchUserInfo } from "@/service/userServices";
 import { getCookie } from "@/utils/helpers";
 import assert from "assert";
-import { autorun, makeObservable, makeAutoObservable, toJS, computed, action, runInAction, observable } from "mobx";
+import { autorun, makeObservable, computed, action, runInAction, observable } from "mobx";
 
 export class HomeViewModel {
 
-    public user: User | undefined;
-    public posts: Post[] | undefined;
-    public followingIds: number[] | undefined;
-    // private likedPostIds: number[];
+    user: User | undefined;
+    posts: Post[] | undefined;
+    followingIds: number[] | undefined;
+    likedPostIds: number[];
+    isLoading: boolean;
+    // numLikes: number;
 
     private initData = async () => {
         
@@ -39,6 +41,12 @@ export class HomeViewModel {
             });
 
             /* fetch posts'id liked by user */
+            const likedIds = await fetchLikedPostsIds();
+            runInAction(() => {
+                this.likedPostIds = likedIds.data;
+            })
+
+            this.isLoading = false;
             // Add similar pattern for likedPostIds
         } catch (error) {
             console.error("Error initializing data:", error);
@@ -51,6 +59,8 @@ export class HomeViewModel {
         this.user = undefined;
         this.posts = [];
         this.followingIds = [];
+        this.likedPostIds = [];
+        this.isLoading = true;
         this.initData();
         
         makeObservable(this, {
@@ -58,6 +68,9 @@ export class HomeViewModel {
             /* observable */
             user: observable,
             posts: observable,
+            followingIds: observable,
+            likedPostIds: observable,
+            isLoading: observable,
 
             /* computed */
             userInfo: computed,
@@ -66,20 +79,22 @@ export class HomeViewModel {
             /* actions */
             likePost: action,
             followUser: action,
+            isLikedByLoggedInUser: action,
 
         });
 
 
         autorun(() => {
             console.log(`Current state of home view model...`);
-            console.log(this.user);
-            console.log(this.posts);
-            console.log(this.followingIds);
+            // console.log(this.user);
+            // console.log(this.posts);
+            // console.log(this.followingIds);
+            console.log(this.likedPostIds);
+            console.log(this.isLoading);
             console.log(`\n\n`);
         })
 
     }
-
 
     get userInfo() {
         return this.user;
@@ -97,8 +112,30 @@ export class HomeViewModel {
         this.posts?.pop();
     }
 
-    likePost() {
+    async likePost(postId: number) {
 
+        try {
+
+            // console.log(`likePost got called inside viewModel`);
+
+            const type = await likePost(postId);
+    
+            if (type === "dislike") {
+                this.likedPostIds = this.likedPostIds!.filter(id => postId !== id);
+            } else {
+                this.likedPostIds!.push(postId);
+            }
+
+            console.log(this.likedPostIds);
+
+        } catch (err) {
+            console.error(err);
+        }
+
+    }
+
+    isLikedByLoggedInUser(postId: number) {
+        return this.likedPostIds.includes(postId);
     }
 
     followUser() {

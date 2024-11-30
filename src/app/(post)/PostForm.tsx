@@ -11,12 +11,10 @@ import { IoClose } from "react-icons/io5";
 import "@/app/ui/hoverable.css";
 import { createPost, fetchAllPosts } from "@/service/postServices";
 import { HomeViewModel } from "@/app/home/HomeViewModel";
-// import { useRouter } from "next/navigation";
 
 const PostForm = ({ vm }: { vm: HomeViewModel}) => {
+
     const { palette } = useTheme();
-    // const store = useStore();
-    // const router = useRouter()
 
     const closeModal = () => {
         setShowModal(false);
