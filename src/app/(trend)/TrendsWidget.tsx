@@ -14,7 +14,10 @@ const TrendsWidget = () => {
     return (
         <div
             className={` w-full min-h-60 rounded-lg p-4`}
-            style={{ background: palette.bgPrimary }}
+            style={{ 
+                background: palette.bgPrimary,
+                boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
+            }}
         >
             <h3 style={{ color: palette.primary }}>Trendings</h3>
 
@@ -33,3 +36,5 @@ const TrendsWidget = () => {
 };
 
 export default TrendsWidget;
+
+// box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
