@@ -7,8 +7,9 @@ import { PostWidgetVM } from "@/utils/viewModel";
 import assert from "assert";
 import { autorun, makeObservable, computed, action, runInAction, observable } from "mobx";
 
-export class ProfileViewModel implements PostWidgetVM {
+export class ProfileIDViewModel implements PostWidgetVM {
 
+    userId: number;
     user: User | undefined;
     posts: Post[] | undefined;
     followingIds: number[] | undefined;
@@ -22,7 +23,7 @@ export class ProfileViewModel implements PostWidgetVM {
             assert(window !== undefined);
 
             /* fetch user info */
-            const userInfo = await fetchUserInfo();
+            const userInfo = await fetchUserInfo(this.userId);
             runInAction(() => {
                 this.user = userInfo;
             });
@@ -33,7 +34,7 @@ export class ProfileViewModel implements PostWidgetVM {
                 this.followingIds = followingIds;
             });
             
-            /* fetch follower posts */
+            /* fetch user's posts */
             const posts = await fetchAllPosts();
             runInAction(() => {
                 this.posts = posts;
@@ -53,8 +54,9 @@ export class ProfileViewModel implements PostWidgetVM {
         }
     };
 
-    constructor(id?: number) {
+    constructor(userId: number) {
         
+        this.userId = userId;
         this.user = undefined;
         this.posts = [];
         this.followingIds = [];
@@ -78,14 +80,6 @@ export class ProfileViewModel implements PostWidgetVM {
 
         });
 
-    }
-
-    createPost(post: Post) {
-        this.posts?.push(post);
-    }
-
-    rollBackCreatePost() {
-        this.posts?.pop();
     }
 
     async likePost(postId: number) {

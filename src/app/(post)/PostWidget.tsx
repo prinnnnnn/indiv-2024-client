@@ -32,12 +32,7 @@ interface PostProp {
 const PostWidget: FC<PostProp> = ({ post, vm }) => {
 
     const username = `${post!.author.firstName} ${post!.author.lastName}`;
-    // const [isLiked, setLiked] = useState<boolean>(vm.isLikedByLoggedInUser(post.id))
     const { palette } = useTheme();
-
-    useEffect(() => {
-        // setLiked(vm.isLikedByLoggedInUser(post.id))
-    }, [vm.isLoading])
 
     return (
         <>

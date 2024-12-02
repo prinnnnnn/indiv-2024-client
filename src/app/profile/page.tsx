@@ -25,7 +25,7 @@ const ProfilePage = () => {
                     );
                 })
                 .map(post => (
-                    <PostWidget post={post} vm={viewModel}/>
+                    <PostWidget post={post} vm={viewModel} key={post.id} />
                 ))}
         </div>
     );

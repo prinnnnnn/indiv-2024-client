@@ -15,7 +15,7 @@ const SuggestionCard = ({
                 {user.profilePath && <img
                     src={user.profilePath}
                     alt="Profile img"
-                    className="object-cover rounded-full mt-[0.3rem]"
+                    className="w-full h-full object-cover rounded-full mt-[0.3rem]"
                 />}
                 {!user.profilePath && <Image
                     src={defaultProfile}
@@ -32,14 +32,6 @@ const SuggestionCard = ({
     );
 };
 
-const mockUsers = [
-    { name: "Leo Messi", bio: "The best player in " },
-    { name: "u2", bio: "bio2" },
-    { name: "u3", bio: "bio3" },
-    { name: "u4", bio: "bio4" },
-    { name: "u5", bio: "bio5" },
-];
-
 const PeopleWidget = () => {
     const { palette } = useTheme();
     const [users, setUsers] = useState<User[] | null>(null);
@@ -48,7 +40,6 @@ const PeopleWidget = () => {
 
         const fetchdata = async () => {
             const users = await fetchRandomUsers();
-            console.log(users);
             setUsers(users!);
         }
 

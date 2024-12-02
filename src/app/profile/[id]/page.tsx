@@ -1,20 +1,37 @@
 "use client";
 
 import { fetchUserInfo } from "@/service/userServices";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Profile from "../Profile";
 import { User } from "@/common/model";
+import { observer } from "mobx-react-lite";
+import { ProfileIDViewModel } from "./ProfileIDViewModel";
+import PostWidget from "@/app/(post)/PostWidget";
+import { usePathname, useParams } from "next/navigation";
 
-async function page({ params }: { params: { id: string } }) {
-  const id = params.id;
+const ProfileByIdPage = () => {
 
-  return (
-    <div className="">
-      <div className="flex flex-col gap-3">
-        <p>Profile ID: {id}</p>
-      </div>
-    </div>
-  );
-}
+    const { id } = useParams();
+    const userId = id;
+    const [viewModel] = useState<ProfileIDViewModel>(new ProfileIDViewModel(Number(userId)));
 
-export default page;
+    return (
+        <div className="flex flex-col gap-3">
+            <Profile vm={viewModel} />
+            {viewModel.posts &&
+                viewModel.posts
+                    .slice()
+                    .sort((a, b) => {
+                        return (
+                            new Date(b.createdAt).getTime() -
+                            new Date(a.createdAt).getTime()
+                        );
+                    })
+                    .map(post => (
+                        <PostWidget post={post} vm={viewModel} key={post.id} />
+                    ))}
+        </div>
+    );
+};
+
+export default observer(ProfileByIdPage);

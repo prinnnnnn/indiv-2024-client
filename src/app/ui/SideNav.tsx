@@ -62,14 +62,13 @@ const SideNav: React.FC<SideNavProp> = ({ menus }) => {
     const { theme, palette } = useTheme();
     const pathName = usePathname();
     const router = useRouter();
-    const store = useStore();
 
     const clientLogOut = () => {
         try {
-            store!.logout();
+            document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             router.push("/login");
         } catch (error) {
-            // console.log(error);
+            console.error(error);
             alert("error");
         }
     };

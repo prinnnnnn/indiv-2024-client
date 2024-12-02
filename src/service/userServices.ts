@@ -24,12 +24,11 @@ export const followUser = async () => {
 
 };
 
-export const fetchUserInfo = async () => {
-    // console.log(`fetching user user id:${userId}`);
+export const fetchUserInfo = async (userId?: number) => {
 
     const options: AxiosRequestConfig = {
         method: "GET",
-        url: `${serverAddr}/users/`,
+        url: `${serverAddr}/users/`.concat(userId ? `${userId}` : "profile"),
         withCredentials: true,
     };
 

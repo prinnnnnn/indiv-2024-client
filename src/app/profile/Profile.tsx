@@ -10,18 +10,24 @@ import Image from "next/image";
 import "@/app/ui/hoverable.css";
 import { ProfileViewModel } from "./ProfileViewModel";
 import { observer } from "mobx-react-lite";
+import { ProfileVM } from "@/utils/viewModel";
+import { useParams } from "next/navigation";
 
 interface ProfileProp {
-    vm: ProfileViewModel
+    vm: ProfileVM;
 }
 
 const Profile = ({ vm }: ProfileProp) => {
-
+    
+    const { id } = useParams();
+    const userId = id;
     const { palette } = useTheme();
 
     if (vm.isLoading) {
-        return <div>Loading...</div>
+        return <b style={{ color: `${palette.accent}` }}>Loading...</b>;
     }
+
+    console.log(`userId: ${userId}`);
 
     return (
         <div
@@ -46,28 +52,40 @@ const Profile = ({ vm }: ProfileProp) => {
             {/* Profile Image and Name */}
             <div className="sm:w-[80%] xs:w-[60%] mx-auto flex flex-col md:flex-row items-center md:items-start">
                 <div className=" pb-[-40] aspect-square w-1/4 lg:w-[12rem] md:w-[10rem] sm:w-[8rem] xs:w-[7rem] relative lg:bottom-[3rem] sm:bottom-[2rem] bottom-[3rem]">
-                    <Image
-                        src={defaultProfile}
-                        alt="Profile img"
-                        layout="fill"
-                        className="object-cover rounded-md"
-                        style={{ outline: `3px solid ${palette.secondary}` }}
-                    />
+                    {vm.user && vm.user.profilePath ? (
+                        <img
+                            src={vm.user.profilePath}
+                            alt="User Profile"
+                            className="w-full h-full object-cover rounded-full bg-white"
+                        />
+                    ) : (
+                        <Image
+                            src={defaultProfile}
+                            alt="Profile img"
+                            layout="fill"
+                            className="object-cover rounded-md"
+                            style={{
+                                outline: `3px solid ${palette.secondary}`,
+                            }}
+                        />
+                    )}
                 </div>
 
                 <div className="flex flex-col md:flex-row w-full md:my-6 md:pl-4 justify-center md:justify-between">
                     <div className="md:hidden mx-auto mb-3 md:mx-5 md:my-auto justify-center items-center">
-                        <button
-                            className="hoverable flex rounded-md px-4 py-2 text-sm text-white transition-colors"
-                            style={
-                                {
-                                    "--bg-color": palette.primary,
-                                    "--bg-hover": palette.bgHover,
-                                } as any
-                            }
-                        >
-                            Follow
-                        </button>
+                        {userId && (
+                            <button
+                                className="hoverable flex rounded-md px-4 py-2 text-sm text-white transition-colors"
+                                style={
+                                    {
+                                        "--bg-color": palette.primary,
+                                        "--bg-hover": palette.bgHover,
+                                    } as any
+                                }
+                            >
+                                Follow
+                            </button>
+                        )}
                     </div>
 
                     <h1 className="text-xl lg:text-4xl md:text-3xl sm:text-xl text-center md:text-left">
