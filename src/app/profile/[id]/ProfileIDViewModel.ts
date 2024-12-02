@@ -5,7 +5,7 @@ import { fetchAllPosts, fetchLikedPostsIds, likePost } from "@/service/postServi
 import { fetchFollowings, fetchUserInfo } from "@/service/userServices";
 import { PostWidgetVM } from "@/utils/viewModel";
 import assert from "assert";
-import { autorun, makeObservable, computed, action, runInAction, observable } from "mobx";
+import { makeObservable, action, runInAction, observable } from "mobx";
 
 export class ProfileIDViewModel implements PostWidgetVM {
 

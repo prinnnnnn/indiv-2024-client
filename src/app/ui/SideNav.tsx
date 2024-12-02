@@ -10,7 +10,7 @@ import { useStore } from "@/stores/storeContext";
 
 /* Icons for navs */
 import { CgMoreO, CgProfile } from "react-icons/cg";
-import { IoHome } from "react-icons/io5";
+import { IoHome, IoPersonCircleSharp } from "react-icons/io5";
 import { MdExplore } from "react-icons/md";
 
 /* Client-Routing */
@@ -45,7 +45,7 @@ const defaultMenus = [
     },
     {
         name: "Profile",
-        icon: <CgProfile className="text-xl" />,
+        icon: <IoPersonCircleSharp className="text-xl" />,
     },
     {
         name: "More",

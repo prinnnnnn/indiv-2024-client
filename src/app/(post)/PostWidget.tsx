@@ -2,7 +2,7 @@
 
 /* React */
 import Image from "next/image";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 import { format } from "date-fns";
 
 /* picture */

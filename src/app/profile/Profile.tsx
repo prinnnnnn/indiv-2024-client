@@ -8,7 +8,6 @@ import defaultCover from "@/public/assets/default-cover.jpg";
 
 import Image from "next/image";
 import "@/app/ui/hoverable.css";
-import { ProfileViewModel } from "./ProfileViewModel";
 import { observer } from "mobx-react-lite";
 import { ProfileVM } from "@/utils/viewModel";
 import { useParams } from "next/navigation";
@@ -18,7 +17,6 @@ interface ProfileProp {
 }
 
 const Profile = ({ vm }: ProfileProp) => {
-    
     const { id } = useParams();
     const userId = id;
     const { palette } = useTheme();
@@ -27,7 +25,8 @@ const Profile = ({ vm }: ProfileProp) => {
         return <b style={{ color: `${palette.accent}` }}>Loading...</b>;
     }
 
-    console.log(`userId: ${userId}`);
+    console.log(`userId: ${userId !== undefined}`);
+    const canFollow = userId !== undefined;
 
     return (
         <div
@@ -73,19 +72,17 @@ const Profile = ({ vm }: ProfileProp) => {
 
                 <div className="flex flex-col md:flex-row w-full md:my-6 md:pl-4 justify-center md:justify-between">
                     <div className="md:hidden mx-auto mb-3 md:mx-5 md:my-auto justify-center items-center">
-                        {userId && (
-                            <button
-                                className="hoverable flex rounded-md px-4 py-2 text-sm text-white transition-colors"
-                                style={
-                                    {
-                                        "--bg-color": palette.primary,
-                                        "--bg-hover": palette.bgHover,
-                                    } as any
-                                }
-                            >
-                                Follow
-                            </button>
-                        )}
+                        {canFollow && <button
+                            className="hoverable flex rounded-md px-4 py-2 text-sm text-white transition-colors"
+                            style={
+                                {
+                                    "--bg-color": palette.primary,
+                                    "--bg-hover": palette.bgHover,
+                                } as any
+                            }
+                        >
+                            Follow
+                        </button>}
                     </div>
 
                     <h1 className="text-xl lg:text-4xl md:text-3xl sm:text-xl text-center md:text-left">
@@ -93,7 +90,7 @@ const Profile = ({ vm }: ProfileProp) => {
                     </h1>
 
                     <div className="hidden md:block mx-auto mt-3 md:mx-5 md:my-auto justify-center items-center">
-                        <button
+                        {canFollow && <button
                             className="hoverable flex rounded-md px-4 py-2 text-base text-white transition-colors"
                             style={
                                 {
@@ -103,7 +100,7 @@ const Profile = ({ vm }: ProfileProp) => {
                             }
                         >
                             Follow
-                        </button>
+                        </button>}
                     </div>
                 </div>
             </div>
