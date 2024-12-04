@@ -25,7 +25,6 @@ const Profile = ({ vm }: ProfileProp) => {
         return <b style={{ color: `${palette.accent}` }}>Loading...</b>;
     }
 
-    console.log(`userId: ${userId !== undefined}`);
     const canFollow = userId !== undefined;
 
     return (

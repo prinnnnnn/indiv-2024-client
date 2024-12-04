@@ -2,17 +2,17 @@
 
 import { Post, User } from "@/common/model";
 import { fetchAllPosts, fetchLikedPostsIds, likePost } from "@/service/postServices";
-import { fetchFollowings, fetchUserInfo } from "@/service/userServices";
-import { PostWidgetVM } from "@/utils/viewModel";
+import { fetchFollowings, fetchUserInfo, updateProfileCoverPicture } from "@/service/userServices";
+import { PostWidgetVM, ProfileVM } from "@/utils/viewModel";
 import assert from "assert";
 import { autorun, makeObservable, computed, action, runInAction, observable } from "mobx";
 
-export class ProfileViewModel implements PostWidgetVM {
+export class ProfileViewModel implements PostWidgetVM, ProfileVM {
 
     user: User | undefined;
     posts: Post[] | undefined;
-    followingIds: number[] | undefined;
-    likedPostIds: number[];
+    followingIds: number[] = [];
+    likedPostIds: number[] = [];
     isLoading: boolean;
 
     private initData = async () => {
@@ -53,7 +53,7 @@ export class ProfileViewModel implements PostWidgetVM {
         }
     };
 
-    constructor(id?: number) {
+    constructor() {
         
         this.user = undefined;
         this.posts = [];
@@ -78,6 +78,14 @@ export class ProfileViewModel implements PostWidgetVM {
 
         });
 
+    }
+
+    async changeProfilePic(picture: File): Promise<void> {
+        this.user = await updateProfileCoverPicture({ picture }, "profile");
+    }
+
+    async changeCoverPic(picture: File): Promise<void> {
+        this.user = await updateProfileCoverPicture({ picture }, "cover");
     }
 
     createPost(post: Post) {

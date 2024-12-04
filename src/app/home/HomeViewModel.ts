@@ -44,7 +44,7 @@ export class HomeViewModel implements PostWidgetVM {
             /* fetch posts'id liked by user */
             const likedIds = await fetchLikedPostsIds();
             runInAction(() => {
-                this.likedPostIds = likedIds.data;
+                this.likedPostIds = likedIds;
             })
 
             this.isLoading = false;

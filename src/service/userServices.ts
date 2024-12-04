@@ -20,8 +20,21 @@ export const fetchFollowings = async () => {
     }
 };
 
-export const followUser = async () => {
+export const followUser = async (followId: number) => {
 
+    const options = { 
+        method: 'PATCH',
+        url: `${serverAddr}/users/follow/${followId}`,
+    };
+
+    try {
+
+        const { data } = await axios.request(options);
+        return data.id;
+
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 export const fetchUserInfo = async (userId?: number) => {
@@ -51,7 +64,33 @@ export const fetchUserInfo = async (userId?: number) => {
     }
 };
 
-export const updateProfileCoverPicture = async () => {
+export const updateProfileCoverPicture = async (data: any, type: "profile" | "cover") => {
+
+    const options: AxiosRequestConfig = {
+        method: 'PATCH',
+        url: `${serverAddr}/users/upload/${type}Picture`,
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+        data: data,
+    };
+
+    try {
+        const { data } = await axios.request(options);
+
+        const user: User = {
+            ...data,
+            coverPhotoUrl: data.coverPhotoUrl
+                ? await getPresignedUrl(data.coverPhotoUrl)
+                : null,
+            profilePath: data.profilePath
+                ? await getPresignedUrl(data.profilePath)
+                : null,
+        };
+
+        return user;
+    } catch (error) {
+        throw error;
+    }
 
 }
 

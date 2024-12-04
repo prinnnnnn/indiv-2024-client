@@ -23,6 +23,7 @@ import { HomeViewModel } from "../home/HomeViewModel";
 import { observer } from "mobx-react-lite";
 import { formatNumber } from "@/utils/helpers";
 import { PostWidgetVM } from "@/utils/viewModel";
+import Link from "next/link";
 
 interface PostProp {
     post: Post;
@@ -30,8 +31,9 @@ interface PostProp {
 }
 
 const PostWidget: FC<PostProp> = ({ post, vm }) => {
-
-    const username = `${post!.author.firstName} ${post!.author.lastName}`;
+    
+    console.log(post);
+    const username = `${post.author.firstName} ${post.author.lastName}`;
     const { palette } = useTheme();
 
     return (
@@ -43,10 +45,10 @@ const PostWidget: FC<PostProp> = ({ post, vm }) => {
                 {/* Header */}
                 <div className="flex flex-row gap-3 items-center mb-2">
                     <div className="relative w-[50px] h-[50px]">
-                        {post!.profileImg ? (
+                        {post.profileImg ? (
                             <img
                                 key={`${post?.profileImg}`}
-                                src={`${post!.profileImg}`}
+                                src={`${post.profileImg}`}
                                 alt="Profile img"
                                 className="object-cover w-full h-full rounded-full"
                             />
@@ -59,10 +61,15 @@ const PostWidget: FC<PostProp> = ({ post, vm }) => {
                         )}
                     </div>
                     <div className="flex flex-col justify-center">
-                        <h4 className="text-lg md:text-xl">{username}</h4>
+                        <Link
+                            href={`/profile/${post.authorId}`}
+                            className="hover:underline transition duration-300 ease-in-out"
+                        >
+                            <h4 className="text-lg md:text-xl">{username}</h4>
+                        </Link>
                         <p className="text-sm">
                             {format(
-                                new Date(post!.createdAt),
+                                new Date(post.createdAt),
                                 "dd MMMM yyyy HH:mm"
                             )}
                         </p>
@@ -99,17 +106,24 @@ const PostWidget: FC<PostProp> = ({ post, vm }) => {
 
                 {/* Buttons */}
                 <div className=" my-4 flex flex-row justify-around text-lg md:text-xl">
-                    <button className="flex items-center gap-0" onClick={async () => {await vm.likePost(post!.id); }}>
-                    {/* <button className="flex items-center gap-0" onClick={async () => {await vm.likePost(post!.id); setLiked(prev => !prev)}}> */}
+                    <button
+                        className="flex items-center gap-0"
+                        onClick={async () => {
+                            await vm.likePost(post.id);
+                        }}
+                    >
+                        {/* <button className="flex items-center gap-0" onClick={async () => {await vm.likePost(post.id); setLiked(prev => prev)}}> */}
                         <b>{formatNumber(post!.likeCounts)}</b>
-                        {vm.isLikedByLoggedInUser(post!.id) ? (
-                            <AiFillFire
-                                fontSize={25}
-                                color={`${palette.primary}`}
-                            />
-                        ) : (
-                            <AiFillFire fontSize={25} />
-                        )}
+
+                        <AiFillFire
+                            fontSize={25}
+                            color={`${palette.primary}`}
+                            style={{
+                                color: vm.isLikedByLoggedInUser(post!.id)
+                                    ? palette.primary
+                                    : palette.text,
+                            }}
+                        />
 
                         {/* liked post */}
                     </button>

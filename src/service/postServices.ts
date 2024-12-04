@@ -108,9 +108,36 @@ export const fetchLikedPostsIds = async () => {
 
     try {
 
-        const likeRecords = await axios.get(`${serverAddr}/posts/likesRecord/`, { withCredentials: true });
+        const { data } = await axios.get(`${serverAddr}/posts/likesRecord/`, { withCredentials: true });
 
-        return likeRecords;
+        return data;
+        
+    } catch (error) {
+        throw error;
+    }
+
+}
+
+export const fetchRandomPosts = async () => {
+    
+    try {
+
+        const options: AxiosRequestConfig = {
+            method: "GET",
+            url: `${serverAddr}/posts/random`,
+            withCredentials: true,
+        }
+
+        const { data } = await axios.request(options);
+        console.log(data);
+
+        const randomPosts = await Promise.all(data.map(async (post: Post) => ({
+            ...post,
+            imageUrl: post.imageUrl ? await getPresignedUrl(post.imageUrl) : post.imageUrl,
+            profileImg: post.author.profilePath ? await getPresignedUrl(post.author.profilePath) : null,
+        })));
+
+        return randomPosts; 
         
     } catch (error) {
         throw error;

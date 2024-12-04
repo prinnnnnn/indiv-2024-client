@@ -3,11 +3,11 @@
 import { Post, User } from "@/common/model";
 import { fetchAllPosts, fetchLikedPostsIds, likePost } from "@/service/postServices";
 import { fetchFollowings, fetchUserInfo } from "@/service/userServices";
-import { PostWidgetVM } from "@/utils/viewModel";
+import { PostWidgetVM, ProfileVM } from "@/utils/viewModel";
 import assert from "assert";
 import { makeObservable, action, runInAction, observable } from "mobx";
 
-export class ProfileIDViewModel implements PostWidgetVM {
+export class ProfileIDViewModel implements PostWidgetVM, ProfileVM {
 
     userId: number;
     user: User | undefined;
@@ -43,7 +43,7 @@ export class ProfileIDViewModel implements PostWidgetVM {
             /* fetch posts'id liked by user */
             const likedIds = await fetchLikedPostsIds();
             runInAction(() => {
-                this.likedPostIds = likedIds.data;
+                this.likedPostIds = likedIds;
             })
 
             this.isLoading = false;
@@ -80,6 +80,12 @@ export class ProfileIDViewModel implements PostWidgetVM {
 
         });
 
+    }
+    changeProfilePic(picture: File): void {
+        throw new Error("Method not implemented.");
+    }
+    changeCoverPic(picture: File): void {
+        throw new Error("Method not implemented.");
     }
 
     async likePost(postId: number) {

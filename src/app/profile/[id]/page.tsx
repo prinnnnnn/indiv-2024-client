@@ -1,13 +1,11 @@
 "use client";
 
-import { fetchUserInfo } from "@/service/userServices";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import Profile from "../Profile";
-import { User } from "@/common/model";
 import { observer } from "mobx-react-lite";
 import { ProfileIDViewModel } from "./ProfileIDViewModel";
 import PostWidget from "@/app/(post)/PostWidget";
-import { usePathname, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 
 const ProfileByIdPage = () => {
 
