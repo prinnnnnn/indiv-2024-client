@@ -143,7 +143,7 @@ const PostWidget: FC<PostProp> = ({ post, vm }) => {
                 </div>
 
                 {/* Captions with image. */}
-                {post?.imageUrl && (
+                {post?.imageUrl && post?.content !== "" && (
                     <div className="text-lg md:text-xl">
                         <p>
                             <span className="font-bold">{username}</span>{" "}

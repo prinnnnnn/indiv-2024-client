@@ -1,7 +1,7 @@
 "use client"
 
 import { Post, User } from "@/common/model";
-import { fetchAllPosts, fetchLikedPostsIds, likePost } from "@/service/postServices";
+import { fetchAllPosts, fetchLikedPostsIds, fetchUserPosts, likePost } from "@/service/postServices";
 import { fetchFollowings, fetchUserInfo } from "@/service/userServices";
 import { PostWidgetVM, ProfileVM } from "@/utils/viewModel";
 import assert from "assert";
@@ -35,7 +35,7 @@ export class ProfileIDViewModel implements PostWidgetVM, ProfileVM {
             });
             
             /* fetch user's posts */
-            const posts = await fetchAllPosts();
+            const posts = await fetchUserPosts(this.userId);
             runInAction(() => {
                 this.posts = posts;
             });
