@@ -2,10 +2,7 @@
 
 import PostWidget from "@/app/(post)/PostWidget";
 import Profile from "./Profile";
-import { useEffect, useState } from "react";
-import { fetchAllPosts, fetchUserPosts } from "@/service/postServices";
-import { Post, User } from "@/common/model";
-import { useStore } from "@/stores/storeContext";
+import {useState } from "react";
 import { ProfileViewModel } from "./ProfileViewModel";
 import { observer } from "mobx-react-lite";
 
@@ -16,7 +13,7 @@ const ProfilePage = () => {
     return (
         <div className="flex flex-col gap-3">
             <Profile vm={viewModel}/>
-            {viewModel.posts && viewModel.posts
+            {/* {viewModel.posts && viewModel.posts
                 .slice()
                 .sort((a, b) => {
                     return (
@@ -26,7 +23,7 @@ const ProfilePage = () => {
                 })
                 .map(post => (
                     <PostWidget post={post} vm={viewModel} key={post.id} />
-                ))}
+                ))} */}
         </div>
     );
 };

@@ -12,9 +12,10 @@ import "@/app/ui/hoverable.css";
 import { createPost, fetchAllPosts } from "@/service/postServices";
 import { HomeViewModel } from "@/app/home/HomeViewModel";
 
-const PostForm = ({ vm }: { vm: HomeViewModel}) => {
+const PostForm = ({ vm }: { vm: HomeViewModel }) => {
+  const { palette } = useTheme();
+  const user = vm.userInfo
 
-    const { palette } = useTheme();
 
   const closeModal = () => {
     setShowModal(false);
@@ -37,31 +38,30 @@ const PostForm = ({ vm }: { vm: HomeViewModel}) => {
     element.style.height = `${Math.max(element.scrollHeight, 50)}px`; // Set height based on content or minimum height
   };
 
-    // Handle the file selected through input
-    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0]; // Get the first file
-        if (file) {
-            setSelectedImage(file);
-        }
-    };
+  // Handle the file selected through input
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]; // Get the first file
+    if (file) {
+      setSelectedImage(file);
+    }
+  };
 
-    const handleSubmit = async () => {
-        
-        setIsPending(true);
-        setErrorMessage("");
-        const formData = new FormData();
-        if (postText !== "") formData.append("content", postText);
-        if (selectedImage) formData.append("picture", selectedImage);
+  const handleSubmit = async () => {
+    setIsPending(true);
+    setErrorMessage("");
+    const formData = new FormData();
+    if (postText !== "") formData.append("content", postText);
+    if (selectedImage) formData.append("picture", selectedImage);
 
-        try {
-            const post = await createPost(formData);
-            vm.createPost(post);
-        } catch (error: any) {
-            setErrorMessage("An unexpected error occurred.");
-        } finally {
-            setPostText("");
-            setIsPending(false);
-            closeModal();
+    try {
+      const post = await createPost(formData);
+      vm.createPost(post);
+    } catch (error: any) {
+      setErrorMessage("An unexpected error occurred.");
+    } finally {
+      setPostText("");
+      setIsPending(false);
+      closeModal();
 
       // Hard reload to fetch data
       window.location.reload();
