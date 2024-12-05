@@ -34,7 +34,7 @@ export const useTheme = () => {
 };
 
 const lightPalette: Palette = {
-    text: "black",
+    text: "#000000",
     primary: "#2fadfc",
     secondary: "#32a5fd",
     bgPrimary: "#ffffff",
@@ -52,7 +52,7 @@ const lightPalette: Palette = {
 };
 
 const darkPalette: Palette = {
-    text: "white",
+    text: "#FFFFFF",
     primary: "#ff7525",
     secondary: "#FF8F00",
     bgPrimary: "#3e3e3e",

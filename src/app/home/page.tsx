@@ -2,7 +2,7 @@
 
 import { useTheme } from "@/app/ui/ThemeContext";
 import ToggleThemeButton from "@/app/ui/ToggleThemeButton";
-import PeopleWidget from "@/app/ui/PeopleWidget";
+import PeopleWidget from "@/app/(people)/PeopleWidget";
 
 /* Components */
 import SideNav from "@/app/ui/SideNav";
@@ -15,30 +15,11 @@ import PostWidget from "@/app/(post)/PostWidget";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { HomeViewModel } from "./HomeViewModel";
-import { useStore } from "@/stores/storeContext";
-import { fetchAllPosts } from "@/service/postServices";
-import { Post } from "@/common/model";
 
 const HomePage = () => {
+
     const { palette } = useTheme();
-    const store = useStore();
-    const [viewModel, setViewModel] = useState<HomeViewModel | null>();
-
-    useEffect(() => {
-        console.log(store!.getUserInfo);
-        const fetchData = async () => {
-            const posts = (await fetchAllPosts()) as Post[];
-            store!.setFeeds(posts);
-            setViewModel(
-                new HomeViewModel({
-                    user: store!.getUserInfo,
-                    posts: store!.homeFeeds,
-                })
-            );
-        };
-
-        fetchData();
-    }, []);
+    const [viewModel] = useState<HomeViewModel>(() => new HomeViewModel());
 
     return (
         <div className="flex flex-row justify-center w-full">
@@ -46,6 +27,7 @@ const HomePage = () => {
                 <ToggleThemeButton />
             </div>
             <div className="flex flex-row justify-evenly md:justify-between w-full md:w-10/12 gap-0 sm:gap-5 pt-10">
+                
                 {/* Navigation Bar */}
                 <SideNav />
 
@@ -56,7 +38,7 @@ const HomePage = () => {
                 >
                     <div className="flex flex-col gap-3">
                         <SearchBar />
-                        <PostForm />
+                        <PostForm vm={viewModel}/>
                         {viewModel &&
                             viewModel.homeFeeds &&
                             viewModel.homeFeeds
@@ -67,8 +49,7 @@ const HomePage = () => {
                                         new Date(a.createdAt).getTime()
                                     );
                                 })
-                                .map(post => <PostWidget post={post} />)}
-                        {/* {viewModel && viewModel.homeFeeds && .map(() => <PostWidget post={viewModel.homeFeeds[0]} />)} */}
+                                .map(post => <PostWidget post={post} vm={viewModel} key={post.id} />)}
                     </div>
                 </div>
 
@@ -81,6 +62,7 @@ const HomePage = () => {
                         <TrendsWidget />
                         <PeopleWidget />
                     </div>
+
                 </div>
             </div>
         </div>

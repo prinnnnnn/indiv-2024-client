@@ -10,7 +10,7 @@ import { useStore } from "@/stores/storeContext";
 
 /* Icons for navs */
 import { CgMoreO, CgProfile } from "react-icons/cg";
-import { IoHome } from "react-icons/io5";
+import { IoHome, IoPersonCircleSharp } from "react-icons/io5";
 import { MdExplore } from "react-icons/md";
 
 /* Client-Routing */
@@ -45,7 +45,7 @@ const defaultMenus = [
     },
     {
         name: "Profile",
-        icon: <CgProfile className="text-xl" />,
+        icon: <IoPersonCircleSharp className="text-xl" />,
     },
     {
         name: "More",
@@ -62,14 +62,13 @@ const SideNav: React.FC<SideNavProp> = ({ menus }) => {
     const { theme, palette } = useTheme();
     const pathName = usePathname();
     const router = useRouter();
-    const store = useStore();
 
     const clientLogOut = () => {
         try {
-            store!.logout();
+            document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             router.push("/login");
         } catch (error) {
-            // console.log(error);
+            console.error(error);
             alert("error");
         }
     };

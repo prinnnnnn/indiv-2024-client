@@ -10,19 +10,11 @@ import { ChangeEvent, DragEvent, useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import "@/app/ui/hoverable.css";
 import { createPost, fetchAllPosts } from "@/service/postServices";
-import { useStore } from "@/stores/storeContext";
-import { Post, User } from "@/common/model";
+import { HomeViewModel } from "@/app/home/HomeViewModel";
 
-const PostForm = () => {
-  const { palette } = useTheme();
-  const store = useStore();
+const PostForm = ({ vm }: { vm: HomeViewModel}) => {
 
-  const [userId, setUserId] = useState<number | null>(null);
-  const [user, setUser] = useState(() => store?.getUserInfo);
-
-  useEffect(() => {
-
-  }, [userId]);
+    const { palette } = useTheme();
 
   const closeModal = () => {
     setShowModal(false);
@@ -45,40 +37,31 @@ const PostForm = () => {
     element.style.height = `${Math.max(element.scrollHeight, 50)}px`; // Set height based on content or minimum height
   };
 
-  // Handle the file selected through input
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]; // Get the first file
-    if (file) {
-      setSelectedImage(file);
-    }
-  };
+    // Handle the file selected through input
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]; // Get the first file
+        if (file) {
+            setSelectedImage(file);
+        }
+    };
 
-  const fetchPosts = async () => {
-    const posts = (await fetchAllPosts()) as Post[];
-    store!.setFeeds(posts);
-  };
+    const handleSubmit = async () => {
+        
+        setIsPending(true);
+        setErrorMessage("");
+        const formData = new FormData();
+        if (postText !== "") formData.append("content", postText);
+        if (selectedImage) formData.append("picture", selectedImage);
 
-  const handleSubmit = async () => {
-    setIsPending(true);
-    setErrorMessage("");
-    const formData = new FormData();
-    if (postText !== "") formData.append("content", postText);
-    if (selectedImage) formData.append("picture", selectedImage);
-    if (postText === "" && !selectedImage) {
-      setIsPending(false);
-      return;
-    }
-
-    try {
-      const post = await createPost(formData);
-      console.log(post);
-    } catch (error: any) {
-      setErrorMessage("An unexpected error occurred.");
-    } finally {
-      await fetchPosts();
-      setPostText("");
-      setIsPending(false);
-      closeModal();
+        try {
+            const post = await createPost(formData);
+            vm.createPost(post);
+        } catch (error: any) {
+            setErrorMessage("An unexpected error occurred.");
+        } finally {
+            setPostText("");
+            setIsPending(false);
+            closeModal();
 
       // Hard reload to fetch data
       window.location.reload();

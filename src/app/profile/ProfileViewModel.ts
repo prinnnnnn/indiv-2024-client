@@ -1,21 +1,19 @@
 "use client"
 
 import { Post, User } from "@/common/model";
-import { fetchAllPosts, fetchLikedPostsIds, likePost } from "@/service/postServices";
-import { fetchFollowings, fetchUserInfo } from "@/service/userServices";
-import { getCookie } from "@/utils/helpers";
-import { PostWidgetVM } from "@/utils/viewModel";
+import { fetchAllPosts, fetchLikedPostsIds, fetchUserPosts, likePost } from "@/service/postServices";
+import { fetchFollowings, fetchUserInfo, updateProfileCoverPicture } from "@/service/userServices";
+import { PostWidgetVM, ProfileVM } from "@/utils/viewModel";
 import assert from "assert";
 import { autorun, makeObservable, computed, action, runInAction, observable } from "mobx";
 
-export class HomeViewModel implements PostWidgetVM {
+export class ProfileViewModel implements PostWidgetVM, ProfileVM {
 
     user: User | undefined;
     posts: Post[] | undefined;
-    followingIds: number[] | undefined;
-    likedPostIds: number[];
+    followingIds: number[] = [];
+    likedPostIds: number[] = [];
     isLoading: boolean;
-    // numLikes: number;
 
     private initData = async () => {
         
@@ -36,7 +34,7 @@ export class HomeViewModel implements PostWidgetVM {
             });
             
             /* fetch follower posts */
-            const posts = await fetchAllPosts();
+            const posts = await fetchUserPosts(this.user!.id);
             runInAction(() => {
                 this.posts = posts;
             });
@@ -44,7 +42,7 @@ export class HomeViewModel implements PostWidgetVM {
             /* fetch posts'id liked by user */
             const likedIds = await fetchLikedPostsIds();
             runInAction(() => {
-                this.likedPostIds = likedIds;
+                this.likedPostIds = likedIds.data;
             })
 
             this.isLoading = false;
@@ -56,7 +54,6 @@ export class HomeViewModel implements PostWidgetVM {
     };
 
     constructor() {
-
         
         this.user = undefined;
         this.posts = [];
@@ -74,10 +71,6 @@ export class HomeViewModel implements PostWidgetVM {
             likedPostIds: observable,
             isLoading: observable,
 
-            /* computed */
-            userInfo: computed,
-            homeFeeds: computed,
-
             /* actions */
             likePost: action,
             followUser: action,
@@ -85,25 +78,14 @@ export class HomeViewModel implements PostWidgetVM {
 
         });
 
-
-        // autorun(() => {
-        //     console.log(`Current state of home view model...`);
-        //     // console.log(this.user);
-        //     // console.log(this.posts);
-        //     // console.log(this.followingIds);
-        //     console.log(this.likedPostIds);
-        //     console.log(this.isLoading);
-        //     console.log(`\n\n`);
-        // })
-
     }
 
-    get userInfo() {
-        return this.user;
+    async changeProfilePic(picture: File): Promise<void> {
+        this.user = await updateProfileCoverPicture({ picture }, "profile");
     }
 
-    get homeFeeds() {
-        return this.posts;
+    async changeCoverPic(picture: File): Promise<void> {
+        this.user = await updateProfileCoverPicture({ picture }, "cover");
     }
 
     createPost(post: Post) {

@@ -17,7 +17,7 @@ export const createPost = async (formData: FormData) => {
 
     try {
         const { data } = await axios.request(options);
-        console.log(data);
+        // console.log(data);
         return data;
     } catch (error) {
         console.error(error);
@@ -33,6 +33,7 @@ export const fetchAllPosts = async () => {
     };
 
     try {
+        
         const { data } = await axios.request(options);
         const posts = await Promise.all(
             (data as Post[]).map(async (post) => ({
@@ -42,8 +43,8 @@ export const fetchAllPosts = async () => {
                 // profileImg: await getPresignedUrl(post.imageUrl),
             }))
         );
-        console.log(posts);
-        return posts;
+
+        return posts as Post[];
     } catch (error) {
         console.error(error);
     }
@@ -66,9 +67,10 @@ export const fetchUserPosts = async (userId: Number | null) => {
                 ...post,
                 imageUrl: post.imageUrl ? await getPresignedUrl(post.imageUrl) : null,
                 profileImg: post.author.profilePath ? await getPresignedUrl(post.author.profilePath) : null,
+                likeCounts: 0
             }))
         );
-        return posts;
+        return posts as Post[];
     } catch (error) {
         console.error(error);
         return []
@@ -81,6 +83,66 @@ export const fetchFollowersPosts = async () => {
 };
 
 export const likePost = async (postId: number) => {
-    /* userId from redux store */
-    /* PATCH - /posts/:userId/:postId */
+    /* PATCH - /posts/:postId */
+
+    try {
+
+        const options = {
+            method: "PATCH",
+            url: `${serverAddr}/posts/${postId}`,
+            withCredentials: true,
+        };
+
+        const response = await axios.request(options);
+
+        // return {
+        return response.status === 200 ? "dislike" : "like";
+            // data: response.data,
+        // }
+        
+    } catch (error) {
+        throw error;
+    }
+
 };
+
+export const fetchLikedPostsIds = async () => {
+
+    try {
+
+        const { data } = await axios.get(`${serverAddr}/posts/likesRecord/`, { withCredentials: true });
+
+        return data;
+        
+    } catch (error) {
+        throw error;
+    }
+
+}
+
+export const fetchRandomPosts = async () => {
+    
+    try {
+
+        const options: AxiosRequestConfig = {
+            method: "GET",
+            url: `${serverAddr}/posts/random`,
+            withCredentials: true,
+        }
+
+        const { data } = await axios.request(options);
+        console.log(data);
+
+        const randomPosts = await Promise.all(data.map(async (post: Post) => ({
+            ...post,
+            imageUrl: post.imageUrl ? await getPresignedUrl(post.imageUrl) : post.imageUrl,
+            profileImg: post.author.profilePath ? await getPresignedUrl(post.author.profilePath) : null,
+        })));
+
+        return randomPosts; 
+        
+    } catch (error) {
+        throw error;
+    }
+
+}

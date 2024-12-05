@@ -6,45 +6,29 @@ import { useEffect, useState } from "react";
 import { fetchAllPosts, fetchUserPosts } from "@/service/postServices";
 import { Post, User } from "@/common/model";
 import { useStore } from "@/stores/storeContext";
+import { ProfileViewModel } from "./ProfileViewModel";
+import { observer } from "mobx-react-lite";
 
 const ProfilePage = () => {
-  const store = useStore();
-  const [userId, setUserId] = useState<number | null>(null);
-  const [user, setUser] = useState(() => store?.getUserInfo);
+    
+    const [viewModel] = useState<ProfileViewModel>(new ProfileViewModel());
 
-  useEffect(() => {
-    const fetchData = async () => {
-      console.log(`user : ${user?.id}`);
-
-      let userPosts: Post[] = [];
-      if (user) {
-        setUserId(user.id);
-        userPosts = (await fetchUserPosts(user.id)) as Post[];
-      }
-      console.log(`user Posts: ${userPosts}`);
-      store!.setUserFeeds(userPosts);
-    };
-
-    fetchData();
-  }, [userId]);
-
-
-  if (!user) return <h1>Loading...</h1>
-
-  return (
-    <div className="flex flex-col gap-3">
-      <Profile />
-      {store!.userPosts &&
-        store!.userPosts
-          .slice()
-          .sort((a, b) => {
-            return (
-              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-            );
-          })
-          .map((post) => <PostWidget post={post} />)} 
-    </div>
-  );
+    return (
+        <div className="flex flex-col gap-3">
+            <Profile vm={viewModel}/>
+            {viewModel.posts && viewModel.posts
+                .slice()
+                .sort((a, b) => {
+                    return (
+                        new Date(b.createdAt).getTime() -
+                        new Date(a.createdAt).getTime()
+                    );
+                })
+                .map(post => (
+                    <PostWidget post={post} vm={viewModel} key={post.id} />
+                ))}
+        </div>
+    );
 };
 
-export default ProfilePage;
+export default observer(ProfilePage);
