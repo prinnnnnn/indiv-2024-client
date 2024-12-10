@@ -10,10 +10,14 @@ import Image from "next/image";
 import "@/app/ui/hoverable.css";
 import { observer } from "mobx-react-lite";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { ChangeEvent, DragEvent, useState } from "react";
 import "../ui/FormInput.css";
-import { updateUserInfo } from "@/service/userServices";
+import {
+  updateProfileCoverPicture,
+  updateUserInfo,
+} from "@/service/userServices";
 import { ProfileViewModel } from "./ProfileViewModel";
+import { IoClose } from "react-icons/io5";
 
 const Profile = ({ vm }: { vm: ProfileViewModel }) => {
   const { id } = useParams();
@@ -26,6 +30,12 @@ const Profile = ({ vm }: { vm: ProfileViewModel }) => {
   const [profileFirstName, setFirstName] = useState("");
   const [profileLastName, setLastName] = useState("");
   const [profileBio, setBio] = useState("");
+  const [selectedProfileImage, setSelectedProfileImage] = useState<File | null>(
+    null
+  );
+  const [selectedCoverImage, setSelectedCoverImage] = useState<File | null>(
+    null
+  );
 
   const autoGrow = (element: HTMLTextAreaElement) => {
     element.style.height = "auto"; // Reset height to allow shrinking
@@ -44,33 +54,98 @@ const Profile = ({ vm }: { vm: ProfileViewModel }) => {
   };
 
   const openModal = () => {
-    setShowModal(true);
     resetProfile();
+    setShowModal(true);
   };
 
   const cancel = () => {
     setShowModal(false);
   };
 
-  const handleSubmit = async () => {
+  // Handle the file selected through input
+  const handleProfileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]; // Get the first file
+    if (file) {
+      setSelectedProfileImage(file);
+    }
+  };
+
+  // Handle file dropped into the upload area
+  const handleProfileDrop = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0]; // Get the first file from the drop event
+    setSelectedProfileImage(file);
+  };
+
+  const handleProfileDragOver = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
+
+  const removeProfileImage = () => {
+    setSelectedProfileImage(null);
+  };
+
+  const handleCoverChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]; // Get the first file
+    if (file) {
+      setSelectedCoverImage(file);
+    }
+  };
+
+  // Handle file dropped into the upload area
+  const handleCoverDrop = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0]; // Get the first file from the drop event
+    setSelectedCoverImage(file);
+  };
+
+  const handleCoverDragOver = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
+
+  const removeCoverImage = () => {
+    setSelectedCoverImage(null);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setIsPending(true);
     setErrorMessage("");
     const formData = new FormData();
+    const profileData = new FormData();
+    const coverData = new FormData();
     formData.append("firstName", profileFirstName);
     formData.append("lastName", profileLastName);
     formData.append("bio", profileBio);
 
+    if (selectedProfileImage) {
+      profileData.append("picture", selectedProfileImage);
+    }
+
+    if (selectedCoverImage) {
+      coverData.append("picture", selectedCoverImage);
+    }
+
     try {
-      const updatedUser = await updateUserInfo(user!.id, formData);
-      console.log(`updatedUser: ${updatedUser}`);
+      var updatedUser = await updateUserInfo(user!.id, formData);
+      console.log(`after info: ${updatedUser}`);
+      if (selectedProfileImage) {
+        updatedUser = await updateProfileCoverPicture(profileData, "profile");
+        console.log(`after profile: ${updatedUser}`);
+      }
+      if (selectedCoverImage) {
+        updatedUser = await updateProfileCoverPicture(coverData, "cover");
+        console.log(`after cover: ${updatedUser}`);
+      }
     } catch (error: any) {
+      console.log(error)
       setErrorMessage("An unexpected error occurred.");
     } finally {
       setIsPending(false);
-      setShowModal(false);
+      // setShowModal(false);
 
       // Hard reload to fetch data
-      window.location.reload();
+      // window.location.reload();
     }
   };
 
@@ -112,7 +187,7 @@ const Profile = ({ vm }: { vm: ProfileViewModel }) => {
                 src={defaultProfile}
                 alt="Profile img"
                 layout="fill"
-                className="object-cover rounded-md"
+                className="object-cover rounded-full"
                 style={{
                   outline: `3px solid ${palette.secondary}`,
                 }}
@@ -138,7 +213,7 @@ const Profile = ({ vm }: { vm: ProfileViewModel }) => {
               {canEdit && (
                 <button
                   className="hoverable flex rounded-md px-4 py-2 text-sm text-white transition-colors"
-                  onClick={() => setShowModal(true)}
+                  onClick={() => openModal()}
                   style={
                     {
                       "--bg-color": palette.primary,
@@ -188,7 +263,7 @@ const Profile = ({ vm }: { vm: ProfileViewModel }) => {
         </div>
 
         {/* Bio */}
-        <div className="my-4 md:my-2 xl:w-[80%] lg:w-[90%] md:w-[90%] sm:w-[92%] xs:w-[90%] mx-auto flex flex-col gap-4 items-center relative xl:-top-6">
+        <div className="my-4 md:my-2 sm:w-[80%] xs:w-[60%] mx-auto flex flex-col gap-4 relative xl:-top-6 text-center md:text-left">
           {user!.bio}
           <p className="w-fit text-md"></p>
         </div>
@@ -217,55 +292,136 @@ const Profile = ({ vm }: { vm: ProfileViewModel }) => {
                   >
                     {/* Cover image */}
                     <div className="relative group">
-                      {vm.user && vm.user.coverPhotoUrl ? (
-                        <img
-                          src={vm.user.coverPhotoUrl}
-                          alt="User Cover"
-                          className="w-full xl:h-[20rem] lg:h-[18rem] md:h-[16rem] sm:h-[14rem] h-[11rem] object-cover rounded-lg"
-                        />
+                      {!selectedCoverImage ? (
+                        vm.user && vm.user.coverPhotoUrl ? (
+                          <img
+                            src={vm.user.coverPhotoUrl}
+                            alt="User Cover"
+                            className="w-full xl:h-[20rem] lg:h-[18rem] md:h-[16rem] sm:h-[14rem] h-[11rem] object-cover rounded-lg"
+                          />
+                        ) : (
+                          <Image
+                            src={defaultCover}
+                            alt="User Cover"
+                            className="w-full xl:h-[20rem] lg:h-[18rem] md:h-[16rem] sm:h-[14rem] h-[11rem] object-cover rounded-lg"
+                          />
+                        )
                       ) : (
-                        <Image
-                          src={defaultCover}
-                          alt="User Cover"
-                          className="w-full xl:h-[20rem] lg:h-[18rem] md:h-[16rem] sm:h-[14rem] h-[11rem] object-cover rounded-lg"
-                        />
+                        <div className="relative w-full">
+                          <img
+                            src={URL.createObjectURL(selectedCoverImage)}
+                            alt="Selected Profile"
+                            className="w-full h-full object-cover rounded-lg bg-white"
+                            onClick={() =>
+                              document.getElementById("coverInput")?.click()
+                            }
+                          />
+                          <button
+                            type="button"
+                            className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 m-2 hover:bg-red-600 transition-colors z-50"
+                            onClick={removeCoverImage}
+                            aria-label="Remove selected image"
+                          >
+                            <IoClose size={20} color={palette.text} />
+                          </button>
+                        </div>
                       )}
 
                       {/* Overlay and Edit text */}
-                      <div className="absolute inset-0 bg-gray-600 bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center rounded-lg">
+                      <div
+                        className="absolute inset-0 bg-gray-600 bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center rounded-lg"
+                        onDrop={handleCoverDrop}
+                        onDragOver={handleCoverDragOver}
+                        onClick={() =>
+                          document.getElementById("coverInput")?.click()
+                        }
+                      >
                         <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-semibold">
                           Upload New Cover Inage
                         </span>
                       </div>
                     </div>
 
+                    <input
+                      type="file"
+                      id="coverInput"
+                      multiple
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleCoverChange}
+                    />
+
                     {/* Profile Image and Name */}
                     <div className="sm:w-[80%] xs:w-[60%] mx-auto flex flex-col md:flex-row items-center md:items-start justify-around">
                       <div className="pb-[-40] aspect-square lg:w-[12rem] md:w-[15rem] sm:w-[8rem] w-[7rem] max-h-[7rem] sm:max-h-[8rem] md:max-h-[12rem] relative bottom-[2rem] group">
-                        {vm.user && vm.user.profilePath ? (
-                          <img
-                            src={vm.user.profilePath}
-                            alt="User Profile"
-                            className="w-full h-full object-cover rounded-full bg-white"
-                          />
+                        {!selectedProfileImage ? (
+                          // Existing profile image or default image
+                          vm.user && vm.user.profilePath ? (
+                            <img
+                              src={vm.user.profilePath}
+                              alt="User Profile"
+                              className="w-full h-full object-cover rounded-full bg-white"
+                            />
+                          ) : (
+                            <Image
+                              src={defaultProfile}
+                              alt="Profile img"
+                              layout="fill"
+                              className="object-cover rounded-full"
+                              style={{
+                                outline: `3px solid ${palette.secondary}`,
+                              }}
+                            />
+                          )
                         ) : (
-                          <Image
-                            src={defaultProfile}
-                            alt="Profile img"
-                            layout="fill"
-                            className="object-cover rounded-md"
-                            style={{
-                              outline: `3px solid ${palette.secondary}`,
-                            }}
-                          />
+                          // Selected image preview with remove button
+                          <div className="relative w-full aspect-square">
+                            <img
+                              src={URL.createObjectURL(selectedProfileImage)}
+                              alt="Selected Profile"
+                              className="w-full h-full object-cover rounded-full bg-white"
+                              onClick={() =>
+                                document.getElementById("profileInput")?.click()
+                              }
+                              onLoad={() => {
+                                // Revoke object URL to free up memory
+                                // URL.revokeObjectURL;
+                              }}
+                            />
+                            <button
+                              type="button"
+                              className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 m-2 hover:bg-red-600 transition-colors z-50"
+                              onClick={removeProfileImage}
+                              aria-label="Remove selected image"
+                            >
+                              <IoClose size={20} color={palette.text} />
+                            </button>
+                          </div>
                         )}
-                        <div className="absolute inset-0 bg-gray-600 bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center rounded-full">
-                          <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-semibold text-center">
+
+                        <div
+                          className="absolute inset-0 bg-gray-600 bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center rounded-full"
+                          onDrop={handleProfileDrop}
+                          onDragOver={handleProfileDragOver}
+                          onClick={() =>
+                            document.getElementById("profileInput")?.click()
+                          }
+                        >
+                          <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-semibold text-center z-10">
                             Upload New <br />
                             Profile Picture
                           </span>
                         </div>
                       </div>
+
+                      <input
+                        type="file"
+                        id="profileInput"
+                        multiple
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleProfileChange}
+                      />
 
                       <div className="flex flex-col md:pl-4">
                         {/* Name inputs */}

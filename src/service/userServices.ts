@@ -103,7 +103,16 @@ export const updateUserInfo = async (userId: Number, data: any) => {
   try {
     const { data } = await axios.request(options);
     console.log(data);
-    return data;
+    const user: User = {
+        ...data,
+        coverPhotoUrl: data.coverPhotoUrl
+          ? await getPresignedUrl(data.coverPhotoUrl)
+          : null,
+        profilePath: data.profilePath
+          ? await getPresignedUrl(data.profilePath)
+          : null,
+      };
+    return user;
   } catch (error) {
     console.error(error);
   }

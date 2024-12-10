@@ -6,10 +6,10 @@ import defaultProfile from "@/public/assets/default-profile.jpg";
 
 import { BsFillSendPlusFill } from "react-icons/bs";
 import { ImAttachment } from "react-icons/im";
-import { ChangeEvent, DragEvent, useEffect, useState } from "react";
+import { ChangeEvent, DragEvent, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import "@/app/ui/hoverable.css";
-import { createPost, fetchAllPosts } from "@/service/postServices";
+import { createPost } from "@/service/postServices";
 import { HomeViewModel } from "@/app/home/HomeViewModel";
 
 const PostForm = ({ vm }: { vm: HomeViewModel }) => {
@@ -43,6 +43,8 @@ const PostForm = ({ vm }: { vm: HomeViewModel }) => {
     const formData = new FormData();
     if (postText !== "") formData.append("content", postText);
     if (selectedImage) formData.append("picture", selectedImage);
+
+    if (postText === "" && !selectedImage) return;
 
     try {
       const post = await createPost(formData);
