@@ -9,7 +9,6 @@ export const createPost = async (formData: FormData) => {
 
     const options: AxiosRequestConfig = {
         method: "POST",
-        // TODO: implement userId from state 
         url: `${serverAddr}/posts/`,
         data: formData,
         withCredentials: true,
@@ -91,13 +90,10 @@ export const likePost = async (postId: number) => {
             withCredentials: true,
         };
 
-        const response = await axios.request(options);
-
-        // return {
-        return response.status === 200 ? "dislike" : "like";
-            // data: response.data,
-        // }
+        const response = await axios.request(options)
         
+        return response.status === 200 ? "dislike" : "like";
+            
     } catch (error) {
         throw error;
     }
