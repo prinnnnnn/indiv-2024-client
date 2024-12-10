@@ -14,8 +14,7 @@ import { HomeViewModel } from "@/app/home/HomeViewModel";
 
 const PostForm = ({ vm }: { vm: HomeViewModel }) => {
   const { palette } = useTheme();
-  const user = vm.userInfo
-
+  const user = vm.userInfo;
 
   const closeModal = () => {
     setShowModal(false);
@@ -38,14 +37,6 @@ const PostForm = ({ vm }: { vm: HomeViewModel }) => {
     element.style.height = `${Math.max(element.scrollHeight, 50)}px`; // Set height based on content or minimum height
   };
 
-  // Handle the file selected through input
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]; // Get the first file
-    if (file) {
-      setSelectedImage(file);
-    }
-  };
-
   const handleSubmit = async () => {
     setIsPending(true);
     setErrorMessage("");
@@ -65,6 +56,14 @@ const PostForm = ({ vm }: { vm: HomeViewModel }) => {
 
       // Hard reload to fetch data
       window.location.reload();
+    }
+  };
+
+  // Handle the file selected through input
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]; // Get the first file
+    if (file) {
+      setSelectedImage(file);
     }
   };
 
