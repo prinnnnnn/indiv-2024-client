@@ -63,6 +63,7 @@ const HomePage = () => {
             <SearchBar />
             <PostForm vm={viewModel} />
 
+
             {/* Posts */}
             {viewModel &&
               viewModel.homeFeeds &&
