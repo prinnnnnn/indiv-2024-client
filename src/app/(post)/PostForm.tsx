@@ -40,7 +40,7 @@ const PostForm = ({ vm }: { vm: HomeViewModel }) => {
 
 
 
-  if (vm.isLoading) {
+  if (vm.isLoading || user == undefined) {
     return <b style={{ color: `${palette.accent}` }}>Loading...</b>;
   }
 

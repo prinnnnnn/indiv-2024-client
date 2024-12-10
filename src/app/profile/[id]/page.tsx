@@ -12,19 +12,21 @@ const ProfileByIdPage = () => {
     const { id } = useParams();
     const userId = id;
     const [viewModel] = useState<ProfileIDViewModel>(new ProfileIDViewModel(Number(userId)));
+    
+    const sortedPosts = viewModel.posts
+    ? viewModel.posts.slice().sort((a, b) => {
+        return (
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      })
+    : [];
+
 
     return (
         <div className="flex flex-col gap-3">
             <Profile vm={viewModel} />
             {viewModel.posts &&
-                viewModel.posts
-                    .slice()
-                    .sort((a, b) => {
-                        return (
-                            new Date(b.createdAt).getTime() -
-                            new Date(a.createdAt).getTime()
-                        );
-                    })
+                sortedPosts
                     .map(post => (
                         <PostWidget post={post} vm={viewModel} key={post.id} />
                     ))}

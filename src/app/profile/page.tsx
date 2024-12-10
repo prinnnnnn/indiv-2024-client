@@ -9,18 +9,18 @@ import { observer } from "mobx-react-lite";
 const ProfilePage = () => {
     
     const [viewModel] = useState<ProfileViewModel>(new ProfileViewModel());
+    const sortedPosts = viewModel.posts
+    ? viewModel.posts.slice().sort((a, b) => {
+        return (
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      })
+    : [];
 
     return (
         <div className="flex flex-col gap-3">
             <Profile vm={viewModel}/>
-            {viewModel.posts && viewModel.posts
-                .slice()
-                .sort((a, b) => {
-                    return (
-                        new Date(b.createdAt).getTime() -
-                        new Date(a.createdAt).getTime()
-                    );
-                })
+            {viewModel.posts && sortedPosts
                 .map(post => (
                     <PostWidget post={post} vm={viewModel} key={post.id} />
                 ))}
