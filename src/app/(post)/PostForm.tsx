@@ -11,10 +11,14 @@ import { IoClose } from "react-icons/io5";
 import "@/app/ui/hoverable.css";
 import { createPost } from "@/service/postServices";
 import { HomeViewModel } from "@/app/home/HomeViewModel";
+import { useRouter } from "next/navigation";
+
 
 const PostForm = ({ vm }: { vm: HomeViewModel }) => {
   const { palette } = useTheme();
   const user = vm.userInfo;
+
+  const router = useRouter();
 
   const closeModal = () => {
     setShowModal(false);
@@ -26,11 +30,20 @@ const PostForm = ({ vm }: { vm: HomeViewModel }) => {
     setPostText("");
   };
 
+
+
   const [postText, setPostText] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [isPending, setIsPending] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
+
+
+  if (vm.isLoading) {
+    return <b style={{ color: `${palette.accent}` }}>Loading...</b>;
+  }
+
 
   const autoGrow = (element: HTMLTextAreaElement) => {
     element.style.height = "auto"; // Reset height to allow shrinking
@@ -84,13 +97,16 @@ const PostForm = ({ vm }: { vm: HomeViewModel }) => {
     setSelectedImage(null);
   };
 
+
+
   return (
     <div
       className={`w-full min-h-20 rounded-lg p-4 mb-5`}
       style={{ background: palette.bgPrimary }}
     >
       <div className="flex justify-between">
-        <div className="relative w-[50px] h-[50px] z-1">
+        <button className="relative w-[50px] h-[50px] z-1"
+        onClick={() => {router.push('/profile')}}>
           {user?.profilePath ? (
             <img
               src={user.profilePath}
@@ -105,7 +121,7 @@ const PostForm = ({ vm }: { vm: HomeViewModel }) => {
               className="object-cover rounded-full"
             />
           )}
-        </div>
+        </button>
         <div className="w-3/5 lg:w-4/5 lg:px-2">
           <textarea
             className="outline-none w-full h-full"

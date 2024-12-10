@@ -21,6 +21,10 @@ const HomePage = () => {
     const { palette } = useTheme();
     const [viewModel] = useState<HomeViewModel>(() => new HomeViewModel());
 
+    if (viewModel.isLoading) {
+        return <b style={{ color: `${palette.accent}` }}>Loading...</b>;
+      }
+
     return (
         <div className="flex flex-row justify-center w-full">
             <div className="absolute top-2 md:top-5 right-2 md:right-5">
