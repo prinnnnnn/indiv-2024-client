@@ -13,7 +13,7 @@ const ProfilePage = () => {
     return (
         <div className="flex flex-col gap-3">
             <Profile vm={viewModel}/>
-            {/* {viewModel.posts && viewModel.posts
+            {viewModel.posts && viewModel.posts
                 .slice()
                 .sort((a, b) => {
                     return (
@@ -23,7 +23,7 @@ const ProfilePage = () => {
                 })
                 .map(post => (
                     <PostWidget post={post} vm={viewModel} key={post.id} />
-                ))} */}
+                ))}
         </div>
     );
 };

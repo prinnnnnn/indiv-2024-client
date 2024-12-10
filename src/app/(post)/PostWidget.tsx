@@ -97,7 +97,7 @@ const PostWidget: FC<PostProp> = ({ post, vm }) => {
                     ) : (
                         <div className="text-lg md:text-xl">
                             <p>
-                                <span className="font-bold">{username}</span>{" "}
+                                <span className="whitespace-pre-wrap font-bold">{username}</span>{" "}
                                 {post?.content}
                             </p>
                         </div>
@@ -146,7 +146,7 @@ const PostWidget: FC<PostProp> = ({ post, vm }) => {
                 {post?.imageUrl && post?.content !== "" && (
                     <div className="text-lg md:text-xl">
                         <p>
-                            <span className="font-bold">{username}</span>{" "}
+                            <span className="whitespace-pre-wrap font-bold">{username}</span>{" "}
                             {post?.content}
                         </p>
                     </div>

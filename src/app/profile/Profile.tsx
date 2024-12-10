@@ -51,6 +51,8 @@ const Profile = ({ vm }: { vm: ProfileViewModel }) => {
     setFirstName(user!.firstName);
     setLastName(user!.lastName);
     setBio(user!.bio);
+    removeCoverImage();
+    removeProfileImage();
   };
 
   const openModal = () => {
@@ -138,14 +140,14 @@ const Profile = ({ vm }: { vm: ProfileViewModel }) => {
         console.log(`after cover: ${updatedUser}`);
       }
     } catch (error: any) {
-      console.log(error)
+      console.log(error);
       setErrorMessage("An unexpected error occurred.");
     } finally {
       setIsPending(false);
-      // setShowModal(false);
+      setShowModal(false);
 
       // Hard reload to fetch data
-      // window.location.reload();
+      window.location.reload();
     }
   };
 
@@ -264,8 +266,7 @@ const Profile = ({ vm }: { vm: ProfileViewModel }) => {
 
         {/* Bio */}
         <div className="my-4 md:my-2 sm:w-[80%] xs:w-[60%] mx-auto flex flex-col gap-4 relative xl:-top-6 text-center md:text-left">
-          {user!.bio}
-          <p className="w-fit text-md"></p>
+          <p className=" whitespace-pre-wrap w-fit text-md">{user!.bio}</p>
         </div>
       </div>
 
@@ -507,7 +508,10 @@ const Profile = ({ vm }: { vm: ProfileViewModel }) => {
                               autoGrow(e.target as HTMLTextAreaElement)
                             }
                             value={profileBio}
-                            onChange={(e) => setBio(e.target.value)}
+                            onChange={(e) => {
+                              setBio(e.target.value);
+                              autoGrow(e.target as HTMLTextAreaElement);
+                            }}
                             rows={2}
                             style={{
                               background: palette.bgPrimary,

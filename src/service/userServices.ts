@@ -66,7 +66,6 @@ export const updateProfileCoverPicture = async (
   const options: AxiosRequestConfig = {
     method: "PATCH",
     url: `${serverAddr}/users/upload/${type}Picture`,
-    headers: { "Content-Type": "application/json" },
     withCredentials: true,
     data: data,
   };
