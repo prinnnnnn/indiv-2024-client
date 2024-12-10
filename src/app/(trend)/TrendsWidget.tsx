@@ -2,10 +2,10 @@ import React from "react";
 import { useTheme } from "../ui/ThemeContext";
 
 const trends = [
-    { word: "ComSysArch", numTweets: Math.floor(Math.random() * 100) },
-    { word: "CEM2", numTweets: Math.floor(Math.random() * 100) },
-    { word: "DBSys", numTweets: Math.floor(Math.random() * 100) },
-    { word: "SE1", numTweets: Math.floor(Math.random() * 100) },
+    { word: "ArneSlot", numTweets: Math.floor(Math.random() * 100000) },
+    { word: "KingTrump", numTweets: Math.floor(Math.random() * 10000) },
+    { word: "KlongZuperLeague", numTweets: Math.floor(Math.random() * 1000) },
+    { word: "PiromsopaGang", numTweets: Math.floor(Math.random() * 100) },
 ];
 
 const TrendsWidget = () => {

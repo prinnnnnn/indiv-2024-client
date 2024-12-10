@@ -80,6 +80,10 @@ export class ProfileViewModel implements PostWidgetVM, ProfileVM {
 
     }
 
+    async updateUser(user: User): Promise<void> {
+        this.user = user
+    }
+
     async changeProfilePic(picture: File): Promise<void> {
         this.user = await updateProfileCoverPicture({ picture }, "profile");
     }

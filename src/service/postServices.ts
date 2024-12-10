@@ -53,7 +53,7 @@ export const fetchUserPosts = async (userId: Number | null) => {
 
     const options = {
         method: "GET",
-        url: `${serverAddr}/posts/user`,
+        url: `${serverAddr}/posts/user/${userId}`,
         withCredentials: true,
     };
 
@@ -66,12 +66,13 @@ export const fetchUserPosts = async (userId: Number | null) => {
                 ...post,
                 imageUrl: post.imageUrl ? await getPresignedUrl(post.imageUrl) : null,
                 profileImg: post.author.profilePath ? await getPresignedUrl(post.author.profilePath) : null,
-                likeCounts: 0
+                // likeCounts: 0
             }))
         );
         return posts as Post[];
     } catch (error) {
         console.error(error);
+        return []
     }
 };
 
